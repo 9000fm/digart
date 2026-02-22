@@ -1,7 +1,10 @@
 import musicChannels from "@/data/music-channels.json";
 import approvedChannels from "@/data/approved-channels.json";
+import genreCacheData from "@/data/genre-cache.json";
 import { cacheGet, cacheSet } from "./cache";
 import type { CardData } from "./types";
+
+const genreCache: Record<string, { genres: string[]; tags: string[] }> = genreCacheData;
 
 const API_KEY = process.env.YOUTUBE_API_KEY!;
 const YT_API = "https://www.googleapis.com/youtube/v3";
@@ -217,8 +220,26 @@ function videoThumbnail(videoId: string): string {
   return `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`;
 }
 
+function getGenresForArtist(artistName: string, channelName: string): { genres: string[]; channelLabels: string[] } {
+  // 1. Check MusicBrainz cache
+  const mbEntry = genreCache[artistName.toLowerCase()] || genreCache[channelName.toLowerCase()];
+  const mbGenres = mbEntry?.genres || [];
+  const mbTags = mbEntry?.tags?.slice(0, 5) || [];
+
+  // 2. Check channel labels from curator
+  const channel = (approvedChannels as { name: string; id: string; labels?: string[] }[])
+    .find((c) => c.name === channelName);
+  const channelLabels = channel?.labels || [];
+
+  // Merge: MusicBrainz genres + tags + channel labels (deduplicated)
+  const allGenres = [...new Set([...mbGenres, ...mbTags, ...channelLabels.map(l => l.toLowerCase())])];
+
+  return { genres: allGenres, channelLabels };
+}
+
 function videoToCard(v: YouTubeVideo): CardData {
   const { name, artist } = parseVideoTitle(v.title, v.channelTitle);
+  const { genres, channelLabels } = getGenresForArtist(artist, v.channelTitle);
   return {
     id: `yt-${v.id}`,
     name,
@@ -226,19 +247,13 @@ function videoToCard(v: YouTubeVideo): CardData {
     album: v.channelTitle,
     image: videoThumbnail(v.id),
     imageSmall: v.thumbnail,
-    previewUrl: null,
-    spotifyUrl: null,
     youtubeUrl: `https://www.youtube.com/watch?v=${v.id}`,
     videoId: v.id,
-    uri: null,
     source: "youtube" as const,
-    bpm: null,
-    energy: null,
-    danceability: null,
-    valence: null,
-    key: null,
     duration: v.duration,
     viewCount: v.viewCount,
+    genres,
+    channelLabels,
   };
 }
 

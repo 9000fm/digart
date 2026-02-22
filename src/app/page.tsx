@@ -8,6 +8,18 @@ import NowPlayingBanner from "@/components/NowPlayingBanner";
 import Sidebar from "@/components/Sidebar";
 import type { ViewType } from "@/components/Sidebar";
 import type { CardData } from "@/lib/types";
+import { createPlayer, YT_STATE } from "@/lib/youtube-player";
+
+interface YTPlayer {
+  loadVideoById: (opts: { videoId: string; startSeconds?: number }) => void;
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  getCurrentTime: () => number;
+  getDuration: () => number;
+  getPlayerState: () => number;
+  destroy: () => void;
+}
 
 export default function Home() {
   const [activeView, setActiveView] = useState<ViewType>("home");
@@ -20,20 +32,12 @@ export default function Home() {
   const [audioProgress, setAudioProgress] = useState(0);
   const [audioDuration, setAudioDuration] = useState(0);
   const [playerClosing, setPlayerClosing] = useState(false);
-  const [ytVideoId, setYtVideoId] = useState<string | null>(null);
   const cardRegistry = useRef<Map<string, CardData>>(new Map());
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const ytIframeRef = useRef<HTMLIFrameElement | null>(null);
-  const ytElapsedRef = useRef(0);
-  const ytIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const ytSavedVideoId = useRef<string | null>(null);
 
-  const clearYtInterval = useCallback(() => {
-    if (ytIntervalRef.current) {
-      clearInterval(ytIntervalRef.current);
-      ytIntervalRef.current = null;
-    }
-  }, []);
+  // YouTube IFrame API player
+  const ytPlayerRef = useRef<YTPlayer | null>(null);
+  const ytPlayerReady = useRef(false);
+  const ytProgressInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const registerCards = useCallback((cards: CardData[]) => {
     for (const c of cards) {
@@ -41,19 +45,58 @@ export default function Home() {
     }
   }, []);
 
-  // Synthetic elapsed-time tracker for YouTube playback
+  // Initialize YouTube player once
   useEffect(() => {
-    if (isPlaying && nowPlayingCard?.source === "youtube") {
-      clearYtInterval();
-      ytIntervalRef.current = setInterval(() => {
-        ytElapsedRef.current += 1;
-        setAudioProgress(ytElapsedRef.current);
-      }, 1000);
-    } else {
-      clearYtInterval();
+    const initYT = async () => {
+      try {
+        const player = await createPlayer(
+          "yt-player-target",
+          (state: number) => {
+            if (state === YT_STATE.ENDED) {
+              setIsPlaying(false);
+              setPlayingId(null);
+              setAudioProgress(0);
+              stopYtProgress();
+            }
+          }
+        );
+        ytPlayerRef.current = player;
+        ytPlayerReady.current = true;
+      } catch (e) {
+        console.error("YT player init failed:", e);
+      }
+    };
+    initYT();
+
+    return () => {
+      stopYtProgress();
+      if (ytPlayerRef.current) {
+        try { ytPlayerRef.current.destroy(); } catch { /* ignore */ }
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const stopYtProgress = useCallback(() => {
+    if (ytProgressInterval.current) {
+      clearInterval(ytProgressInterval.current);
+      ytProgressInterval.current = null;
     }
-    return () => clearYtInterval();
-  }, [isPlaying, nowPlayingCard?.source, nowPlayingCard?.id, clearYtInterval]);
+  }, []);
+
+  const startYtProgress = useCallback(() => {
+    stopYtProgress();
+    ytProgressInterval.current = setInterval(() => {
+      if (ytPlayerRef.current && ytPlayerReady.current) {
+        try {
+          const t = ytPlayerRef.current.getCurrentTime();
+          const d = ytPlayerRef.current.getDuration();
+          setAudioProgress(t);
+          if (d > 0) setAudioDuration(d);
+        } catch { /* player not ready */ }
+      }
+    }, 250);
+  }, [stopYtProgress]);
 
   const handlePlay = useCallback((id: string) => {
     const card = cardRegistry.current.get(id);
@@ -62,37 +105,14 @@ export default function Home() {
     setPlayingId(id);
     setIsPlaying(true);
     setAudioProgress(0);
-    setAudioDuration(0);
+    setAudioDuration(card.duration || 0);
     setNowPlayingCard(card);
 
-    if (card.source === "youtube" && card.videoId) {
-      // YouTube — use hidden persistent iframe
-      ytElapsedRef.current = 0;
-      ytSavedVideoId.current = null;
-      setAudioDuration(card.duration || 0);
-      setYtVideoId(card.videoId);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.removeAttribute("src");
-        audioRef.current.load();
-      }
-    } else if (card.source === "spotify" && card.previewUrl && audioRef.current) {
-      // Spotify — use persistent audio element
-      setYtVideoId(null);
-      const audio = audioRef.current;
-      audio.src = card.previewUrl;
-      audio.load();
-      audio.play().catch(() => {});
-    } else {
-      // No preview — stop everything
-      setYtVideoId(null);
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.removeAttribute("src");
-        audioRef.current.load();
-      }
+    if (card.videoId && ytPlayerRef.current && ytPlayerReady.current) {
+      ytPlayerRef.current.loadVideoById({ videoId: card.videoId });
+      startYtProgress();
     }
-  }, []);
+  }, [startYtProgress]);
 
   const toggleSave = useCallback((id: string) => {
     setSavedIds((prev) => {
@@ -114,48 +134,29 @@ export default function Home() {
 
   const handleTogglePlay = useCallback(() => {
     if (isPlaying) {
-      // Pause
-      if (audioRef.current && audioRef.current.src) {
-        audioRef.current.pause();
-      }
-      // YouTube: kill playback by clearing iframe src, save video ID for resume
-      if (ytVideoId && ytIframeRef.current) {
-        ytSavedVideoId.current = ytVideoId;
-        ytIframeRef.current.src = "";
+      if (ytPlayerRef.current) {
+        ytPlayerRef.current.pauseVideo();
+        stopYtProgress();
       }
       setPlayingId(null);
       setIsPlaying(false);
     } else if (nowPlayingCard) {
-      // Resume
       setPlayingId(nowPlayingCard.id);
       setIsPlaying(true);
-      if (audioRef.current && audioRef.current.src) {
-        audioRef.current.play().catch(() => {});
-      }
-      // YouTube: restore iframe src with start= to resume from correct position
-      if (ytSavedVideoId.current && ytIframeRef.current) {
-        const startSeconds = Math.floor(ytElapsedRef.current);
-        ytIframeRef.current.src = `https://www.youtube.com/embed/${ytSavedVideoId.current}?autoplay=1&enablejsapi=1&rel=0&start=${startSeconds}`;
-        ytSavedVideoId.current = null;
+      if (ytPlayerRef.current) {
+        ytPlayerRef.current.playVideo();
+        startYtProgress();
       }
     }
-  }, [isPlaying, nowPlayingCard, ytVideoId]);
+  }, [isPlaying, nowPlayingCard, startYtProgress, stopYtProgress]);
 
   const handleClosePlayer = useCallback(() => {
     setPlayerClosing(true);
     setTimeout(() => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.removeAttribute("src");
-        audioRef.current.load();
+      if (ytPlayerRef.current) {
+        try { ytPlayerRef.current.pauseVideo(); } catch { /* ignore */ }
       }
-      if (ytIframeRef.current) {
-        ytIframeRef.current.src = "";
-      }
-      clearYtInterval();
-      ytElapsedRef.current = 0;
-      ytSavedVideoId.current = null;
-      setYtVideoId(null);
+      stopYtProgress();
       setPlayingId(null);
       setIsPlaying(false);
       setNowPlayingCard(null);
@@ -163,10 +164,9 @@ export default function Home() {
       setAudioDuration(0);
       setPlayerClosing(false);
     }, 300);
-  }, [clearYtInterval]);
+  }, [stopYtProgress]);
 
   const handleViewChange = useCallback((view: ViewType) => {
-    // Audio persists across view switches (Spotify via <audio>, YouTube via hidden iframe)
     setActiveView(view);
   }, []);
 
@@ -181,35 +181,12 @@ export default function Home() {
   }, [nowPlayingCard]);
 
   const handleSeek = useCallback((seconds: number) => {
-    if (nowPlayingCard?.source === "youtube" && ytIframeRef.current && ytVideoId) {
-      // YouTube: reload iframe with start= parameter
-      const startSeconds = Math.floor(seconds);
-      ytIframeRef.current.src = `https://www.youtube.com/embed/${ytVideoId}?autoplay=1&enablejsapi=1&rel=0&start=${startSeconds}`;
-      ytElapsedRef.current = seconds;
+    if (ytPlayerRef.current) {
+      ytPlayerRef.current.seekTo(seconds, true);
       setAudioProgress(seconds);
-    } else if (audioRef.current && audioRef.current.duration) {
-      audioRef.current.currentTime = seconds;
-      setAudioProgress(seconds);
-    }
-  }, [nowPlayingCard?.source, ytVideoId]);
-
-  // Audio element event handlers
-  const handleTimeUpdate = useCallback(() => {
-    if (audioRef.current) {
-      setAudioProgress(audioRef.current.currentTime);
-      setAudioDuration(audioRef.current.duration || 0);
     }
   }, []);
 
-  const handleAudioEnded = useCallback(() => {
-    setIsPlaying(false);
-    setPlayingId(null);
-    setAudioProgress(0);
-  }, []);
-
-  const activeSource = "youtube";
-
-  // Calculate top padding: banner + header + player (when active)
   const hasPlayer = !!nowPlayingCard && !playerClosing;
 
   return (
@@ -217,22 +194,8 @@ export default function Home() {
       className="layout-shift min-h-screen bg-[var(--bg)] lg:ml-[var(--sidebar-width)]"
       data-player={hasPlayer ? "true" : "false"}
     >
-      {/* Persistent audio element — survives view switches */}
-      <audio
-        ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={handleAudioEnded}
-        preload="none"
-      />
-
-      {/* Persistent hidden YouTube iframe — always rendered, src toggled */}
-      <iframe
-        ref={ytIframeRef}
-        src={ytVideoId ? `https://www.youtube.com/embed/${ytVideoId}?autoplay=1&enablejsapi=1&rel=0` : ""}
-        allow="autoplay; encrypted-media"
-        className="fixed w-px h-px opacity-0 pointer-events-none"
-        style={{ top: 0, left: 0 }}
-      />
+      {/* Hidden div for YouTube IFrame API player */}
+      <div id="yt-player-target" className="fixed w-px h-px opacity-0 pointer-events-none" style={{ top: 0, left: 0 }} />
 
       <Sidebar
         activeView={activeView}
@@ -251,7 +214,6 @@ export default function Home() {
           onToggleSave={toggleSave}
           onToggleLike={toggleLike}
           activeGenre={activeGenre}
-          activeSource={activeSource}
           onCardsLoaded={registerCards}
         />
       )}
@@ -293,7 +255,6 @@ export default function Home() {
           onToggleSave={toggleSave}
           onToggleLike={toggleLike}
           activeGenre={activeGenre}
-          activeSource={activeSource}
           onCardsLoaded={registerCards}
         />
       )}

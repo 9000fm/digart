@@ -44,18 +44,12 @@ export default function MusicCard({
 
 
   const handlePlay = () => {
-    if (card.source === "youtube" && card.videoId) {
+    if (card.videoId) {
       onPlay();
       return;
     }
-
-    if (!card.previewUrl) {
-      if (card.spotifyUrl) window.open(card.spotifyUrl, "_blank");
-      return;
-    }
-
-    // Spotify preview — parent handles audio
-    onPlay();
+    // No video — open YouTube link
+    if (card.youtubeUrl) window.open(card.youtubeUrl, "_blank");
   };
 
   return (
@@ -97,7 +91,7 @@ export default function MusicCard({
             ? "bg-orange-500 text-white font-bold shadow-sm"
             : "bg-black/70 text-white backdrop-blur-sm"
         }`}>
-          {card.source === "spotify" ? `Pop ${card.viewCount}` : formatViewCount(card.viewCount)}
+          {formatViewCount(card.viewCount)}
         </span>
       )}
 

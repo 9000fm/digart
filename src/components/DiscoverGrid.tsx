@@ -15,7 +15,6 @@ interface DiscoverGridProps {
   onToggleSave: (id: string) => void;
   onToggleLike: (id: string) => void;
   activeGenre: number;
-  activeSource: string;
   onCardsLoaded?: (cards: CardData[]) => void;
 }
 
@@ -29,7 +28,6 @@ export default function DiscoverGrid({
   onToggleSave,
   onToggleLike,
   activeGenre,
-  activeSource,
   onCardsLoaded,
 }: DiscoverGridProps) {
   const [cards, setCards] = useState<CardData[]>([]);
@@ -39,7 +37,7 @@ export default function DiscoverGrid({
   const pageRef = useRef(0);
 
   const fetchCards = useCallback(
-    async (genreIndex: number, source: string, append = false) => {
+    async (genreIndex: number, append = false) => {
       if (append) setLoadingMore(true);
       else setLoading(true);
 
@@ -47,7 +45,7 @@ export default function DiscoverGrid({
         const genres = GENRE_PRESETS[genreIndex].genres.join(",");
         const offset = append ? pageRef.current * 30 : 0;
         const res = await fetch(
-          `/api/discover?genres=${genres}&limit=30&offset=${offset}&source=${source}`
+          `/api/discover?limit=30&offset=${offset}`
         );
         const data = await res.json();
         const newCards: CardData[] = data.cards || [];
@@ -75,8 +73,8 @@ export default function DiscoverGrid({
   );
 
   useEffect(() => {
-    fetchCards(activeGenre, activeSource);
-  }, [activeGenre, activeSource, fetchCards]);
+    fetchCards(activeGenre);
+  }, [activeGenre, fetchCards]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -87,7 +85,7 @@ export default function DiscoverGrid({
           !loadingMore &&
           cards.length > 0
         ) {
-          fetchCards(activeGenre, activeSource, true);
+          fetchCards(activeGenre, true);
         }
       },
       { rootMargin: "400px" }
@@ -98,10 +96,10 @@ export default function DiscoverGrid({
     return () => {
       if (el) observer.unobserve(el);
     };
-  }, [activeGenre, activeSource, loading, loadingMore, cards.length, fetchCards]);
+  }, [activeGenre, loading, loadingMore, cards.length, fetchCards]);
 
   const shareCard = async (card: CardData) => {
-    const url = card.spotifyUrl || card.youtubeUrl || "";
+    const url = card.youtubeUrl || "";
     if (navigator.share) {
       await navigator.share({
         title: `${card.name} — ${card.artist}`,
