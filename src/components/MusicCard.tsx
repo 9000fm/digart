@@ -6,14 +6,13 @@ import type { CardData } from "@/lib/types";
 
 interface MusicCardProps {
   card: CardData;
-  liked?: boolean;
   saved: boolean;
   isPlaying: boolean;
   isTop10?: boolean;
   onPlay: () => void;
-  onLike?: () => void;
   onSave: () => void;
   onShare?: () => void;
+  isAuthenticated?: boolean;
 }
 
 function formatViewCount(count: number): string {
@@ -39,35 +38,27 @@ export default function MusicCard({
   isTop10 = false,
   onPlay,
   onSave,
+  isAuthenticated = true,
 }: MusicCardProps) {
   const [imgError, setImgError] = useState(false);
 
 
   const handlePlay = () => {
-    if (card.source === "youtube" && card.videoId) {
-      onPlay();
-      return;
-    }
-
-    if (!card.previewUrl) {
-      if (card.spotifyUrl) window.open(card.spotifyUrl, "_blank");
-      return;
-    }
-
-    // Spotify preview — parent handles audio
     onPlay();
   };
 
   return (
-    <div data-card-id={card.id} className={`group relative aspect-square overflow-hidden cursor-pointer bg-[var(--bg-alt)] rounded-md transition-all duration-200 hover:ring-1 hover:ring-[var(--text-muted)]/20`} style={{ isolation: "isolate" }}>
+    <div data-card-id={card.id} className={`group relative aspect-square overflow-hidden cursor-pointer bg-[var(--bg-alt)] rounded-2xl transition-all duration-200 hover:ring-1 hover:ring-[var(--text-muted)]/20`} style={{ isolation: "isolate" }}>
       {/* Cover image or fallback */}
       {imgError ? (
         <div
           className="absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg-alt)]"
           onClick={handlePlay}
         >
-          <svg className="w-10 h-10 text-[var(--text-muted)] mb-2" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.34A1 1 0 0017.93 1.4L9.428 3.97A1 1 0 008.5 4.93V14" />
+          <svg className="w-10 h-10 text-[var(--text-muted)] mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5}>
+            <circle cx="12" cy="12" r="10" />
+            <circle cx="12" cy="12" r="3" />
+            <circle cx="12" cy="12" r="6.5" strokeDasharray="2 3" />
           </svg>
           <span className="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-widest">DIGEART</span>
         </div>
@@ -97,22 +88,20 @@ export default function MusicCard({
             ? "bg-orange-500 text-white font-bold shadow-sm"
             : "bg-black/70 text-white backdrop-blur-sm"
         }`}>
-          {card.source === "spotify" ? `Pop ${card.viewCount}` : formatViewCount(card.viewCount)}
+          {formatViewCount(card.viewCount)}
         </span>
       )}
 
-      {/* Center EQ — always visible when playing, hidden on hover (stop button takes over) */}
-      {isPlaying && (
-        <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-200">
-          <div className="flex items-end gap-[3px] bg-black/60 rounded-lg px-3 py-2 h-10 backdrop-blur-sm">
-            <span className="w-[3px] bg-white eq-bar rounded-full" style={{ animationDelay: "0ms" }} />
-            <span className="w-[3px] bg-white eq-bar rounded-full" style={{ animationDelay: "150ms" }} />
-            <span className="w-[3px] bg-white eq-bar rounded-full" style={{ animationDelay: "300ms" }} />
-            <span className="w-[3px] bg-white eq-bar rounded-full" style={{ animationDelay: "100ms" }} />
-            <span className="w-[3px] bg-white eq-bar rounded-full" style={{ animationDelay: "220ms" }} />
-          </div>
+      {/* Center EQ — wind-down animation on stop */}
+      <div className={`absolute inset-0 flex items-center justify-center z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-200 ${isPlaying ? "opacity-100" : "opacity-0"}`} style={{ transitionDelay: isPlaying ? "0ms" : "350ms" }}>
+        <div className="flex items-end gap-[3px] bg-black/60 rounded-lg px-3 py-2 h-10 backdrop-blur-sm">
+          <span className={`w-[3px] bg-white rounded-full transition-[height] duration-300 ease-out ${isPlaying ? "eq-bar" : "eq-bar-idle"}`} style={{ animationDelay: "0ms", transitionDelay: isPlaying ? "0ms" : "0ms" }} />
+          <span className={`w-[3px] bg-white rounded-full transition-[height] duration-300 ease-out ${isPlaying ? "eq-bar" : "eq-bar-idle"}`} style={{ animationDelay: "150ms", transitionDelay: isPlaying ? "0ms" : "60ms" }} />
+          <span className={`w-[3px] bg-white rounded-full transition-[height] duration-300 ease-out ${isPlaying ? "eq-bar" : "eq-bar-idle"}`} style={{ animationDelay: "300ms", transitionDelay: isPlaying ? "0ms" : "120ms" }} />
+          <span className={`w-[3px] bg-white rounded-full transition-[height] duration-300 ease-out ${isPlaying ? "eq-bar" : "eq-bar-idle"}`} style={{ animationDelay: "100ms", transitionDelay: isPlaying ? "0ms" : "180ms" }} />
+          <span className={`w-[3px] bg-white rounded-full transition-[height] duration-300 ease-out ${isPlaying ? "eq-bar" : "eq-bar-idle"}`} style={{ animationDelay: "220ms", transitionDelay: isPlaying ? "0ms" : "240ms" }} />
         </div>
-      )}
+      </div>
 
       {/* Hover overlay */}
       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none" />
@@ -127,30 +116,29 @@ export default function MusicCard({
             isPlaying ? "text-white" : "text-white hover:text-zinc-300"
           }`}
         >
-          {isPlaying ? "■" : "▶"}
+          {isPlaying ? "❚❚" : "▶"}
         </span>
       </div>
 
-      {/* Save button — bottom right */}
+      {/* Save/Like button — bottom right */}
       <button
         onClick={(e) => {
           e.stopPropagation();
-          onSave();
+          if (isAuthenticated) onSave();
         }}
-        className={`absolute bottom-2 right-2 w-11 h-11 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 bg-black/70 text-white hover:bg-black/90`}
+        title={isAuthenticated ? undefined : "Log in to save"}
+        className={`absolute bottom-2 right-2 w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 bg-black/70 text-white hover:bg-black/90 ${
+          !isAuthenticated ? "opacity-50! cursor-default" : ""
+        }`}
       >
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth={saved ? 0 : 2}>
-          {saved ? (
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
-          )}
+        <svg className="w-4 h-4" viewBox="0 0 24 24" fill={saved ? "currentColor" : "none"} stroke="currentColor" strokeWidth={saved ? 0 : 2} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
         </svg>
       </button>
 
 
       {/* Track info — bottom */}
-      <div className="absolute bottom-0 left-0 right-[48px] px-2.5 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="absolute bottom-0 left-0 right-10 px-2.5 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           <p className="font-mono text-sm text-white uppercase truncate leading-tight font-bold drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
             {card.name}
           </p>

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(tail:*)",
+      "Bash(cd:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(head:*)",
+      "Bash(cd \"E:\\\\WEB+DESIGN\\\\_ACTIVE\\\\digeart\" && npm run build 2>&1)",
+      "WebSearch",
+      "WebFetch(domain:fonts.google.com)",
+      "Bash(cd /e/WEB+DESIGN/_ACTIVE/digeart && node -e \"const f = require\\('next/font/google'\\); console.log\\(Object.keys\\(f\\).filter\\(k => k.toLowerCase\\(\\).includes\\('shoulder'\\)\\).join\\('\\\\n'\\)\\)\" 2>&1)",
+      "mcp__ide__getDiagnostics",
+      "WebFetch(domain:www.htmhell.dev)",
+      "WebFetch(domain:frontendhack.com)",
+      "WebFetch(domain:codepen.io)",
+      "Bash(cd E:\\\\WEB+DESIGN\\\\_ACTIVE\\\\digeart:*)"
+    ]
+  }
+}

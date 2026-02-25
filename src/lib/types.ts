@@ -6,11 +6,10 @@ export interface CardData {
   image: string;
   imageSmall: string;
   previewUrl: string | null;
-  spotifyUrl: string | null;
   youtubeUrl: string | null;
   videoId: string | null;
   uri: string | null;
-  source: "spotify" | "youtube";
+  source: "youtube";
   bpm: number | null;
   energy: number | null;
   danceability: number | null;

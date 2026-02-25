@@ -180,7 +180,7 @@ export async function getChannelUploads(
     for (const v of videos) {
       const d = details.get(v.id);
       if (d) {
-        if (withDuration) v.duration = d.duration;
+        v.duration = d.duration;
         v.viewCount = d.viewCount;
       }
     }
@@ -214,7 +214,7 @@ export function parseVideoTitle(
 }
 
 function videoThumbnail(videoId: string): string {
-  return `https://i.ytimg.com/vi/${videoId}/sddefault.jpg`;
+  return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 }
 
 function videoToCard(v: YouTubeVideo): CardData {
@@ -227,7 +227,6 @@ function videoToCard(v: YouTubeVideo): CardData {
     image: videoThumbnail(v.id),
     imageSmall: v.thumbnail,
     previewUrl: null,
-    spotifyUrl: null,
     youtubeUrl: `https://www.youtube.com/watch?v=${v.id}`,
     videoId: v.id,
     uri: null,
@@ -244,7 +243,7 @@ function videoToCard(v: YouTubeVideo): CardData {
 
 /**
  * Build the full discover pool: ALL approved channels × 20 uploads each.
- * Cached for 1 hour. Returns shuffled pool stored in cache for stable pagination.
+ * Cached for 1 hour. Returns RAW unshuffled pool — shuffling happens per-call.
  */
 async function getDiscoverPool(): Promise<CardData[]> {
   const cacheKey = "yt-discover-pool-v3";
@@ -281,10 +280,9 @@ async function getDiscoverPool(): Promise<CardData[]> {
     })
     .map(videoToCard);
 
-  // Shuffle once and cache — pagination reads slices of this shuffled pool
-  const shuffled = pool.sort(() => Math.random() - 0.5);
-  cacheSet(cacheKey, shuffled);
-  return shuffled;
+  // Cache raw unshuffled pool
+  cacheSet(cacheKey, pool);
+  return pool;
 }
 
 export async function discoverFromYouTube(limit = 30, offset = 0): Promise<CardData[]> {
@@ -293,23 +291,19 @@ export async function discoverFromYouTube(limit = 30, offset = 0): Promise<CardD
   const pool = await getDiscoverPool();
   if (pool.length === 0) return [];
 
-  // Wrap around when offset exceeds pool size (infinite loop)
-  const cards: CardData[] = [];
-  for (let i = 0; i < limit; i++) {
-    const idx = (offset + i) % pool.length;
-    cards.push(pool[idx]);
-  }
-  return cards;
+  // Shuffle a copy each call for fresh order
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, limit);
 }
 
 /** Discover long-form mixes (DJ sets, live recordings, podcasts >40min) */
-export async function discoverMixes(limit = 20): Promise<CardData[]> {
+export async function discoverMixes(limit = 20, offset = 0): Promise<CardData[]> {
   if (approvedChannels.length === 0) return [];
 
   const cacheKey = "yt-mixes-pool";
   let pool = cacheGet<CardData[]>(cacheKey);
 
-  if (!pool || pool.length < limit) {
+  if (!pool || pool.length === 0) {
     // Prefer channels with DJ/mix labels, but include all
     const allApproved = [...approvedChannels] as { name: string; id: string; labels?: string[] }[];
     const mixChannels = allApproved.filter(
@@ -336,6 +330,7 @@ export async function discoverMixes(limit = 20): Promise<CardData[]> {
     }
 
     // Filter for long-form content (>40 minutes = 2400 seconds)
+    // Shuffle once on pool creation for stable pagination
     pool = allVideos
       .filter((v) => {
         if (v.title === "Private video" || v.title === "Deleted video") return false;
@@ -344,25 +339,25 @@ export async function discoverMixes(limit = 20): Promise<CardData[]> {
         if (lower.includes("#shorts") || lower.includes("#short")) return false;
         return true;
       })
-      .map(videoToCard);
+      .map(videoToCard)
+      .sort(() => Math.random() - 0.5);
 
     cacheSet(cacheKey, pool);
   }
 
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, limit);
+  return pool.slice(offset, offset + limit);
 }
 
 /** Discover short-form samples/tracks from niche-labeled channels (<15min) */
 const SAMPLE_LABELS = ["EBM", "Hip Hop", "Jazz", "Reggae", "Pop", "World", "Experimental", "Samples", "Ambient", "Funk", "Disco"];
 
-export async function discoverSamples(limit = 30): Promise<CardData[]> {
+export async function discoverSamples(limit = 30, offset = 0): Promise<CardData[]> {
   if (approvedChannels.length === 0) return [];
 
   const cacheKey = "yt-samples-pool";
   let pool = cacheGet<CardData[]>(cacheKey);
 
-  if (!pool || pool.length < limit) {
+  if (!pool || pool.length === 0) {
     const allApproved = [...approvedChannels] as { name: string; id: string; labels?: string[] }[];
     const sampleChannelPool = allApproved.filter(
       (c) => c.labels?.some((l) => SAMPLE_LABELS.some((sl) => l.toLowerCase() === sl.toLowerCase()))
@@ -383,6 +378,7 @@ export async function discoverSamples(limit = 30): Promise<CardData[]> {
       }
     }
 
+    // Shuffle once on pool creation for stable pagination
     pool = allVideos
       .filter((v) => {
         if (v.title === "Private video" || v.title === "Deleted video") return false;
@@ -395,11 +391,11 @@ export async function discoverSamples(limit = 30): Promise<CardData[]> {
         if (isNonMusic(v.title)) return false;
         return true;
       })
-      .map(videoToCard);
+      .map(videoToCard)
+      .sort(() => Math.random() - 0.5);
 
     cacheSet(cacheKey, pool);
   }
 
-  const shuffledResult = [...pool].sort(() => Math.random() - 0.5);
-  return shuffledResult.slice(0, limit);
+  return pool.slice(offset, offset + limit);
 }

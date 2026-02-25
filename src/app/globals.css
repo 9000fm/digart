@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --sidebar-width: 100px;
-  --banner-height: 32px;
+  --sidebar-width: 80px;
+  --banner-height: 36px;
   --header-height: 68px;
   --header-height-mobile: 56px;
   --nav-height-mobile: 48px;
-  --player-height: 120px;
+  --player-height: 116px;
 
   /* Light theme (default) */
   --bg: #ffffff;
@@ -61,17 +61,36 @@ body {
   background: transparent;
 }
 .sidebar-scroll::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: var(--border);
 }
 .sidebar-scroll {
   scrollbar-width: thin;
-  scrollbar-color: #3f3f46 transparent;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Locate button Y-axis spin */
+@keyframes locate-spin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
 }
 
 /* Scrolling marquee banner */
 .marquee-track {
-  animation: marquee-scroll 60s linear infinite;
+  animation: marquee-scroll 50s linear infinite;
   will-change: transform;
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.marquee-hue:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
 }
 
 @keyframes marquee-scroll {
@@ -112,6 +131,11 @@ body {
 
 .eq-bar {
   animation: eq-bar 0.8s ease-in-out infinite;
+}
+
+.eq-bar-idle {
+  height: 0 !important;
+  animation: none !important;
 }
 
 /* 7 unique EQ keyframes for now-playing banner */
@@ -155,8 +179,30 @@ body {
 .eq-bar-3 { animation: eq-3 1.0s ease-in-out infinite; }
 .eq-bar-4 { animation: eq-4 0.75s ease-in-out infinite; }
 .eq-bar-5 { animation: eq-5 0.55s ease-in-out infinite; }
+
 .eq-bar-6 { animation: eq-6 0.9s ease-in-out infinite; }
 .eq-bar-7 { animation: eq-7 0.7s ease-in-out infinite; }
+
+/* Locate failed — shake the locate button */
+@keyframes locate-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-3px); }
+  40%, 80% { transform: translateX(3px); }
+}
+.locate-pulse {
+  animation: locate-shake 0.4s ease-out;
+}
+
+/* Locate success — soft opacity flash */
+@keyframes locate-flash {
+  0%, 100% { opacity: 1; }
+  30% { opacity: 0.3; }
+  60% { opacity: 1; }
+  80% { opacity: 0.35; }
+}
+.locate-highlight {
+  animation: locate-flash 1.6s ease-in-out;
+}
 
 /* Now-playing banner scrolling text */
 .nowplaying-track {
@@ -166,36 +212,114 @@ body {
 
 /* Responsive player height */
 @media (min-width: 640px) {
-  :root { --player-height: 96px; }
+  :root { --player-height: 92px; }
 }
 
-/* Player entrance: slide up with spring overshoot */
-@keyframes player-enter {
-  0%   { transform: translateY(100%); opacity: 0; }
-  60%  { transform: translateY(-4px); opacity: 1; }
-  80%  { transform: translateY(2px); }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-/* Player exit: smooth drop away */
-@keyframes player-exit {
-  0%   { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(100%); opacity: 0; }
-}
-
-.player-enter {
-  animation: player-enter 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-.player-exit {
-  animation: player-exit 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-/* Now-playing banner transitions */
+/* Now-playing banner transitions (enter/exit handled by Framer Motion) */
 .player-banner {
   transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  overflow: visible;
+  overflow: hidden;
   z-index: 30;
 }
+
+/* Marquee banner — light: white bg + dark text; dark: accent bar */
+.marquee-hue {
+  background: var(--bg);
+  color: var(--text);
+}
+[data-theme="dark"] .marquee-hue {
+  background: var(--bg-alt);
+  color: var(--text);
+}
+
+/* Volume slider — Spotify-style: filled track + thumb on hover */
+.volume-slider {
+  --vol-fill: var(--text-muted);
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  transition: height 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group\/vol:hover .volume-slider {
+  --vol-fill: var(--text);
+  height: 6px;
+  border-radius: 3px;
+}
+/* WebKit */
+.volume-slider::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 100%;
+  border-radius: inherit;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text);
+  margin-top: -4px;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1), margin-top 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.group\/vol:hover .volume-slider::-webkit-slider-thumb {
+  opacity: 1;
+  transform: scale(1);
+  margin-top: -3px;
+}
+.volume-slider:active::-webkit-slider-thumb {
+  opacity: 1;
+  transform: scale(1);
+}
+/* Firefox */
+.volume-slider::-moz-range-track {
+  background: transparent;
+  height: 100%;
+  border-radius: inherit;
+}
+.volume-slider::-moz-range-progress {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--vol-fill);
+}
+.volume-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--text);
+  border: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+.group\/vol:hover .volume-slider::-moz-range-thumb {
+  opacity: 1;
+  transform: scale(1);
+}
+.volume-slider:active::-moz-range-thumb {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Diagonal hatch separator — close gutter */
+.hatch-separator {
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 2px,
+    var(--border) 2px,
+    var(--border) 3px
+  );
+  opacity: 0.5;
+}
+
+/* Album art track-change animation */
+@keyframes art-fade-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-art-in { animation: art-fade-in 200ms ease-out; }
 
 /* Smooth layout shift when player opens/closes */
 .layout-shift {

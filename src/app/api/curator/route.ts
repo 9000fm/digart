@@ -24,6 +24,7 @@ function writeJson(filePath: string, data: unknown) {
 }
 
 export async function GET(req: NextRequest) {
+  const mode = req.nextUrl.searchParams.get("mode");
   const rescan = req.nextUrl.searchParams.get("rescan");
   const rescanChannelId = req.nextUrl.searchParams.get("channelId");
 
@@ -34,6 +35,42 @@ export async function GET(req: NextRequest) {
   const unsub: { name: string; id: string }[] = readJson(UNSUB_PATH);
   const starred: { name: string; id: string }[] = readJson(STARRED_PATH);
   const skipped: string[] = readJson(SKIPPED_PATH);
+
+  // Return stats for the stats bar
+  if (mode === "stats") {
+    return NextResponse.json({
+      imported: allChannels.length,
+      approved: approved.length,
+      skipped: skipped.length,
+      rejected: rejected.length,
+      unsub: unsub.length,
+      starred: starred.length,
+      pending: Math.max(0, allChannels.length - approved.length - rejected.length - unsub.length),
+    });
+  }
+
+  // Return full approved list for the Approved Browser
+  if (mode === "approved") {
+    const starredIds = new Set(starred.map((c) => c.id));
+    return NextResponse.json({
+      channels: approved.map((c) => ({
+        ...c,
+        isStarred: starredIds.has(c.id),
+      })),
+    });
+  }
+
+  // Return skipped channels with names for Manage tab
+  if (mode === "skipped") {
+    const skippedChannels = allChannels.filter((c) => skipped.includes(c.id));
+    return NextResponse.json({ channels: skippedChannels });
+  }
+
+  // Return untagged approved channels for Manage tab
+  if (mode === "untagged") {
+    const untagged = approved.filter((c) => !c.labels || c.labels.length === 0);
+    return NextResponse.json({ channels: untagged });
+  }
 
   const approvedIds = new Set(approved.map((c) => c.id));
   const rejectedIds = new Set(rejected);
@@ -202,6 +239,61 @@ export async function PUT(req: NextRequest) {
     // Clear all skipped channels
     writeJson(SKIPPED_PATH, []);
     return NextResponse.json({ ok: true, cleared: true });
+  }
+
+  // Un-skip a single channel (move back to review queue)
+  if (body.action === "unskip" && body.channelId) {
+    const skipped: string[] = readJson(SKIPPED_PATH);
+    const idx = skipped.indexOf(body.channelId);
+    if (idx !== -1) {
+      skipped.splice(idx, 1);
+      writeJson(SKIPPED_PATH, skipped);
+    }
+    return NextResponse.json({ ok: true, skippedCount: skipped.length });
+  }
+
+  // Change decision on an approved channel (reject or unsubscribe)
+  if (body.action === "changeDecision" && body.channelId && body.newDecision) {
+    const approved: { name: string; id: string; labels?: string[] }[] = readJson(APPROVED_PATH);
+    const approvedIdx = approved.findIndex((c) => c.id === body.channelId);
+    if (approvedIdx !== -1) {
+      approved.splice(approvedIdx, 1);
+      writeJson(APPROVED_PATH, approved);
+    }
+
+    const starred: { name: string; id: string }[] = readJson(STARRED_PATH);
+    const starIdx = starred.findIndex((c) => c.id === body.channelId);
+    if (starIdx !== -1) {
+      starred.splice(starIdx, 1);
+      writeJson(STARRED_PATH, starred);
+    }
+
+    const rejected: string[] = readJson(REJECTED_PATH);
+    if (!rejected.includes(body.channelId)) {
+      rejected.push(body.channelId);
+      writeJson(REJECTED_PATH, rejected);
+    }
+
+    if (body.newDecision === "unsubscribe") {
+      const unsub: { name: string; id: string }[] = readJson(UNSUB_PATH);
+      if (!unsub.some((c) => c.id === body.channelId)) {
+        unsub.push({ name: body.channelName || "", id: body.channelId });
+        writeJson(UNSUB_PATH, unsub);
+      }
+    }
+
+    return NextResponse.json({ ok: true });
+  }
+
+  // Update labels on an approved channel
+  if (body.action === "updateLabels" && body.channelId && body.labels) {
+    const approved: { name: string; id: string; labels?: string[] }[] = readJson(APPROVED_PATH);
+    const ch = approved.find((c) => c.id === body.channelId);
+    if (ch) {
+      ch.labels = body.labels;
+      writeJson(APPROVED_PATH, approved);
+    }
+    return NextResponse.json({ ok: true });
   }
 
   if (body.channelId) {

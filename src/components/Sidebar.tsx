@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useMemo, type ReactNode } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useState, useEffect, useRef, useCallback, type ReactNode } from "react";
+import SettingsPanel from "./SettingsPanel";
+import AuthButton from "./AuthButton";
 
 const SEARCH_PHRASES = [
   "detroit techno...",
@@ -16,26 +17,27 @@ const SEARCH_PHRASES = [
   "minimal 2007...",
   "rominimal 2008...",
   "dub techno 2000s...",
-  "germany 2000s techno...",
+  "techno 2000s...",
   "miami bass 1989...",
-  "new beat belgium 1989...",
+  "new beat 1989...",
   "ebm 1986...",
   "electroclash 2003...",
   "italo disco 1983...",
   "gabber rotterdam 1995...",
   "goa 1995...",
   "hard trance 1996...",
-  "breakbeat hardcore 1993...",
-  "old school chicago house...",
-  "drum and bass UK...",
-  "electro old school...",
-  "acid house Chicago...",
+  "hardcore 1993...",
+  "chicago house...",
+  "drum & bass...",
+  "electro 80s...",
+  "acid house...",
   "ambient mix...",
   "idm experimental...",
-  "big beat 90s London...",
+  "big beat 90s...",
 ];
 
 const BANNER_PHRASES = [
+  "DIGEART — MUSIC DISCOVERY",
   "DIG DEEPER",
   "SUPERSOUNDS FROM THE UNDERGROUND",
   "SUPPORT LOCAL ARTISTS",
@@ -49,6 +51,13 @@ const BANNER_PHRASES = [
   "REAL MUSIC FOR REAL PEOPLE",
   "UNDERGROUND NEVER DIES",
 ];
+
+const SEPARATOR_ICONS = ["✦", "◇", "⬥", "✧", "◆", "⏣", "✦"];
+
+const BANNER_TEXT = BANNER_PHRASES.map((phrase, i) => {
+  const icon = SEPARATOR_ICONS[i % SEPARATOR_ICONS.length];
+  return `${phrase}     ${icon}     `;
+}).join("");
 
 const GENRE_PRESETS = [
   { label: "All", genres: ["electronic", "house", "techno"] },
@@ -66,7 +75,6 @@ export type ViewType = "home" | "samples" | "mixes" | "saved";
 interface NavItem {
   key: ViewType;
   label: string;
-  // Stroke-only (inactive)
   icon: (active: boolean) => ReactNode;
 }
 
@@ -75,7 +83,7 @@ const NAV_ITEMS: NavItem[] = [
     key: "home",
     label: "For You",
     icon: (active) => (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 2}>
+      <svg className="w-8 h-8" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke="currentColor" strokeWidth={active ? 0 : 2}>
         {active ? (
           <path d="M12 2.1L1 12h3v9h7v-6h2v6h7v-9h3L12 2.1z" />
         ) : (
@@ -89,12 +97,12 @@ const NAV_ITEMS: NavItem[] = [
     label: "Samples",
     icon: (active) =>
       active ? (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
           <path fillRule="evenodd" clipRule="evenodd"
             d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 8a2 2 0 100 4 2 2 0 000-4z" />
         </svg>
       ) : (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
           <circle cx="12" cy="12" r="10" />
           <circle cx="12" cy="12" r="2" />
         </svg>
@@ -105,7 +113,7 @@ const NAV_ITEMS: NavItem[] = [
     label: "Mixes",
     icon: (active) =>
       active ? (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
           <rect x="3" y="10" width="2" height="4" rx="1" />
           <rect x="7" y="6" width="2" height="12" rx="1" />
           <rect x="11" y="4" width="2" height="16" rx="1" />
@@ -113,7 +121,7 @@ const NAV_ITEMS: NavItem[] = [
           <rect x="19" y="7" width="2" height="10" rx="1" />
         </svg>
       ) : (
-        <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+        <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
           <line x1="4" y1="10" x2="4" y2="14" />
           <line x1="8" y1="6" x2="8" y2="18" />
           <line x1="12" y1="4" x2="12" y2="20" />
@@ -126,7 +134,7 @@ const NAV_ITEMS: NavItem[] = [
     key: "saved",
     label: "Saved",
     icon: (active) => (
-      <svg className="w-6 h-6" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke={active ? "none" : "currentColor"} strokeWidth={2}>
+      <svg className="w-8 h-8" viewBox="0 0 24 24" fill={active ? "currentColor" : "none"} stroke={active ? "none" : "currentColor"} strokeWidth={2}>
         {active ? (
           <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
         ) : (
@@ -154,14 +162,13 @@ function randomPhraseIndex(current: number): number {
   return next;
 }
 
-function shuffleArray<T>(arr: T[]): T[] {
-  const shuffled = [...arr];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
-}
+// Gear icon SVG
+const GearIcon = ({ className }: { className?: string }) => (
+  <svg className={className || "w-5 h-5"} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12.22 2h-.44a2 2 0 00-2 2v.18a2 2 0 01-1 1.73l-.43.25a2 2 0 01-2 0l-.15-.08a2 2 0 00-2.73.73l-.22.38a2 2 0 00.73 2.73l.15.1a2 2 0 011 1.72v.51a2 2 0 01-1 1.74l-.15.09a2 2 0 00-.73 2.73l.22.38a2 2 0 002.73.73l.15-.08a2 2 0 012 0l.43.25a2 2 0 011 1.73V20a2 2 0 002 2h.44a2 2 0 002-2v-.18a2 2 0 011-1.73l.43-.25a2 2 0 012 0l.15.08a2 2 0 002.73-.73l.22-.39a2 2 0 00-.73-2.73l-.15-.08a2 2 0 01-1-1.74v-.5a2 2 0 011-1.74l.15-.09a2 2 0 00.73-2.73l-.22-.38a2 2 0 00-2.73-.73l-.15.08a2 2 0 01-2 0l-.43-.25a2 2 0 01-1-1.73V4a2 2 0 00-2-2z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
 
 export default function Sidebar({
   activeView,
@@ -169,24 +176,39 @@ export default function Sidebar({
   activeGenre,
   onGenreChange,
 }: SidebarProps) {
-  const { theme, toggleTheme } = useTheme();
   const [placeholder, setPlaceholder] = useState("");
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
+  const [settingsAnchor, setSettingsAnchor] = useState<DOMRect | null>(null);
+  const gearRef = useRef<HTMLButtonElement>(null);
+  const aboutRef = useRef<HTMLDivElement>(null);
   const phraseIndex = useRef(
     Math.floor(Math.random() * SEARCH_PHRASES.length)
   );
   const charIndex = useRef(0);
   const isDeleting = useRef(false);
 
-  const bannerText = useMemo(() => {
-    const SEPARATORS = ["✦", "◆", "●", "▲", "■", "♦", "◉", "✧", "♫", "◐", "▸"];
-    const shuffled = shuffleArray(BANNER_PHRASES);
-    return shuffled
-      .map((phrase, i) => {
-        const sep = SEPARATORS[Math.floor(Math.random() * SEPARATORS.length)];
-        return i < shuffled.length - 1 ? `${phrase}   ${sep}   ` : phrase;
-      })
-      .join("");
-  }, []);
+  // Close About on outside click or Escape
+  useEffect(() => {
+    if (!showAbout) return;
+    const handleClick = (e: MouseEvent) => {
+      if (aboutRef.current && !aboutRef.current.contains(e.target as Node)) {
+        setShowAbout(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowAbout(false);
+    };
+    const timer = setTimeout(() => {
+      window.addEventListener("mousedown", handleClick);
+      window.addEventListener("keydown", handleKey);
+    }, 100);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [showAbout]);
 
   useEffect(() => {
     const tick = () => {
@@ -216,13 +238,13 @@ export default function Sidebar({
   return (
     <>
       {/* ===== SCROLLING BANNER ===== */}
-      <div className="fixed top-0 left-0 right-0 z-[60] h-[var(--banner-height)] bg-[var(--accent)] text-[var(--accent-text)] overflow-hidden flex items-center">
+      <div className="fixed top-0 left-0 right-0 z-[60] h-[var(--banner-height)] marquee-hue text-[var(--accent-text)] overflow-hidden flex items-center">
         <div className="marquee-track inline-flex whitespace-nowrap">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] shrink-0 px-2">
-            {bannerText}   ✦
+          <span className="font-[family-name:var(--font-banner)] text-[13px] font-bold uppercase tracking-[0.15em] shrink-0 px-2">
+            {BANNER_TEXT}
           </span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em] shrink-0 px-2">
-            {bannerText}   ✦
+          <span aria-hidden="true" className="font-[family-name:var(--font-banner)] text-[13px] font-bold uppercase tracking-[0.15em] shrink-0 px-2">
+            {BANNER_TEXT}
           </span>
         </div>
       </div>
@@ -263,11 +285,7 @@ export default function Sidebar({
         </div>
 
         <div className="shrink-0">
-          <img
-            src="https://api.dicebear.com/7.x/shapes/svg?seed=digeart"
-            alt="User"
-            className="w-11 h-11 rounded-full bg-[var(--bg-alt)]"
-          />
+          <AuthButton />
         </div>
       </header>
 
@@ -279,7 +297,7 @@ export default function Sidebar({
           height: "calc(100vh - var(--banner-height) - var(--header-height))",
         }}
       >
-        <nav className="flex flex-col items-center flex-1 gap-0.5">
+        <nav className="flex flex-col items-center flex-1 gap-8">
           {NAV_ITEMS.map((item) => {
             const isActive = activeView === item.key;
             return (
@@ -302,12 +320,48 @@ export default function Sidebar({
             );
           })}
         </nav>
-        <button
-          onClick={toggleTheme}
-          className="w-14 h-14 flex items-center justify-center rounded-xl text-3xl text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-all duration-200"
-        >
-          {theme === "light" ? "☀" : "☾"}
-        </button>
+        {/* About & Settings */}
+        <div className="flex flex-col items-center gap-4">
+        <div ref={aboutRef} className="relative group/about">
+          <button
+            onClick={() => setShowAbout((v) => !v)}
+            className="w-12 h-12 flex items-center justify-center rounded-xl text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-all duration-200"
+          >
+            <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <circle cx="12" cy="8" r="0.5" fill="currentColor" />
+            </svg>
+          </button>
+          {!showAbout && (
+            <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[10px] whitespace-nowrap opacity-0 pointer-events-none group-hover/about:opacity-100 transition-opacity duration-150 z-50">
+              About
+            </div>
+          )}
+          {showAbout && (
+            <div className="absolute left-full ml-3 bottom-full mb-1 px-4 py-3 bg-[var(--bg)] border border-[var(--border)] rounded-xl shadow-2xl whitespace-nowrap z-50">
+              <p className="font-mono text-xs text-[var(--text)] font-bold">digeart</p>
+              <p className="font-mono text-[10px] text-[var(--text-muted)] mt-0.5">Music discovery for diggers & curators</p>
+              <p className="font-mono text-[10px] text-[var(--text-muted)]">v0.1.0</p>
+            </div>
+          )}
+        </div>
+        <div className="relative group/gear">
+          <button
+            ref={gearRef}
+            onClick={() => {
+              setSettingsAnchor(gearRef.current?.getBoundingClientRect() ?? null);
+              setSettingsOpen(true);
+            }}
+            className="w-12 h-12 flex items-center justify-center rounded-xl text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-all duration-200"
+          >
+            <GearIcon className="w-7 h-7" />
+          </button>
+          <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[10px] whitespace-nowrap opacity-0 pointer-events-none group-hover/gear:opacity-100 transition-opacity duration-150 z-50">
+            Settings
+          </div>
+        </div>
+        </div>
       </aside>
 
       {/* ===== MOBILE: Fixed header bar ===== */}
@@ -340,11 +394,17 @@ export default function Sidebar({
           />
         </div>
         <button
-          onClick={toggleTheme}
-          className="shrink-0 w-11 h-11 flex items-center justify-center rounded-full text-xl text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-colors"
+          onClick={() => {
+            setSettingsAnchor(null);
+            setSettingsOpen(true);
+          }}
+          className="shrink-0 w-9 h-9 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-colors"
         >
-          {theme === "light" ? "☀" : "☾"}
+          <GearIcon className="w-4.5 h-4.5" />
         </button>
+        <div className="shrink-0">
+          <AuthButton />
+        </div>
       </header>
 
       {/* ===== MOBILE: Nav icons below header ===== */}
@@ -370,6 +430,8 @@ export default function Sidebar({
         })}
       </div>
 
+      {/* Settings Panel */}
+      <SettingsPanel open={settingsOpen} onClose={() => setSettingsOpen(false)} anchorRect={settingsAnchor} />
     </>
   );
 }

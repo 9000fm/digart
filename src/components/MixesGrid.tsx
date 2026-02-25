@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import MusicCard from "./MusicCard";
 import type { CardData } from "@/lib/types";
 
@@ -13,6 +13,7 @@ interface MixesGridProps {
   onToggleSave: (id: string) => void;
   onToggleLike: (id: string) => void;
   onCardsLoaded?: (cards: CardData[]) => void;
+  isAuthenticated?: boolean;
 }
 
 export default function MixesGrid({
@@ -24,27 +25,72 @@ export default function MixesGrid({
   onToggleSave,
   onToggleLike,
   onCardsLoaded,
+  isAuthenticated = true,
 }: MixesGridProps) {
   const [cards, setCards] = useState<CardData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const observerRef = useRef<HTMLDivElement | null>(null);
+  const pageRef = useRef(0);
 
-  useEffect(() => {
-    async function fetchMixes() {
-      setLoading(true);
+  const fetchMixes = useCallback(
+    async (append = false) => {
+      if (append) setLoadingMore(true);
+      else setLoading(true);
+
       try {
-        const res = await fetch("/api/mixes");
+        const offset = append ? pageRef.current * 20 : 0;
+        const res = await fetch(`/api/mixes?limit=20&offset=${offset}`);
         const data = await res.json();
-        const loaded = data.cards || [];
-        setCards(loaded);
-        onCardsLoaded?.(loaded);
+        const newCards: CardData[] = data.cards || [];
+        onCardsLoaded?.(newCards);
+
+        if (append) {
+          setCards((prev) => {
+            const existingIds = new Set(prev.map((c) => c.id));
+            const unique = newCards.filter((c) => !existingIds.has(c.id));
+            return [...prev, ...unique];
+          });
+        } else {
+          setCards(newCards);
+          pageRef.current = 0;
+        }
+        pageRef.current += 1;
       } catch (err) {
         console.error("Failed to fetch mixes:", err);
       } finally {
         setLoading(false);
+        setLoadingMore(false);
       }
-    }
+    },
+    [] // eslint-disable-line react-hooks/exhaustive-deps
+  );
+
+  useEffect(() => {
     fetchMixes();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (
+          entries[0].isIntersecting &&
+          !loading &&
+          !loadingMore &&
+          cards.length > 0
+        ) {
+          fetchMixes(true);
+        }
+      },
+      { rootMargin: "400px" }
+    );
+
+    const el = observerRef.current;
+    if (el) observer.observe(el);
+    return () => {
+      if (el) observer.unobserve(el);
+    };
+  }, [loading, loadingMore, cards.length, fetchMixes]);
 
   const shareCard = async (card: CardData) => {
     const url = card.youtubeUrl || "";
@@ -88,20 +134,27 @@ export default function MixesGrid({
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-[11px] p-2 sm:p-[11px]">
-      {cards.map((card) => (
-        <MusicCard
-          key={card.id}
-          card={card}
-          liked={likedIds.has(card.id)}
-          saved={savedIds.has(card.id)}
-          isPlaying={playingId === card.id && isPlaying}
-          onPlay={() => onPlay(card.id)}
-          onLike={() => onToggleLike(card.id)}
-          onSave={() => onToggleSave(card.id)}
-          onShare={() => shareCard(card)}
-        />
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-[11px] p-2 sm:p-[11px]">
+        {cards.map((card) => (
+          <MusicCard
+            key={card.id}
+            card={card}
+            saved={likedIds.has(card.id)}
+            isPlaying={playingId === card.id && isPlaying}
+            onPlay={() => onPlay(card.id)}
+            onSave={() => onToggleLike(card.id)}
+            onShare={() => shareCard(card)}
+            isAuthenticated={isAuthenticated}
+          />
+        ))}
+      </div>
+
+      <div ref={observerRef} className="flex justify-center py-6">
+        {loadingMore && (
+          <div className="vinyl-spinner" />
+        )}
+      </div>
+    </>
   );
 }
