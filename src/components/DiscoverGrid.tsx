@@ -5,6 +5,8 @@ import MusicCard from "./MusicCard";
 import { GENRE_PRESETS } from "./Sidebar";
 import type { CardData } from "@/lib/types";
 
+import type { TagFilter } from "./Sidebar";
+
 interface DiscoverGridProps {
   showSavedOnly?: boolean;
   savedIds: Set<string>;
@@ -15,6 +17,7 @@ interface DiscoverGridProps {
   onToggleSave: (id: string) => void;
   onToggleLike: (id: string) => void;
   activeGenre: number;
+  activeTagFilter?: TagFilter;
   onCardsLoaded?: (cards: CardData[]) => void;
   isAuthenticated?: boolean;
 }
@@ -29,6 +32,7 @@ export default function DiscoverGrid({
   onToggleSave,
   onToggleLike,
   activeGenre,
+  activeTagFilter = "all",
   onCardsLoaded,
   isAuthenticated = true,
 }: DiscoverGridProps) {
@@ -37,21 +41,26 @@ export default function DiscoverGrid({
   const [loadingMore, setLoadingMore] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const pageRef = useRef(0);
+  const hasMore = useRef(true);
 
   const fetchCards = useCallback(
-    async (genreIndex: number, append = false) => {
+    async (genreIndex: number, append = false, sort?: string) => {
+      if (append && !hasMore.current) return;
       if (append) setLoadingMore(true);
-      else setLoading(true);
+      else { setLoading(true); hasMore.current = true; }
 
       try {
+        const limit = 30;
         const genres = GENRE_PRESETS[genreIndex].genres.join(",");
-        const offset = append ? pageRef.current * 30 : 0;
-        const res = await fetch(
-          `/api/discover?genres=${genres}&limit=30&offset=${offset}`
-        );
+        const offset = append ? pageRef.current * limit : 0;
+        let url = `/api/discover?genres=${genres}&limit=${limit}&offset=${offset}`;
+        if (sort) url += `&sort=${sort}`;
+        const res = await fetch(url);
         const data = await res.json();
         const newCards: CardData[] = data.cards || [];
         onCardsLoaded?.(newCards);
+
+        if (newCards.length < limit) hasMore.current = false;
 
         if (append) {
           setCards((prev) => {
@@ -74,8 +83,19 @@ export default function DiscoverGrid({
     []
   );
 
+  const prevTagRef = useRef(activeTagFilter);
   useEffect(() => {
-    fetchCards(activeGenre);
+    const wasTop = prevTagRef.current === "top";
+    const isTop = activeTagFilter === "top";
+    prevTagRef.current = activeTagFilter;
+    // Refetch when switching to/from "top" sort
+    if (wasTop !== isTop) {
+      fetchCards(activeGenre, false, isTop ? "top" : undefined);
+    }
+  }, [activeTagFilter, activeGenre, fetchCards]);
+
+  useEffect(() => {
+    fetchCards(activeGenre, false, activeTagFilter === "top" ? "top" : undefined);
   }, [activeGenre, fetchCards]);
 
   useEffect(() => {
@@ -87,7 +107,7 @@ export default function DiscoverGrid({
           !loadingMore &&
           cards.length > 0
         ) {
-          fetchCards(activeGenre, true);
+          fetchCards(activeGenre, true, activeTagFilter === "top" ? "top" : undefined);
         }
       },
       { rootMargin: "400px" }
@@ -112,16 +132,27 @@ export default function DiscoverGrid({
     }
   };
 
-  const displayCards = showSavedOnly
+  const baseCards = showSavedOnly
     ? cards.filter((c) => savedIds.has(c.id))
     : cards;
 
   const top10Ids = useMemo(() => {
-    const sorted = [...displayCards]
+    const sorted = [...cards]
       .filter((c) => c.viewCount != null && c.viewCount > 0)
       .sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
     return new Set(sorted.slice(0, 10).map((c) => c.id));
-  }, [displayCards]);
+  }, [cards]);
+
+  const displayCards = useMemo(() => {
+    if (activeTagFilter === "all") return baseCards;
+    if (activeTagFilter === "top") return baseCards; // server already sorted by viewCount
+    return baseCards.filter((card) => {
+      if (activeTagFilter === "hot") return card.viewCount != null && card.viewCount >= 100_000;
+      if (activeTagFilter === "rare") return card.viewCount != null && card.viewCount < 5_000;
+      if (activeTagFilter === "new") return card.publishedAt && (Date.now() - new Date(card.publishedAt).getTime()) / 86400000 <= 30;
+      return true;
+    });
+  }, [baseCards, activeTagFilter, top10Ids]);
 
   return (
     <>
@@ -161,11 +192,13 @@ export default function DiscoverGrid({
             </div>
           )}
 
-          <div ref={observerRef} className="flex justify-center py-6">
-            {loadingMore && (
-              <div className="vinyl-spinner" />
-            )}
-          </div>
+          {!(showSavedOnly && displayCards.length === 0) && (
+            <div ref={observerRef} className="flex justify-center py-6">
+              {loadingMore && (
+                <div className="vinyl-spinner" />
+              )}
+            </div>
+          )}
         </>
       )}
     </>

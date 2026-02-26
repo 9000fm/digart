@@ -12,6 +12,9 @@ interface YTPlayer {
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
   playVideo: () => void;
   pauseVideo: () => void;
+  mute: () => void;
+  unMute: () => void;
+  setVolume: (volume: number) => void;
   getCurrentTime: () => number;
   getDuration: () => number;
   getPlayerState: () => number;
@@ -75,6 +78,14 @@ export async function createPlayer(
       },
       events: {
         onReady: () => {
+          // iOS Safari: must start muted for autoplay policy
+          try {
+            (player as YTPlayer).mute();
+            (player as YTPlayer).playVideo();
+            setTimeout(() => {
+              (player as YTPlayer).unMute();
+            }, 300);
+          } catch { /* ignore */ }
           onReady?.();
           resolve(player as YTPlayer);
         },

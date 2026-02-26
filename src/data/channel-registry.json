@@ -1,0 +1,4372 @@
+{
+  "UCWAVtH-ZrSTCYPYCEY6C0cw": {
+    "id": "UCWAVtH-ZrSTCYPYCEY6C0cw",
+    "name": "- Reloop02 -",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": "2026-02-25T09:57:29.169Z",
+    "uploadsFetched": 20,
+    "scanError": null
+  },
+  "UCWcTj_F2rUgfyMncqoI_efw": {
+    "id": "UCWcTj_F2rUgfyMncqoI_efw",
+    "name": "-koen.fm-",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0MbImAZ5VBy0CKANa17Rrg": {
+    "id": "UC0MbImAZ5VBy0CKANa17Rrg",
+    "name": "0000",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWJ0h-sGerHCxjAo2vRtkbg": {
+    "id": "UCWJ0h-sGerHCxjAo2vRtkbg",
+    "name": "030esar0303",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCMP7DfzfokHx3X5TTJaBK0Q": {
+    "id": "UCMP7DfzfokHx3X5TTJaBK0Q",
+    "name": "16 Steps",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCiu2v3qCcbHI7sXsX4rPsXA": {
+    "id": "UCiu2v3qCcbHI7sXsX4rPsXA",
+    "name": "180 Fact",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJY8C2HoNUE6UUVAgt-ftBw": {
+    "id": "UCJY8C2HoNUE6UUVAgt-ftBw",
+    "name": "192 uploads",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCL4J20Y1UpQGttcNXMB2j9Q": {
+    "id": "UCL4J20Y1UpQGttcNXMB2j9Q",
+    "name": "2trancentral",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4x8XyyOBeyrb9ht164QlCw": {
+    "id": "UC4x8XyyOBeyrb9ht164QlCw",
+    "name": "343 Labs",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwS_EHjafevNbFx9DlkSNBw": {
+    "id": "UCwS_EHjafevNbFx9DlkSNBw",
+    "name": "4AM Breaks",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCcTt3O4_IW5gnA0c58eXshg": {
+    "id": "UCcTt3O4_IW5gnA0c58eXshg",
+    "name": "8-Bit Keys",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC6xQwZHVyACaWwIDe8DKoeQ": {
+    "id": "UC6xQwZHVyACaWwIDe8DKoeQ",
+    "name": "Abandoned Tools",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJvMfaTq0hJjvDotLq6xhRg": {
+    "id": "UCJvMfaTq0hJjvDotLq6xhRg",
+    "name": "Ableton Tutorials & Music habits",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCuIUshnWOUD-a4d5Z54kj8A": {
+    "id": "UCuIUshnWOUD-a4d5Z54kj8A",
+    "name": "Absolute Terry Davis",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCyL8ba5IhmbQtzawMorhb4A": {
+    "id": "UCyL8ba5IhmbQtzawMorhb4A",
+    "name": "abstrakt monomatic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCYlxnUqnV80PUdY03J9fBSw": {
+    "id": "UCYlxnUqnV80PUdY03J9fBSw",
+    "name": "Act of Remembrance",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnkp4xDOwqqJD7sSM3xdUiQ": {
+    "id": "UCnkp4xDOwqqJD7sSM3xdUiQ",
+    "name": "Adam Neely",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC6XpPYQ-yb2zYohn5Cp0XKw": {
+    "id": "UC6XpPYQ-yb2zYohn5Cp0XKw",
+    "name": "Adam Steel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8sfFBWK4obFzUXm-4BU3JQ": {
+    "id": "UC8sfFBWK4obFzUXm-4BU3JQ",
+    "name": "Ades & X-Man",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": "2026-02-25T09:10:00.308Z",
+    "uploadsFetched": 50,
+    "scanError": null
+  },
+  "UC4zfJ32xdMaP6XqBEbqsCGA": {
+    "id": "UC4zfJ32xdMaP6XqBEbqsCGA",
+    "name": "adrian cojocaru",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrXSVX9a1mj8l0CMLwKgMVw": {
+    "id": "UCrXSVX9a1mj8l0CMLwKgMVw",
+    "name": "AI Jason",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZIB_p5AgVVdxgkYWHeUy-Q": {
+    "id": "UCZIB_p5AgVVdxgkYWHeUy-Q",
+    "name": "Aimee Nolte Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqrCXEBwOvzyKkWaeEVBQvQ": {
+    "id": "UCqrCXEBwOvzyKkWaeEVBQvQ",
+    "name": "Aiyn Zahev Sounds",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPChxdwBH6c5NMwQvzziLaw": {
+    "id": "UCPChxdwBH6c5NMwQvzziLaw",
+    "name": "Aladdin Memmi (Aladdin!)",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9A_8o4johljQgGU7QvhkoQ": {
+    "id": "UC9A_8o4johljQgGU7QvhkoQ",
+    "name": "Alajos",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCQ863hl-gaavZZiuvYj7RVw": {
+    "id": "UCQ863hl-gaavZZiuvYj7RVw",
+    "name": "AlbionStreetMusic83",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCCVgtMPRTC_adYMTQnfDmw": {
+    "id": "UCCCVgtMPRTC_adYMTQnfDmw",
+    "name": "Aldo",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrUAuvM2Dhf6ibh50EvILlw": {
+    "id": "UCrUAuvM2Dhf6ibh50EvILlw",
+    "name": "Alex Ball",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTfi27MS74xy55XKD4WVj0g": {
+    "id": "UCTfi27MS74xy55XKD4WVj0g",
+    "name": "Alexander Robotnick",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC3HX56X3S2anPqt5F3dqh5w": {
+    "id": "UC3HX56X3S2anPqt5F3dqh5w",
+    "name": "Algorhythmic Std",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCl9pDani4v5V-sSLXVtFqqw": {
+    "id": "UCl9pDani4v5V-sSLXVtFqqw",
+    "name": "Alice Efe - Mercurial Tones Academy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC_tUHiwyrfVhXZswsOxonpA": {
+    "id": "UC_tUHiwyrfVhXZswsOxonpA",
+    "name": "All Inn Records",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvDUaH2fbXP_Yc5Lc9UXfqA": {
+    "id": "UCvDUaH2fbXP_Yc5Lc9UXfqA",
+    "name": "Amazing Max Stuff",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCAw0NyC_6y-se4zcQGbEgHA": {
+    "id": "UCAw0NyC_6y-se4zcQGbEgHA",
+    "name": "Ambiance",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCYupUh7M7kbUnn_TCvPboCQ": {
+    "id": "UCYupUh7M7kbUnn_TCvPboCQ",
+    "name": "Ambient2K",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UChmUB26wF0JTZShfx8vtngg": {
+    "id": "UChmUB26wF0JTZShfx8vtngg",
+    "name": "Anakronik",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCQ7lqdrz6jV90P23LbTmmtA": {
+    "id": "UCQ7lqdrz6jV90P23LbTmmtA",
+    "name": "AnalogAudio1",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC98cHKIT6IUovzhZ_qTbl9g": {
+    "id": "UC98cHKIT6IUovzhZ_qTbl9g",
+    "name": "Analogue Catalogue",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC3NpTQqMCkIwXNAIaIp_WgQ": {
+    "id": "UC3NpTQqMCkIwXNAIaIp_WgQ",
+    "name": "Andy Louis",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UClITO33PbLa-BgLfCByLsTA": {
+    "id": "UClITO33PbLa-BgLfCByLsTA",
+    "name": "Anthony Muthurajah",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCf0Umv1NmXby_EaHe1vpgsA": {
+    "id": "UCf0Umv1NmXby_EaHe1vpgsA",
+    "name": "Anthony Rother",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCLsMRd097KLJMvkNzC4rYAA": {
+    "id": "UCLsMRd097KLJMvkNzC4rYAA",
+    "name": "Antune",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCeqrG_zgjkvDyTsfdNgrofw": {
+    "id": "UCeqrG_zgjkvDyTsfdNgrofw",
+    "name": "atr0",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC2x4m1lWIyZtKdbkahh-lUw": {
+    "id": "UC2x4m1lWIyZtKdbkahh-lUw",
+    "name": "Attack Magazine",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCznSBwEKa4xU8HmbEXCv6Yw": {
+    "id": "UCznSBwEKa4xU8HmbEXCv6Yw",
+    "name": "Au5",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWjmAUHmajb1-eo5WKk_22A": {
+    "id": "UCWjmAUHmajb1-eo5WKk_22A",
+    "name": "Audiotree",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCE9XJQ1j2vK9NZ4V5BCQeIA": {
+    "id": "UCE9XJQ1j2vK9NZ4V5BCQeIA",
+    "name": "Automatic Writing",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8sSCDtDP1Q0QzumMkVqceg": {
+    "id": "UC8sSCDtDP1Q0QzumMkVqceg",
+    "name": "back lighting",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCBCI_QCAMe1hx8UNyvJlM_Q": {
+    "id": "UCBCI_QCAMe1hx8UNyvJlM_Q",
+    "name": "bad snacks",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCcHqeJgEjy3EJTyiXANSp6g": {
+    "id": "UCcHqeJgEjy3EJTyiXANSp6g",
+    "name": "ballacid",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEZICpNS6kR7nwQjsdv2TcA": {
+    "id": "UCEZICpNS6kR7nwQjsdv2TcA",
+    "name": "BBoy Tech Report",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCtE7gn4X9td_zbgtpn9AYsA": {
+    "id": "UCtE7gn4X9td_zbgtpn9AYsA",
+    "name": "Bearfam",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCuI9mKTljZlI-y-eyaeGcNw": {
+    "id": "UCuI9mKTljZlI-y-eyaeGcNw",
+    "name": "Behringer",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCLo4XaKKxEft3lOurot79kg": {
+    "id": "UCLo4XaKKxEft3lOurot79kg",
+    "name": "Belize",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCLuHOqDilyLQT4NPXQuVN4Q": {
+    "id": "UCLuHOqDilyLQT4NPXQuVN4Q",
+    "name": "Ben Levin",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCuleYyPBOQA23E_k9r-8sZw": {
+    "id": "UCuleYyPBOQA23E_k9r-8sZw",
+    "name": "Best Friends Club",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTuAt9ktWEar-PGyG9i9dhA": {
+    "id": "UCTuAt9ktWEar-PGyG9i9dhA",
+    "name": "BIGMEDV' VINYL CHANNEL",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCONptu0J1PCrW9YfBtSdqjA": {
+    "id": "UCONptu0J1PCrW9YfBtSdqjA",
+    "name": "bileam tschepe (elekktronaut)",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZlOvB5LcAgJv3wwvWFOFLg": {
+    "id": "UCZlOvB5LcAgJv3wwvWFOFLg",
+    "name": "Bill Hilton",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCao-joUeui7eYtOED_9VqyQ": {
+    "id": "UCao-joUeui7eYtOED_9VqyQ",
+    "name": "billgrahammusic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFTK8Oiiny_vt4tzZkM4X0A": {
+    "id": "UCFTK8Oiiny_vt4tzZkM4X0A",
+    "name": "BoBeats",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCxTuR0qOna7H6pLGKqcbsdQ": {
+    "id": "UCxTuR0qOna7H6pLGKqcbsdQ",
+    "name": "bobemihai",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCbe1EaOzuPTQ5ygQ9Vce1Gg": {
+    "id": "UCbe1EaOzuPTQ5ygQ9Vce1Gg",
+    "name": "Bonedo Synthesizers",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCX_VcPCh0yf2OD_G19Vpeng": {
+    "id": "UCX_VcPCh0yf2OD_G19Vpeng",
+    "name": "Borys Danylenko",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCf-vkEWu0vkp3OxckYdTCcw": {
+    "id": "UCf-vkEWu0vkp3OxckYdTCcw",
+    "name": "Bound to Divide",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UClw8Huc_XZcz46GJh5Z0wuA": {
+    "id": "UClw8Huc_XZcz46GJh5Z0wuA",
+    "name": "Brendan Kavanagh",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzYoOv8QhHySWaXm9IlGmuw": {
+    "id": "UCzYoOv8QhHySWaXm9IlGmuw",
+    "name": "Brian 500",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCYAshPaYccIk7q0cuIhlkRg": {
+    "id": "UCYAshPaYccIk7q0cuIhlkRg",
+    "name": "Brian Funk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCNAJolC7SJNfsmlSp0lZRCA": {
+    "id": "UCNAJolC7SJNfsmlSp0lZRCA",
+    "name": "BroBeatzTV",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCaMje122pGSvLfvuLylin8g": {
+    "id": "UCaMje122pGSvLfvuLylin8g",
+    "name": "Bthelick",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqj95nBLMcAc20Ztzfy1Ccg": {
+    "id": "UCqj95nBLMcAc20Ztzfy1Ccg",
+    "name": "Bunker Headz",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCHzcS9Hm5dieyRWDMY-earw": {
+    "id": "UCHzcS9Hm5dieyRWDMY-earw",
+    "name": "Busy Works Beats",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCGHaMg4cvRJFvJh4eJVgfoA": {
+    "id": "UCGHaMg4cvRJFvJh4eJVgfoA",
+    "name": "Cadet5",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCaDDI-TjX50hfil95iPzsYg": {
+    "id": "UCaDDI-TjX50hfil95iPzsYg",
+    "name": "callmeapineapple",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCviKKPyIrxvADia_OUbW1jw": {
+    "id": "UCviKKPyIrxvADia_OUbW1jw",
+    "name": "Captain Pikant",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZgdYblXyFY5UBL9sVGR6Ng": {
+    "id": "UCZgdYblXyFY5UBL9sVGR6Ng",
+    "name": "CGI",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCoNqi9bmw0WD9bAbWZQGUnQ": {
+    "id": "UCoNqi9bmw0WD9bAbWZQGUnQ",
+    "name": "Chevry Agency",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCr9MlaSE4d-3K8WL3BKZ07g": {
+    "id": "UCr9MlaSE4d-3K8WL3BKZ07g",
+    "name": "Cicular",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC_9j-jI_P6heeJpQRvz0eOw": {
+    "id": "UC_9j-jI_P6heeJpQRvz0eOw",
+    "name": "CMYK",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCckSlww8DDaPJ0VQRvvHU-Q": {
+    "id": "UCckSlww8DDaPJ0VQRvvHU-Q",
+    "name": "Collector Drum Breaks",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTEza2fIxJ6SQvs1hstCPxw": {
+    "id": "UCTEza2fIxJ6SQvs1hstCPxw",
+    "name": "Composing Gloves",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCaFYkTAL8ykusTQR6FrZLfg": {
+    "id": "UCaFYkTAL8ykusTQR6FrZLfg",
+    "name": "Cookin Soul",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCb6xpSaaZ_HOLgmmAfvoqkg": {
+    "id": "UCb6xpSaaZ_HOLgmmAfvoqkg",
+    "name": "Crate Audio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCYqmh613WDWJVk7MmwqHUHQ": {
+    "id": "UCYqmh613WDWJVk7MmwqHUHQ",
+    "name": "Cresciente - Teoría Musical & Composición",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFXhLNpftXbCi9W58CJLrJQ": {
+    "id": "UCFXhLNpftXbCi9W58CJLrJQ",
+    "name": "CRSSD festival",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCUNhonb7hwFeREIE7efSn_Q": {
+    "id": "UCUNhonb7hwFeREIE7efSn_Q",
+    "name": "Cubensis Records",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzghqpGuEmk4YdVewxA79GA": {
+    "id": "UCzghqpGuEmk4YdVewxA79GA",
+    "name": "Curtis Holt",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqSNdDNH1Iq25ucNmqaGvig": {
+    "id": "UCqSNdDNH1Iq25ucNmqaGvig",
+    "name": "Cycling '74",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCw-e_2UD9FzGF1lY4XM3WJQ": {
+    "id": "UCw-e_2UD9FzGF1lY4XM3WJQ",
+    "name": "Da Fresh",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCkggyEQN50YnXFX75SC5kUA": {
+    "id": "UCkggyEQN50YnXFX75SC5kUA",
+    "name": "Danzfloor",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCz2iUx-Imr6HgDC3zAFpjOw": {
+    "id": "UCz2iUx-Imr6HgDC3zAFpjOw",
+    "name": "David Bennett",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCtkcJMyK1F46NJ5WjX7hBSw": {
+    "id": "UCtkcJMyK1F46NJ5WjX7hBSw",
+    "name": "Dead Wax",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFaQQPCAUkyG3kcTP0TeGag": {
+    "id": "UCFaQQPCAUkyG3kcTP0TeGag",
+    "name": "Deadbeat Studios",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgG3Nvp86j1WaHaLwjoVJZg": {
+    "id": "UCgG3Nvp86j1WaHaLwjoVJZg",
+    "name": "debuglive",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCyE4Zn8KTubKvDAax3KqS7w": {
+    "id": "UCyE4Zn8KTubKvDAax3KqS7w",
+    "name": "DECAP",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqH-NZi0qLRxMxim8omhTPg": {
+    "id": "UCqH-NZi0qLRxMxim8omhTPg",
+    "name": "dedeco /// VGM DJ",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCbcpZDGmJ02REppY1LbYeJQ": {
+    "id": "UCbcpZDGmJ02REppY1LbYeJQ",
+    "name": "DeepDown",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqVv6vR88oQLj2FJN_gKxlQ": {
+    "id": "UCqVv6vR88oQLj2FJN_gKxlQ",
+    "name": "Desert Sound Colony",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFDg3MJ_rbqJSNGbwQdcUeg": {
+    "id": "UCFDg3MJ_rbqJSNGbwQdcUeg",
+    "name": "Dilby",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCm_Kr-2ML7KtBTon-0bDqSA": {
+    "id": "UCm_Kr-2ML7KtBTon-0bDqSA",
+    "name": "Dirk Digger",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCW0MfWJVJh_eCUi-9FV1Phw": {
+    "id": "UCW0MfWJVJh_eCUi-9FV1Phw",
+    "name": "Dizko Floor",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCVYS9ceIh4vpBxRGfFwAIfw": {
+    "id": "UCVYS9ceIh4vpBxRGfFwAIfw",
+    "name": "DJ Premier",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCuhOAJMCXD7BviDIWkPWHHw": {
+    "id": "UCuhOAJMCXD7BviDIWkPWHHw",
+    "name": "DJ Swivel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqSMQXJ8MieGFIxgZNDeLdQ": {
+    "id": "UCqSMQXJ8MieGFIxgZNDeLdQ",
+    "name": "Do Funkk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCueGZgryhigypz7pl72ZLJQ": {
+    "id": "UCueGZgryhigypz7pl72ZLJQ",
+    "name": "Doble Porción",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCbzNcFN7cxA8HO18cTYyTfg": {
+    "id": "UCbzNcFN7cxA8HO18cTYyTfg",
+    "name": "Doctor Mix",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJ1IyoXPWifsoJO9E4dNjbg": {
+    "id": "UCJ1IyoXPWifsoJO9E4dNjbg",
+    "name": "DOJO Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCZzrgSavFLFG8PiDBYle0A": {
+    "id": "UCCZzrgSavFLFG8PiDBYle0A",
+    "name": "dPs _",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCbRrku58ThULIiDTGBSTqtg": {
+    "id": "UCbRrku58ThULIiDTGBSTqtg",
+    "name": "Dr. Guy Shkolnik Composer",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCBiJBaDaM3K6vPVggLhTyWA": {
+    "id": "UCBiJBaDaM3K6vPVggLhTyWA",
+    "name": "Drumeo",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCio-2JuB2AIAWKZbo_fPYng": {
+    "id": "UCio-2JuB2AIAWKZbo_fPYng",
+    "name": "Dubfire",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCY9gOpnb8_h0VSI6vjSLucg": {
+    "id": "UCY9gOpnb8_h0VSI6vjSLucg",
+    "name": "Dubspot",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpAMj2udHqlvc7HEL80w4KQ": {
+    "id": "UCpAMj2udHqlvc7HEL80w4KQ",
+    "name": "Durosai",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5h8DvwG_TSyCozad_VUWlA": {
+    "id": "UC5h8DvwG_TSyCozad_VUWlA",
+    "name": "D³ - Daily Dose of Digging",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsqP36LJWcso0Qos_8sEK5Q": {
+    "id": "UCsqP36LJWcso0Qos_8sEK5Q",
+    "name": "e/acc",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCVvyJ1kc3UXiX2_SSPs-ReQ": {
+    "id": "UCVvyJ1kc3UXiX2_SSPs-ReQ",
+    "name": "Electro Music Paradise ,Breaks & Retro",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPzWlhG7QM56Y8MYB3qMVnQ": {
+    "id": "UCPzWlhG7QM56Y8MYB3qMVnQ",
+    "name": "Electronic Gems",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCv99d1vZoBGFI7bX9WJ3LPA": {
+    "id": "UCv99d1vZoBGFI7bX9WJ3LPA",
+    "name": "Electronic Love Collective",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRUOfuNIb_sk__7snjK3aVg": {
+    "id": "UCRUOfuNIb_sk__7snjK3aVg",
+    "name": "ElFamosoDemon",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC76jinY0q4tE0pm0GMPkiqQ": {
+    "id": "UC76jinY0q4tE0pm0GMPkiqQ",
+    "name": "Eliana D'Angelo Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCjEK32QlJe0Dy4nXxelXrww": {
+    "id": "UCjEK32QlJe0Dy4nXxelXrww",
+    "name": "ELPHNT",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC43Apc7a9hygSdFYqb7P3rQ": {
+    "id": "UC43Apc7a9hygSdFYqb7P3rQ",
+    "name": "Emanuel Blanco Piano",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCmrWziqPuu4ZMU8Q1LKrOGA": {
+    "id": "UCmrWziqPuu4ZMU8Q1LKrOGA",
+    "name": "envyral",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UClWTCPVi-AU9TeCN6FkGARg": {
+    "id": "UClWTCPVi-AU9TeCN6FkGARg",
+    "name": "EO",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCmwSgh_GsuLRbWIuU_evPGg": {
+    "id": "UCmwSgh_GsuLRbWIuU_evPGg",
+    "name": "Escuela de Bajistas",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCn9pgy_Ra51CGu9EpVRcsgQ": {
+    "id": "UCn9pgy_Ra51CGu9EpVRcsgQ",
+    "name": "estimulo101",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-PFy0Uh1I-Gzv2x8E1q9JA": {
+    "id": "UC-PFy0Uh1I-Gzv2x8E1q9JA",
+    "name": "Father Funk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCFYVrypdSfsivLdIM-KHKQ": {
+    "id": "UCCFYVrypdSfsivLdIM-KHKQ",
+    "name": "Fathers & Sons Productions",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCdFRMrUoKdlNjeqZTVys-Qw": {
+    "id": "UCdFRMrUoKdlNjeqZTVys-Qw",
+    "name": "Felizmente",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZkROKrw8jiTXbt6I3CRA8Q": {
+    "id": "UCZkROKrw8jiTXbt6I3CRA8Q",
+    "name": "Finish More Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCr6eoRY1tYpMiwxpqCjtiyA": {
+    "id": "UCr6eoRY1tYpMiwxpqCjtiyA",
+    "name": "FIREWALKER",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzwCQvbX9_74SIQgggYXoLw": {
+    "id": "UCzwCQvbX9_74SIQgggYXoLw",
+    "name": "fliko",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCMqQP5RfEMScE2U5gveDztQ": {
+    "id": "UCMqQP5RfEMScE2U5gveDztQ",
+    "name": "Floating In Space",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC6NEeGR4c2GC3cknoatgY7A": {
+    "id": "UC6NEeGR4c2GC3cknoatgY7A",
+    "name": "Florent B",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCN7dywl5wDxTu1RM3eJ_h9Q": {
+    "id": "UCN7dywl5wDxTu1RM3eJ_h9Q",
+    "name": "Flux Academy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsfXi7uzQQ9s_moIByumwsg": {
+    "id": "UCsfXi7uzQQ9s_moIByumwsg",
+    "name": "Fonchi_Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCDrszDYSPqyOrv81vi440UQ": {
+    "id": "UCDrszDYSPqyOrv81vi440UQ",
+    "name": "Forest Ill Records",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCM7rP8jN4-IQ9Tu88gOH_Fw": {
+    "id": "UCM7rP8jN4-IQ9Tu88gOH_Fw",
+    "name": "Found it",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTNP-rWpPkdIEsd4aMVAtWQ": {
+    "id": "UCTNP-rWpPkdIEsd4aMVAtWQ",
+    "name": "Frank Dambra",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCGkzJmg31dgczktvAikK7Qg": {
+    "id": "UCGkzJmg31dgczktvAikK7Qg",
+    "name": "Free is in Da House",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCi0VaoauYYlaAcpuOd7q1Vw": {
+    "id": "UCi0VaoauYYlaAcpuOd7q1Vw",
+    "name": "FreedomOfSpeed",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCNP_JARsTaalnFkKNd6eklA": {
+    "id": "UCNP_JARsTaalnFkKNd6eklA",
+    "name": "Futago Sounds",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCm54BvSK--nIal2tZIH1f4w": {
+    "id": "UCm54BvSK--nIal2tZIH1f4w",
+    "name": "Gasper",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCttOBQS6RSh8avmR8vcrB8A": {
+    "id": "UCttOBQS6RSh8avmR8vcrB8A",
+    "name": "Get Physical Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCjavWH_qNQJ_5Oy8kzGNYog": {
+    "id": "UCjavWH_qNQJ_5Oy8kzGNYog",
+    "name": "Gifted Hands Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC6WiXq6JcqzvpCGSfsikIKg": {
+    "id": "UC6WiXq6JcqzvpCGSfsikIKg",
+    "name": "GoatMusicianShorts",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCA26tCEZTfHwZSDcdAcZeoQ": {
+    "id": "UCA26tCEZTfHwZSDcdAcZeoQ",
+    "name": "Gonzalo Genek",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwsyfiOI_Pl-Fko7Xtj7F9A": {
+    "id": "UCwsyfiOI_Pl-Fko7Xtj7F9A",
+    "name": "Grooverie",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCeovElJP0n0i8ADaPsRSd8g": {
+    "id": "UCeovElJP0n0i8ADaPsRSd8g",
+    "name": "HAINBACH",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWbrhbbsXLehhYPb16cfM0Q": {
+    "id": "UCWbrhbbsXLehhYPb16cfM0Q",
+    "name": "Hollow Ground Productions",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCV8WVfYVg9ZUYyiVLHrf62w": {
+    "id": "UCV8WVfYVg9ZUYyiVLHrf62w",
+    "name": "House0fBass",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRC_XCHOdP2BB4kr9Jj_Jqg": {
+    "id": "UCRC_XCHOdP2BB4kr9Jj_Jqg",
+    "name": "HOUSEWARMING",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCynfIactZH2eXPNIflqkfDg": {
+    "id": "UCynfIactZH2eXPNIflqkfDg",
+    "name": "Human 80",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJ2YbcYD5AJXrEMCN5WRGSg": {
+    "id": "UCJ2YbcYD5AJXrEMCN5WRGSg",
+    "name": "ida deerz",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCX4IX5u49LP5PDrb07OVErg": {
+    "id": "UCX4IX5u49LP5PDrb07OVErg",
+    "name": "IILE",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC3R-ZV6hRFAmlcb0Ygah0QQ": {
+    "id": "UC3R-ZV6hRFAmlcb0Ygah0QQ",
+    "name": "Ilja van Eck",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIbyt62LWfj8Cvx0g3AuUCQ": {
+    "id": "UCIbyt62LWfj8Cvx0g3AuUCQ",
+    "name": "Impact Soundworks LLC",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIcCXe3iWo6lq-iWKV40Oug": {
+    "id": "UCIcCXe3iWo6lq-iWKV40Oug",
+    "name": "In The Mix",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwLxgZHR8oDOzJXtXuSB_bA": {
+    "id": "UCwLxgZHR8oDOzJXtXuSB_bA",
+    "name": "Indie Playlists",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCC7eKMxcVk1LZwzJlBdsVuQ": {
+    "id": "UCC7eKMxcVk1LZwzJlBdsVuQ",
+    "name": "Innervisions",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC1aJgri2G2gp3V96CtFeT6Q": {
+    "id": "UC1aJgri2G2gp3V96CtFeT6Q",
+    "name": "Insulation Producers",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRaHXGh2v3bGhlRKzGu2UVA": {
+    "id": "UCRaHXGh2v3bGhlRKzGu2UVA",
+    "name": "is / was",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCSmwOCqzjnQksFn0t7ARkkw": {
+    "id": "UCSmwOCqzjnQksFn0t7ARkkw",
+    "name": "Jacob Koller / The Mad Arranger (Jacob Koller)",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCd6Y__-1Yjb-89Euc0KAJCA": {
+    "id": "UCd6Y__-1Yjb-89Euc0KAJCA",
+    "name": "Janek Gwizdala",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJVpPfRqHtGTgH5KNr4Wd_g": {
+    "id": "UCJVpPfRqHtGTgH5KNr4Wd_g",
+    "name": "Januss a.k.a DJ 916",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCu1yiKjTRetsoZ-OSeOMmzg": {
+    "id": "UCu1yiKjTRetsoZ-OSeOMmzg",
+    "name": "Jazz Tutorial | with Julian Bradley",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqimxUbWsE26KSpx2_OcmmA": {
+    "id": "UCqimxUbWsE26KSpx2_OcmmA",
+    "name": "Jazzduets",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZthhIkxtiIDVQVbKzlvpyQ": {
+    "id": "UCZthhIkxtiIDVQVbKzlvpyQ",
+    "name": "JazzSkills",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCam2kLbstBgHqaHKXSOhB4w": {
+    "id": "UCam2kLbstBgHqaHKXSOhB4w",
+    "name": "jdtrackhl",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFKJ7NEE5S76QYK696nXDfg": {
+    "id": "UCFKJ7NEE5S76QYK696nXDfg",
+    "name": "Jeff Schneider",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqepSCHTyWj4BzHxEEUNvlg": {
+    "id": "UCqepSCHTyWj4BzHxEEUNvlg",
+    "name": "Jens Larsen",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnjseI5wG7FFg1ixEi-topw": {
+    "id": "UCnjseI5wG7FFg1ixEi-topw",
+    "name": "jhadKJ AA",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCaBpxvYSPRS6Gw3FJKA3jgQ": {
+    "id": "UCaBpxvYSPRS6Gw3FJKA3jgQ",
+    "name": "JJay Berthume",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9KXLt434AmLtgi7TQPqPdQ": {
+    "id": "UC9KXLt434AmLtgi7TQPqPdQ",
+    "name": "Joe Hubbard Bass",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpbYtPOzNWUP0kRUSsAJH9g": {
+    "id": "UCpbYtPOzNWUP0kRUSsAJH9g",
+    "name": "Jordan Klemons - Jazz Guitar",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWejTOIxUaCruf1LL1gdokA": {
+    "id": "UCWejTOIxUaCruf1LL1gdokA",
+    "name": "Jordan Rudess",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCmT62o7IVk-rxJvuD5d1NFQ": {
+    "id": "UCmT62o7IVk-rxJvuD5d1NFQ",
+    "name": "Jorge Cárdenas Guitar",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqRZH50fsB1oewilWPTgLaQ": {
+    "id": "UCqRZH50fsB1oewilWPTgLaQ",
+    "name": "Josh Baker",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIJtd55HTddOlUK1CZH6sXg": {
+    "id": "UCIJtd55HTddOlUK1CZH6sXg",
+    "name": "Josh Walsh",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCm9dlciX5cuFdaQWApti01g": {
+    "id": "UCm9dlciX5cuFdaQWApti01g",
+    "name": "João Noriega",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqGquvPClWPC0vmdWTjEx_A": {
+    "id": "UCqGquvPClWPC0vmdWTjEx_A",
+    "name": "Judge",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCa8W2_uf81Ew6gYuw0VPSeA": {
+    "id": "UCa8W2_uf81Ew6gYuw0VPSeA",
+    "name": "Juxtopposed",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCykMeRvNBU-xkCo7SsJMgMQ": {
+    "id": "UCykMeRvNBU-xkCo7SsJMgMQ",
+    "name": "Ken Trash",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC3lBXcrKFnFAFkfVk5WuKcQ": {
+    "id": "UC3lBXcrKFnFAFkfVk5WuKcQ",
+    "name": "Kendrick Lamar",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCdmjw5sm9Kn83TB_rA_QBCw": {
+    "id": "UCdmjw5sm9Kn83TB_rA_QBCw",
+    "name": "Kent Hewitt",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC46h4o7urtJnJNiqNwdr9lQ": {
+    "id": "UC46h4o7urtJnJNiqNwdr9lQ",
+    "name": "Kenton Slash Demon",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCOkpc7Pa7N4cDUb-uoJHY4Q": {
+    "id": "UCOkpc7Pa7N4cDUb-uoJHY4Q",
+    "name": "Kermesse World",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCDHRK1_cIbhxF850F3IbS2Q": {
+    "id": "UCDHRK1_cIbhxF850F3IbS2Q",
+    "name": "Kevin Polzer",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCNpS1MDdfOWqGSvL9pO0f8A": {
+    "id": "UCNpS1MDdfOWqGSvL9pO0f8A",
+    "name": "King F",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCoVVs4GiUnSjjLT9r-1VqMA": {
+    "id": "UCoVVs4GiUnSjjLT9r-1VqMA",
+    "name": "King Sweet",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCMb1TERTJckMlZjfBdwtc2g": {
+    "id": "UCMb1TERTJckMlZjfBdwtc2g",
+    "name": "Kolter",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCy_U5d2G-BeJMwOmVKwpAkw": {
+    "id": "UCy_U5d2G-BeJMwOmVKwpAkw",
+    "name": "L-Gante",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC073DfR3Mn2mXiNXpRQRraQ": {
+    "id": "UC073DfR3Mn2mXiNXpRQRraQ",
+    "name": "La Vie En Rose  & Epice Magique Records",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCc8qFJqyNiCxcuPAPwJo0DQ": {
+    "id": "UCc8qFJqyNiCxcuPAPwJo0DQ",
+    "name": "Learn Jazz Standards",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-bvswlAXLVU6STC3fR2JmQ": {
+    "id": "UC-bvswlAXLVU6STC3fR2JmQ",
+    "name": "LESINDES",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8UjHaDmnndvGYh9uA0GDBQ": {
+    "id": "UC8UjHaDmnndvGYh9uA0GDBQ",
+    "name": "Lessons in Live",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9FM1egkCFesmDoax2ZrB6g": {
+    "id": "UC9FM1egkCFesmDoax2ZrB6g",
+    "name": "Life and Death Forever",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCq-x3AxqsSr2iBp3mf5YIFQ": {
+    "id": "UCq-x3AxqsSr2iBp3mf5YIFQ",
+    "name": "Limbic Bits",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCjp9sLBH49wxNq0b9UFu_TQ": {
+    "id": "UCjp9sLBH49wxNq0b9UFu_TQ",
+    "name": "Limited White Label",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC54TRsJv7RbmkCy_JBbxnDw": {
+    "id": "UC54TRsJv7RbmkCy_JBbxnDw",
+    "name": "Ljubljanalog process",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzDX4m-uZm5BhF6BbQXAXcA": {
+    "id": "UCzDX4m-uZm5BhF6BbQXAXcA",
+    "name": "Loaded",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCyOhJpmvZXXtEm934mG-vVQ": {
+    "id": "UCyOhJpmvZXXtEm934mG-vVQ",
+    "name": "Loco Dice",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZWqaBf6VLuD0cSKF4cukPg": {
+    "id": "UCZWqaBf6VLuD0cSKF4cukPg",
+    "name": "London Contemporary School of Piano",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCQXf1a5SkR2ZYJIoAV3BGyQ": {
+    "id": "UCQXf1a5SkR2ZYJIoAV3BGyQ",
+    "name": "Lost & Sound",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzsxGorXe-AwH3Ng_LRb68w": {
+    "id": "UCzsxGorXe-AwH3Ng_LRb68w",
+    "name": "Love To Learn Drums",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCUCTxPI8mASPi4_5gkhlm2w": {
+    "id": "UCUCTxPI8mASPi4_5gkhlm2w",
+    "name": "Low Heat Beats",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UChaOsYFc0EvYkD9Y8HPw9MA": {
+    "id": "UChaOsYFc0EvYkD9Y8HPw9MA",
+    "name": "Luca Dea",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCLLw7jmFsvfIVaUFsLs8mlQ": {
+    "id": "UCLLw7jmFsvfIVaUFsLs8mlQ",
+    "name": "Luke Barousse",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCxX8-X5XeOTSlXQZERNWrog": {
+    "id": "UCxX8-X5XeOTSlXQZERNWrog",
+    "name": "Luke from Become A Bassist",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRFXjOCQWX6xCjN4_-FI14A": {
+    "id": "UCRFXjOCQWX6xCjN4_-FI14A",
+    "name": "Lumbago",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-zD8J0RLWy3mNB7EMmT7Rg": {
+    "id": "UC-zD8J0RLWy3mNB7EMmT7Rg",
+    "name": "Lupe Fiasco",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCy6aV9hce1viNJGTvLa7oJw": {
+    "id": "UCy6aV9hce1viNJGTvLa7oJw",
+    "name": "Made Fresh Daily",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwsGfP7Y3D84a_zcwKg_2Vw": {
+    "id": "UCwsGfP7Y3D84a_zcwKg_2Vw",
+    "name": "Magical Mystery Mix",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC1WpidoYChUGcyHAcnALQIg": {
+    "id": "UC1WpidoYChUGcyHAcnALQIg",
+    "name": "magrosi65",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvARrwO4x0VInVZr4pQRB2A": {
+    "id": "UCvARrwO4x0VInVZr4pQRB2A",
+    "name": "Make Pop Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCUyeh8X37t_xJ77M6gHb1PQ": {
+    "id": "UCUyeh8X37t_xJ77M6gHb1PQ",
+    "name": "MangoldProject",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCdeUnG6jjKZNvmPqMrtERhw": {
+    "id": "UCdeUnG6jjKZNvmPqMrtERhw",
+    "name": "Mannybass",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZWhPkPPcLj9qL_ZS2MG9mA": {
+    "id": "UCZWhPkPPcLj9qL_ZS2MG9mA",
+    "name": "Marc Houle",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCECakqH9ME9aQHLaOvGqXHw": {
+    "id": "UCECakqH9ME9aQHLaOvGqXHw",
+    "name": "Marcelo Feldman - The Bass Wizard",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEmkeNDznKQBagFLGU8pZ4Q": {
+    "id": "UCEmkeNDznKQBagFLGU8pZ4Q",
+    "name": "MarloweDK - Bass lessons, licks and low notes",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCyFpI1Ft7ZhxA06je0R3MDg": {
+    "id": "UCyFpI1Ft7ZhxA06je0R3MDg",
+    "name": "martinradio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCerm0xrYv04HvPd_G5ZLN0w": {
+    "id": "UCerm0xrYv04HvPd_G5ZLN0w",
+    "name": "Mass Appeal",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCkslcQ2QOglh9kXo7agwVUA": {
+    "id": "UCkslcQ2QOglh9kXo7agwVUA",
+    "name": "Mauro Brunetti Música",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCKmBzsQRqNwxBIb2Awcaoqw": {
+    "id": "UCKmBzsQRqNwxBIb2Awcaoqw",
+    "name": "Mauro De Maria",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFk7qByjBfQ6LA4Qypnt2ew": {
+    "id": "UCFk7qByjBfQ6LA4Qypnt2ew",
+    "name": "MC Tore - Topic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpL_6sG_rSwfo0M3_Y7YeQg": {
+    "id": "UCpL_6sG_rSwfo0M3_Y7YeQg",
+    "name": "Melliflow Records",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTcibhp6ZoZ-7NYdYc-zjFQ": {
+    "id": "UCTcibhp6ZoZ-7NYdYc-zjFQ",
+    "name": "Merov'",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCKC11MOR51CLg4JpYj8jb4g": {
+    "id": "UCKC11MOR51CLg4JpYj8jb4g",
+    "name": "Metro Boomin",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCz27K_YRbqL-hFW1G6-lbLA": {
+    "id": "UCz27K_YRbqL-hFW1G6-lbLA",
+    "name": "Metroid Vibes",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsnnItsqRDu43UtZWUG44zQ": {
+    "id": "UCsnnItsqRDu43UtZWUG44zQ",
+    "name": "MicroGround Peru",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-g2PhDGnFibudkgkWhZj3w": {
+    "id": "UC-g2PhDGnFibudkgkWhZj3w",
+    "name": "Mike Johnston",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5N_RCl1XNAvvsquadm7r_g": {
+    "id": "UC5N_RCl1XNAvvsquadm7r_g",
+    "name": "Mildlife",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCfBTklnXujs3niUElbE_f1w": {
+    "id": "UCfBTklnXujs3niUElbE_f1w",
+    "name": "Mindful Frequencies Lab",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCH3pHnzD1AiSbazIw1maVFg": {
+    "id": "UCH3pHnzD1AiSbazIw1maVFg",
+    "name": "Minh Pham",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-y-8VGVtlP8zDnT60dDgkw": {
+    "id": "UC-y-8VGVtlP8zDnT60dDgkw",
+    "name": "Mix with the Masters",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0zzmN5qzSBt1GxHQ6N1_mg": {
+    "id": "UC0zzmN5qzSBt1GxHQ6N1_mg",
+    "name": "MixbusTv",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCAySG82ra866kPwMBv2Xe9w": {
+    "id": "UCAySG82ra866kPwMBv2Xe9w",
+    "name": "ModeratorUK",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCF6UkmfxogbaRkkByTgM1yw": {
+    "id": "UCF6UkmfxogbaRkkByTgM1yw",
+    "name": "Modular Music Academy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnyZO7xgmY79UYeabqniPuQ": {
+    "id": "UCnyZO7xgmY79UYeabqniPuQ",
+    "name": "Moldy Oldies - Not Forgotten of the 80's & 90's",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCBSAJ-B8QNfds8zAkjn51A": {
+    "id": "UCCBSAJ-B8QNfds8zAkjn51A",
+    "name": "Moonchild",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCY7_e5Fp_UwX3qa8CFfNy5A": {
+    "id": "UCY7_e5Fp_UwX3qa8CFfNy5A",
+    "name": "Mordio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCKXeo8UTCKBJhfh79zxhFvA": {
+    "id": "UCKXeo8UTCKBJhfh79zxhFvA",
+    "name": "MrHouseVinyl",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCL_JLbLw7GU0-V9sthiHmww": {
+    "id": "UCL_JLbLw7GU0-V9sthiHmww",
+    "name": "MsTony700",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5mZ1P8igk3paZnYiN6P_vw": {
+    "id": "UC5mZ1P8igk3paZnYiN6P_vw",
+    "name": "MTTC",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCNeFaFY15uHfdqHxK0AUN5g": {
+    "id": "UCNeFaFY15uHfdqHxK0AUN5g",
+    "name": "Music Enthusiasm Zone",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5i1oUMFiBV6W4fu4CjXXAA": {
+    "id": "UC5i1oUMFiBV6W4fu4CjXXAA",
+    "name": "Music Production Tutorials with Danny J Lewis",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvYua_kZtHl3d3Xzwz622tw": {
+    "id": "UCvYua_kZtHl3d3Xzwz622tw",
+    "name": "Music Stuff Steve",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqeYOThebLKYlvVeozxeR1Q": {
+    "id": "UCqeYOThebLKYlvVeozxeR1Q",
+    "name": "Musical Streams",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEPGkqa0YLIi9dozOQeQkYQ": {
+    "id": "UCEPGkqa0YLIi9dozOQeQkYQ",
+    "name": "Musicologo",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJKVMo13f-DfLHW2_8aGlXg": {
+    "id": "UCJKVMo13f-DfLHW2_8aGlXg",
+    "name": "n",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8R8FRt1KcPiR-rtAflXmeg": {
+    "id": "UC8R8FRt1KcPiR-rtAflXmeg",
+    "name": "Nahre Sol",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCF9qtiYvZAxG29sYzPeZVZA": {
+    "id": "UCF9qtiYvZAxG29sYzPeZVZA",
+    "name": "Natalie Red",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIbbeIvZgBiXikUJaYWXTcQ": {
+    "id": "UCIbbeIvZgBiXikUJaYWXTcQ",
+    "name": "Ned Rush",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCfmAjVU0aF41zi7oWB8_TUg": {
+    "id": "UCfmAjVU0aF41zi7oWB8_TUg",
+    "name": "NewJazz",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWoxdnsvMmu6AOO5dUDS9bg": {
+    "id": "UCWoxdnsvMmu6AOO5dUDS9bg",
+    "name": "Nino",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC924gLFzkNKg_Q_lVSnHx8w": {
+    "id": "UC924gLFzkNKg_Q_lVSnHx8w",
+    "name": "NiteGrooves UK",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC97YN7gYqtdk6z9jYHOn_lQ": {
+    "id": "UC97YN7gYqtdk6z9jYHOn_lQ",
+    "name": "Noah Kellman",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsiFgb0Xtg_YHnyVBfDg8_g": {
+    "id": "UCsiFgb0Xtg_YHnyVBfDg8_g",
+    "name": "noia",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4eYXhJI4-7wSWc8UNRwD4A": {
+    "id": "UC4eYXhJI4-7wSWc8UNRwD4A",
+    "name": "NPR Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFDQ-lfQWn26M-qYM4gI0Hw": {
+    "id": "UCFDQ-lfQWn26M-qYM4gI0Hw",
+    "name": "Offtop",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgtSzqR7D0-BgEFcfhrmWVA": {
+    "id": "UCgtSzqR7D0-BgEFcfhrmWVA",
+    "name": "OMA",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCY2mgHbe4QiYjLHrtF5FMYQ": {
+    "id": "UCY2mgHbe4QiYjLHrtF5FMYQ",
+    "name": "OOUKFunkyOO",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCbEFvUhe-QuH9-0Ksno9dwA": {
+    "id": "UCbEFvUhe-QuH9-0Ksno9dwA",
+    "name": "Open Studio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCQc3HYPYwrGFLludD3fXA1g": {
+    "id": "UCQc3HYPYwrGFLludD3fXA1g",
+    "name": "Origination Overload",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrmTTabqjlMBq-vL8j7EQkA": {
+    "id": "UCrmTTabqjlMBq-vL8j7EQkA",
+    "name": "Oscillator Sink",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFDmops7j7kexRUbhNPNv1A": {
+    "id": "UCFDmops7j7kexRUbhNPNv1A",
+    "name": "Outer Realms Stewards : Попечители Дальних Земель",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCXkSc5u3pGJPrEs35nzbWyw": {
+    "id": "UCXkSc5u3pGJPrEs35nzbWyw",
+    "name": "Oward",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsTsngkHTF3tYTqU3mS0SqQ": {
+    "id": "UCsTsngkHTF3tYTqU3mS0SqQ",
+    "name": "Pacific Base",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-dZ4XsJYOp0iDZY9qeXBSw": {
+    "id": "UC-dZ4XsJYOp0iDZY9qeXBSw",
+    "name": "Parea",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFpGI5tOfL1n9oyF8pS9SOg": {
+    "id": "UCFpGI5tOfL1n9oyF8pS9SOg",
+    "name": "Partiboi69",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCiyZfds9EbgACBuVyuONCKA": {
+    "id": "UCiyZfds9EbgACBuVyuONCKA",
+    "name": "patrickyooo",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4a0kbdAhi-Rw4MrGxZdwgg": {
+    "id": "UC4a0kbdAhi-Rw4MrGxZdwgg",
+    "name": "pdbass",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCno8mYpnGhTA9COSW9sP8gQ": {
+    "id": "UCno8mYpnGhTA9COSW9sP8gQ",
+    "name": "Pensado's Place",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZqMDtNsUQ8mmS2A1l3s5tA": {
+    "id": "UCZqMDtNsUQ8mmS2A1l3s5tA",
+    "name": "petiteecole",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrpk_WB_F6y8d2zwNqhSgkw": {
+    "id": "UCrpk_WB_F6y8d2zwNqhSgkw",
+    "name": "Piano Lesson with Warren",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCSDkCnUNJRKRPOFr4fenBtw": {
+    "id": "UCSDkCnUNJRKRPOFr4fenBtw",
+    "name": "Piano Productivity Peace",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-z678ZZfhkWBae1qo0dKqw": {
+    "id": "UC-z678ZZfhkWBae1qo0dKqw",
+    "name": "PianoGroove",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-obvt6Gn0Eef9vKxwcg_pg": {
+    "id": "UC-obvt6Gn0Eef9vKxwcg_pg",
+    "name": "PianoPig",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRcGNt_axR6Ao_7kAAjTEsQ": {
+    "id": "UCRcGNt_axR6Ao_7kAAjTEsQ",
+    "name": "pipo158",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCUdIW-0oPT33y_OjE_ZnQag": {
+    "id": "UCUdIW-0oPT33y_OjE_ZnQag",
+    "name": "playedby",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWBbakpo_cATqJy9Dzf9x4w": {
+    "id": "UCWBbakpo_cATqJy9Dzf9x4w",
+    "name": "PPPANIK",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCul3zsip1IMVyeUySVs4uvg": {
+    "id": "UCul3zsip1IMVyeUySVs4uvg",
+    "name": "PrettySimpleMusic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpyUGZeMUtOvt57UACw3H2g": {
+    "id": "UCpyUGZeMUtOvt57UACw3H2g",
+    "name": "Produce Like A Pro",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCAvujfcw6V9Kzpyr0LVWu1g": {
+    "id": "UCAvujfcw6V9Kzpyr0LVWu1g",
+    "name": "Pük Production",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvQlAHNHaDq0aGYIr_w98XA": {
+    "id": "UCvQlAHNHaDq0aGYIr_w98XA",
+    "name": "Quincy Davis | Jazz Drum Qtips",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCA0vBiBq_HNx1iBiW3kxogQ": {
+    "id": "UCA0vBiBq_HNx1iBiW3kxogQ",
+    "name": "RAVE SYNDICATE",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwZcHPbQ0TupJKZBMJrVwsA": {
+    "id": "UCwZcHPbQ0TupJKZBMJrVwsA",
+    "name": "Ravier 2000",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC_ZBS370CjlMCM9lXITVD7w": {
+    "id": "UC_ZBS370CjlMCM9lXITVD7w",
+    "name": "RawhausTrax / David Mast",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTLM0C5Acp-0xi4ZEb-mSQg": {
+    "id": "UCTLM0C5Acp-0xi4ZEb-mSQg",
+    "name": "Real Bass Lessons",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnM7ltulCzlVAomV3GaFLzw": {
+    "id": "UCnM7ltulCzlVAomV3GaFLzw",
+    "name": "records diet",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRRtRg9N0R0WHZcyPZGiLKg": {
+    "id": "UCRRtRg9N0R0WHZcyPZGiLKg",
+    "name": "Red Bull Batalla",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCGmcDnE_HwrJ7m_19HNNoTA": {
+    "id": "UCGmcDnE_HwrJ7m_19HNNoTA",
+    "name": "Reedale Rise",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCdzgPbiTKh-JGCJs4B-GTOQ": {
+    "id": "UCdzgPbiTKh-JGCJs4B-GTOQ",
+    "name": "REKK 81",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9_uRCO9WPRZnicwjQkD0VQ": {
+    "id": "UC9_uRCO9WPRZnicwjQkD0VQ",
+    "name": "Remkowski remko",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC292cj7qrjaTFEiKTpSKIcw": {
+    "id": "UC292cj7qrjaTFEiKTpSKIcw",
+    "name": "Remy Nettheim",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqPDZIz8VIeBxJV_KM4vIvA": {
+    "id": "UCqPDZIz8VIeBxJV_KM4vIvA",
+    "name": "reshaping channel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCDHvlud7Hf86FxFsogrBcMg": {
+    "id": "UCDHvlud7Hf86FxFsogrBcMg",
+    "name": "Resident Advisor",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCerrGpJq4S03omaDFIHittg": {
+    "id": "UCerrGpJq4S03omaDFIHittg",
+    "name": "RetroSound",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCG9inuDQ1ROLufVWNmItj_g": {
+    "id": "UCG9inuDQ1ROLufVWNmItj_g",
+    "name": "Ricardo Maraña",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJquYOG5EL82sKTfH9aMA9Q": {
+    "id": "UCJquYOG5EL82sKTfH9aMA9Q",
+    "name": "Rick Beato",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCC4PDb6--MnpwGM9rbg_5iA": {
+    "id": "UCC4PDb6--MnpwGM9rbg_5iA",
+    "name": "ringtone . tools",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0KdDpqCnN7uB2hFeLOOUgQ": {
+    "id": "UC0KdDpqCnN7uB2hFeLOOUgQ",
+    "name": "Robert Martinez",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZWh5xza2OeD8grKH7glceg": {
+    "id": "UCZWh5xza2OeD8grKH7glceg",
+    "name": "romain descoin",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCiA4oO6Q7OIfoQUUpmd0xCw": {
+    "id": "UCiA4oO6Q7OIfoQUUpmd0xCw",
+    "name": "Romanian Techno",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCw59OmZvwnXB5ivCbBNDbmw": {
+    "id": "UCw59OmZvwnXB5ivCbBNDbmw",
+    "name": "rruthology",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5pbZl4urNZOr9aPxMC1xfg": {
+    "id": "UC5pbZl4urNZOr9aPxMC1xfg",
+    "name": "Ryan Leach",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCOfeaBThwL8QgChomSpmBLg": {
+    "id": "UCOfeaBThwL8QgChomSpmBLg",
+    "name": "Sabin Todorov",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC13qnQOO1_U8cc2YAHzuptw": {
+    "id": "UC13qnQOO1_U8cc2YAHzuptw",
+    "name": "Sakiz",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqqagIL-VGK9-nKb4KugVKg": {
+    "id": "UCqqagIL-VGK9-nKb4KugVKg",
+    "name": "Sample Market",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCI_dcH8Zr2UqNT1EqvMNgTg": {
+    "id": "UCI_dcH8Zr2UqNT1EqvMNgTg",
+    "name": "Samuel Andreyev",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC5OkJxOnxn_AycmVGdysP_g": {
+    "id": "UC5OkJxOnxn_AycmVGdysP_g",
+    "name": "Sandfield",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCkVJFouV_2n2ZnP6We1Xklw": {
+    "id": "UCkVJFouV_2n2ZnP6We1Xklw",
+    "name": "Scenes",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC27CB3Fi_gr1_kS1g1PBK9A": {
+    "id": "UC27CB3Fi_gr1_kS1g1PBK9A",
+    "name": "sci phunk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWTj3vCqkQIsrTGSm4kM34g": {
+    "id": "UCWTj3vCqkQIsrTGSm4kM34g",
+    "name": "Scott's Bass Lessons",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpH2qI0kcOxpC-X0JGXrHfw": {
+    "id": "UCpH2qI0kcOxpC-X0JGXrHfw",
+    "name": "ShaolinStyle",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCi7l9chXMljpUft67vw78qw": {
+    "id": "UCi7l9chXMljpUft67vw78qw",
+    "name": "Sideways",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCfmUX1OoQVmqalSft-O5BA": {
+    "id": "UCCfmUX1OoQVmqalSft-O5BA",
+    "name": "Sieben",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCyeXzY3E4Rjjo0y-rj_luYA": {
+    "id": "UCyeXzY3E4Rjjo0y-rj_luYA",
+    "name": "Silat Beksi Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIH5fVh549SzAIaAW1TMNjA": {
+    "id": "UCIH5fVh549SzAIaAW1TMNjA",
+    "name": "SilentChaos Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCkuMxGjzdGrDtp8qGi9TXbA": {
+    "id": "UCkuMxGjzdGrDtp8qGi9TXbA",
+    "name": "Since 1994",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPSf3-VnJZ73eoUECetfO5Q": {
+    "id": "UCPSf3-VnJZ73eoUECetfO5Q",
+    "name": "Slynk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzTdSMCv0H34PEcF-T83BSA": {
+    "id": "UCzTdSMCv0H34PEcF-T83BSA",
+    "name": "Sol Asylum TV",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEfZoAshpTmnRjg53B13--A": {
+    "id": "UCEfZoAshpTmnRjg53B13--A",
+    "name": "some uncertain sir",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCS972vXt4jnzkMlvHngalEg": {
+    "id": "UCS972vXt4jnzkMlvHngalEg",
+    "name": "Sonic Academy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqSi8wyyRxbJmvyaccEnjFw": {
+    "id": "UCqSi8wyyRxbJmvyaccEnjFw",
+    "name": "SoulRoh",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCxc-WLBiEgg5zqeXsTHXR2w": {
+    "id": "UCxc-WLBiEgg5zqeXsTHXR2w",
+    "name": "Sound of 88/92",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFw2zGrdiLLAwbNQra1vtnA": {
+    "id": "UCFw2zGrdiLLAwbNQra1vtnA",
+    "name": "Sound On Sound magazine",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCfNf1na-qn-OSqPeoAbtczA": {
+    "id": "UCfNf1na-qn-OSqPeoAbtczA",
+    "name": "soundBots",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJwqk7q971iQLtF_CmkyyMw": {
+    "id": "UCJwqk7q971iQLtF_CmkyyMw",
+    "name": "SOUNDS & PRESETS",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCMHXn5aIUyIBlDu5UzZ95xA": {
+    "id": "UCMHXn5aIUyIBlDu5UzZ95xA",
+    "name": "sp3y3s",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4rFT7KYE8nHgT0Ourn4b_g": {
+    "id": "UC4rFT7KYE8nHgT0Ourn4b_g",
+    "name": "Spell316",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqkNE6ezOEbZwz0h1KPheBA": {
+    "id": "UCqkNE6ezOEbZwz0h1KPheBA",
+    "name": "Spirit Of Eden",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCpDwheBgHeNO-cvBkRlnfHw": {
+    "id": "UCpDwheBgHeNO-cvBkRlnfHw",
+    "name": "Spiritdancer",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC7RXIF7lok7pTUaC4p7eeXw": {
+    "id": "UC7RXIF7lok7pTUaC4p7eeXw",
+    "name": "squelch uploads",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UClKIjbgtWGzHtXhBDS_I0pg": {
+    "id": "UClKIjbgtWGzHtXhBDS_I0pg",
+    "name": "State Azure",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRt1A0W4iZfvsOhAH1yft2Q": {
+    "id": "UCRt1A0W4iZfvsOhAH1yft2Q",
+    "name": "Steve Lacy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJjYUJudUW67Tg79jtF_rpQ": {
+    "id": "UCJjYUJudUW67Tg79jtF_rpQ",
+    "name": "Steve's Makerspace",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvQfmavUPAiaEQP2aaQJGJQ": {
+    "id": "UCvQfmavUPAiaEQP2aaQJGJQ",
+    "name": "Strickland Propane",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCBwOM8gVzF0wxh4HgMk0idQ": {
+    "id": "UCBwOM8gVzF0wxh4HgMk0idQ",
+    "name": "strictly business",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCk5oMbHTLuzB-2i58wZWNnA": {
+    "id": "UCk5oMbHTLuzB-2i58wZWNnA",
+    "name": "Studio Orbit",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-Ds1DsoRQTpYHGHcMQ3KgA": {
+    "id": "UC-Ds1DsoRQTpYHGHcMQ3KgA",
+    "name": "sub.stantia",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC7qAhxixwvf9AGglJy36Xsw": {
+    "id": "UC7qAhxixwvf9AGglJy36Xsw",
+    "name": "Suck my digs",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UChWNSbYc3mn76_5DGGtYYMg": {
+    "id": "UChWNSbYc3mn76_5DGGtYYMg",
+    "name": "Sweely Music",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCdbetV_5wxUnBTdb_d51qoA": {
+    "id": "UCdbetV_5wxUnBTdb_d51qoA",
+    "name": "Synthet",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgX9My377M927Cd5mDtKW4A": {
+    "id": "UCgX9My377M927Cd5mDtKW4A",
+    "name": "synthou",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCd9N5vPWSWZvKhUe-odcbDw": {
+    "id": "UCd9N5vPWSWZvKhUe-odcbDw",
+    "name": "Tachyons +",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCVOmvrAhvVZe8NI-IbwyruQ": {
+    "id": "UCVOmvrAhvVZe8NI-IbwyruQ",
+    "name": "Takeshi Fukushima",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCDfStxwji-22A_bvY280UIg": {
+    "id": "UCDfStxwji-22A_bvY280UIg",
+    "name": "TalkingBass - Online Bass Lessons",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCwWPmI6jGvzC6CdZLp_duow": {
+    "id": "UCwWPmI6jGvzC6CdZLp_duow",
+    "name": "TECHNIQUE TOKYO",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIwSxDpqPoctBv1A8cakx3Q": {
+    "id": "UCIwSxDpqPoctBv1A8cakx3Q",
+    "name": "Telekom Electronic Beats TV",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8fqt_PDhDDszL5Zi8EauqA": {
+    "id": "UC8fqt_PDhDDszL5Zi8EauqA",
+    "name": "Terminal Passage",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEEvc1dxP2D5C82Ls3b0eLg": {
+    "id": "UCEEvc1dxP2D5C82Ls3b0eLg",
+    "name": "The Diggin Issue",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0tK9G9GMeWQzJJsVjBrEhQ": {
+    "id": "UC0tK9G9GMeWQzJJsVjBrEhQ",
+    "name": "The House of Kush",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCF241w8WFBCc-DG-JYwcLwA": {
+    "id": "UCF241w8WFBCc-DG-JYwcLwA",
+    "name": "The Indie Music Lab",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCGOJgZYbuON5UT3KkBrUL5Q": {
+    "id": "UCGOJgZYbuON5UT3KkBrUL5Q",
+    "name": "The Oblong",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCH2ykOuivtAfbhcgLp4et6Q": {
+    "id": "UCH2ykOuivtAfbhcgLp4et6Q",
+    "name": "The Orange Room",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCoAEGKn_jSCsd-6P6pGN_Rg": {
+    "id": "UCoAEGKn_jSCsd-6P6pGN_Rg",
+    "name": "The Proud Mistress",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWBKJ1RNeKTPII34pc6UyUg": {
+    "id": "UCWBKJ1RNeKTPII34pc6UyUg",
+    "name": "The Theorist",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJ66UdVvX-M3L3ux2zCuFoA": {
+    "id": "UCJ66UdVvX-M3L3ux2zCuFoA",
+    "name": "The Zoot Doctor",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCHoMZyKo8Xx-1Vu2A4APavg": {
+    "id": "UCHoMZyKo8Xx-1Vu2A4APavg",
+    "name": "TheComaProject",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4NCpPTpoDSqsZkpV63wXYg": {
+    "id": "UC4NCpPTpoDSqsZkpV63wXYg",
+    "name": "thedeepestdream",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCMdcnpv-oKcn4W7G28MiBSw": {
+    "id": "UCMdcnpv-oKcn4W7G28MiBSw",
+    "name": "TheMikkehouse",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC1raAF6N6U-9cTCVirCYC1g": {
+    "id": "UC1raAF6N6U-9cTCVirCYC1g",
+    "name": "themuddshow",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCt7fwAhXDy3oNFTAzF2o8Pw": {
+    "id": "UCt7fwAhXDy3oNFTAzF2o8Pw",
+    "name": "theneedledrop",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9x3JQh0HcN-98gyJR3FyoQ": {
+    "id": "UC9x3JQh0HcN-98gyJR3FyoQ",
+    "name": "Theo Dher",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCW9l0nBSv0TrLpNczWjKUQg": {
+    "id": "UCW9l0nBSv0TrLpNczWjKUQg",
+    "name": "Thiago Samadhi",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCKR1U8vwMdtts68a7QM20SA": {
+    "id": "UCKR1U8vwMdtts68a7QM20SA",
+    "name": "This and That Lab",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgQZCM_3gx-uNusf-h2NmXw": {
+    "id": "UCgQZCM_3gx-uNusf-h2NmXw",
+    "name": "Thomas Chauveaux",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCBxbs-ACxSHWPaFzApj-v6A": {
+    "id": "UCBxbs-ACxSHWPaFzApj-v6A",
+    "name": "Thomas Sohet",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCXr4IRnkv4OW1werrKDNecA": {
+    "id": "UCXr4IRnkv4OW1werrKDNecA",
+    "name": "Tim Cant",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC8j6MtZMR-46-Slpm1Ctdlg": {
+    "id": "UC8j6MtZMR-46-Slpm1Ctdlg",
+    "name": "Tim van der vliet",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4E340f3h4Vb1hY72lDN9Vw": {
+    "id": "UC4E340f3h4Vb1hY72lDN9Vw",
+    "name": "TingTingin",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCzC_8MCIATdyZRFAzTGxi5Q": {
+    "id": "UCzC_8MCIATdyZRFAzTGxi5Q",
+    "name": "TK",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsJ2eDkUEpskbIsn1yfUKdg": {
+    "id": "UCsJ2eDkUEpskbIsn1yfUKdg",
+    "name": "Top Creatives",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCshyO4oCfROUZ6-6RccfKOg": {
+    "id": "UCshyO4oCfROUZ6-6RccfKOg",
+    "name": "Tracklib",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCoCAI5K8eiO2rT4I3BxsMTQ": {
+    "id": "UCoCAI5K8eiO2rT4I3BxsMTQ",
+    "name": "Travis Barker",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCOojfmX4Wq3Ww-XP_IkvviQ": {
+    "id": "UCOojfmX4Wq3Ww-XP_IkvviQ",
+    "name": "True Cuckoo",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnEramcm0MUhbwV23JcCTpA": {
+    "id": "UCnEramcm0MUhbwV23JcCTpA",
+    "name": "tunes2tube",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEp0p7wruBUfZx-cQa2WEFA": {
+    "id": "UCEp0p7wruBUfZx-cQa2WEFA",
+    "name": "TUTEMPO piano - Ricardo Uribe",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCfHJRUpF8FlM4FQ0zUtZIMA": {
+    "id": "UCfHJRUpF8FlM4FQ0zUtZIMA",
+    "name": "UFO Beats",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC7E72tYQ5WB_luqhnUwfcyw": {
+    "id": "UC7E72tYQ5WB_luqhnUwfcyw",
+    "name": "Ultimo Tango",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZ1HqFnEiLdEjDKxMED5uKg": {
+    "id": "UCZ1HqFnEiLdEjDKxMED5uKg",
+    "name": "Underground Beats",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPaO3t4D4VtJbmVMeZoghQw": {
+    "id": "UCPaO3t4D4VtJbmVMeZoghQw",
+    "name": "Underground Music Channel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqgSrOa_GVA3do2MAYbvIlA": {
+    "id": "UCqgSrOa_GVA3do2MAYbvIlA",
+    "name": "UnderscopeTV",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqKP3Bo5u5khNjm4cy78KIg": {
+    "id": "UCqKP3Bo5u5khNjm4cy78KIg",
+    "name": "Unknown To The Unknown",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCCS8cRSiJjAqgwvmP7VxJw": {
+    "id": "UCCCS8cRSiJjAqgwvmP7VxJw",
+    "name": "Vapor Memory",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC98VGFuPY3E4WqzFpT1QVgw": {
+    "id": "UC98VGFuPY3E4WqzFpT1QVgw",
+    "name": "Vincent G",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgRDO6kmsXis_8eWmFFoAfw": {
+    "id": "UCgRDO6kmsXis_8eWmFFoAfw",
+    "name": "VisionquestMusic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCv0Ufd_Af9VBEi6xoW6ZTfw": {
+    "id": "UCv0Ufd_Af9VBEi6xoW6ZTfw",
+    "name": "VNRD",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrB4ViWQhSlYGqha2biBOoA": {
+    "id": "UCrB4ViWQhSlYGqha2biBOoA",
+    "name": "Voltage Labs",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCLySvQ5KnssdJVpbi5skvQw": {
+    "id": "UCLySvQ5KnssdJVpbi5skvQw",
+    "name": "VSVN",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIAwH6RiFVBTNibTkX_jfRg": {
+    "id": "UCIAwH6RiFVBTNibTkX_jfRg",
+    "name": "VX3000",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCk24OnGLcP5XlTBjZ9WBWvw": {
+    "id": "UCk24OnGLcP5XlTBjZ9WBWvw",
+    "name": "Walk That Bass",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCGpO_CoO_rbf1n5kRyD8Zgg": {
+    "id": "UCGpO_CoO_rbf1n5kRyD8Zgg",
+    "name": "Waveform",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPSRc34Vs-Nf_t1l3pS7peg": {
+    "id": "UCPSRc34Vs-Nf_t1l3pS7peg",
+    "name": "Waves Audio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCtF03Z2tZ3SDdWDhRqkB47w": {
+    "id": "UCtF03Z2tZ3SDdWDhRqkB47w",
+    "name": "whypeopledance",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0jxua6gd8cCQPKuldKOqqA": {
+    "id": "UC0jxua6gd8cCQPKuldKOqqA",
+    "name": "XLR8R",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCJL_hSRHW8414diAIleErnw": {
+    "id": "UCJL_hSRHW8414diAIleErnw",
+    "name": "Yifan - Beyond the Hype",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCapo4XcpVOlTLkbKIDL0WlA": {
+    "id": "UCapo4XcpVOlTLkbKIDL0WlA",
+    "name": "You Suck at Producing",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCtSYkZGP9nkvXPMQgjeEIow": {
+    "id": "UCtSYkZGP9nkvXPMQgjeEIow",
+    "name": "Yoyaku Record Store",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCeY0Ar5dr4ZDoxNlKqG97hg": {
+    "id": "UCeY0Ar5dr4ZDoxNlKqG97hg",
+    "name": "Zachel Myrdou",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCkqY7CRG-1fI4ww4XHCQOMQ": {
+    "id": "UCkqY7CRG-1fI4ww4XHCQOMQ",
+    "name": "zah house mix",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCrKBjz9fBktmZp82Y5w74cA": {
+    "id": "UCrKBjz9fBktmZp82Y5w74cA",
+    "name": "Zahand / LotusTunes",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC4vkDmheBGKCBb6sfWItN8Q": {
+    "id": "UC4vkDmheBGKCBb6sfWItN8Q",
+    "name": "Zaqaria",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCNRD06rR7bR0Xwd-7gAKDEA": {
+    "id": "UCNRD06rR7bR0Xwd-7gAKDEA",
+    "name": "Zen World - Evolution Of Sound",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC2-3wBz6So8e7W-o7djQwkQ": {
+    "id": "UC2-3wBz6So8e7W-o7djQwkQ",
+    "name": "zrizolina",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCEXoDM0vuAAFavUbng9fArA": {
+    "id": "UCEXoDM0vuAAFavUbng9fArA",
+    "name": "Óscar Calmaestra",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCIyr76c_nUT5cdFbM7lfXAA": {
+    "id": "UCIyr76c_nUT5cdFbM7lfXAA",
+    "name": "℗ΣlΔYΔ",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCDWlGzmKIE2IaMhTgyaQ8Mg": {
+    "id": "UCDWlGzmKIE2IaMhTgyaQ8Mg",
+    "name": "ツ Rubi",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC1bTec-cnD0AB218-ry2WNw": {
+    "id": "UC1bTec-cnD0AB218-ry2WNw",
+    "name": "지민도로시Jimindorothy",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC3Skk3OMbW0yFqz_B9JbogA": {
+    "id": "UC3Skk3OMbW0yFqz_B9JbogA",
+    "name": "𝕽 𝕭",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTDdpdDeS0Et3LJ5gBbPLfQ": {
+    "id": "UCTDdpdDeS0Et3LJ5gBbPLfQ",
+    "name": "David Magyel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCsnc8St_ihNl-K-ycYsGmKA": {
+    "id": "UCsnc8St_ihNl-K-ycYsGmKA",
+    "name": "Groovehunter",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqHvJYDGRnXvck14SEQZ8IA": {
+    "id": "UCqHvJYDGRnXvck14SEQZ8IA",
+    "name": "Buzz Lightbeer",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC1VMyij8HxEogaP58qh-M1A": {
+    "id": "UC1VMyij8HxEogaP58qh-M1A",
+    "name": "D K",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC9AdAutT1A2f3-rBmfTqWtg": {
+    "id": "UC9AdAutT1A2f3-rBmfTqWtg",
+    "name": "LamentedTM R",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCFCFQ9ooz24yLHz3ODOWWxg": {
+    "id": "UCFCFQ9ooz24yLHz3ODOWWxg",
+    "name": "Samuel Peter",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCTFTx1ymiIaUJMrS3Ub3WWQ": {
+    "id": "UCTFTx1ymiIaUJMrS3Ub3WWQ",
+    "name": "risolee",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCZwRG-XAoaaGRcPy8s4xINg": {
+    "id": "UCZwRG-XAoaaGRcPy8s4xINg",
+    "name": "paxtone audio",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCxJkt-1Pke-Ui64hCMZsaDA": {
+    "id": "UCxJkt-1Pke-Ui64hCMZsaDA",
+    "name": "Droid Life",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCWkG8cm2yX2DQ6_qs9Q12HQ": {
+    "id": "UCWkG8cm2yX2DQ6_qs9Q12HQ",
+    "name": "DPM SOUND - Topic",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCCxBNruUq_2S-bIOybycVlQ": {
+    "id": "UCCxBNruUq_2S-bIOybycVlQ",
+    "name": "fabio caotyk",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCOKC0lHmOIgnn6RKQECFmPw": {
+    "id": "UCOKC0lHmOIgnn6RKQECFmPw",
+    "name": "backinthedayjungle",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCvjADfnKZDD62r1RPB55K4Q": {
+    "id": "UCvjADfnKZDD62r1RPB55K4Q",
+    "name": "CookiesJunky",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCgSC4NFr_xwN-lBfBbLqprw": {
+    "id": "UCgSC4NFr_xwN-lBfBbLqprw",
+    "name": "Novaj 新し",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCqUi1zKIj3niQJFCrZvPtVw": {
+    "id": "UCqUi1zKIj3niQJFCrZvPtVw",
+    "name": "miss nightwhore",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCtKurXagMuBUfkc0Iv_QWBQ": {
+    "id": "UCtKurXagMuBUfkc0Iv_QWBQ",
+    "name": "Wild In the streets",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC-jjgfa-oKwxX47JrNrvmLA": {
+    "id": "UC-jjgfa-oKwxX47JrNrvmLA",
+    "name": "kebabkillaz",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRt2xTeRRLHO7F0W21UjroA": {
+    "id": "UCRt2xTeRRLHO7F0W21UjroA",
+    "name": "Specter227",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCoQsV1On1wnbGn705cf_9Gw": {
+    "id": "UCoQsV1On1wnbGn705cf_9Gw",
+    "name": "GST Channel",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCjK21_hU5sQoVyxTf5eRU3Q": {
+    "id": "UCjK21_hU5sQoVyxTf5eRU3Q",
+    "name": "SupraDarky",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCnJ3NIEju6riVXic-Affgsg": {
+    "id": "UCnJ3NIEju6riVXic-Affgsg",
+    "name": "zeusgb",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC0Exan8bIV42qdjD9WZAJUQ": {
+    "id": "UC0Exan8bIV42qdjD9WZAJUQ",
+    "name": "PeyserCommodore",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCKbAPSveMAMTov1PuGYeGJQ": {
+    "id": "UCKbAPSveMAMTov1PuGYeGJQ",
+    "name": "Ricardo Hernández",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UC6xJHht9R-EXQ4KDuc_sxdQ": {
+    "id": "UC6xJHht9R-EXQ4KDuc_sxdQ",
+    "name": "SNES OST",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCRbajqIt4p7NK1P9wVaodug": {
+    "id": "UCRbajqIt4p7NK1P9wVaodug",
+    "name": "SpaceTapes",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  },
+  "UCPPE8e2iiCnRTxu1s4-fLvw": {
+    "id": "UCPPE8e2iiCnRTxu1s4-fLvw",
+    "name": "VANESSA DISKEVICH",
+    "importedAt": "2026-02-25T00:00:00Z",
+    "importSource": "subscription",
+    "reviewedAt": "2026-02-25T00:00:00Z",
+    "lastScannedAt": null,
+    "uploadsFetched": 0,
+    "scanError": null
+  }
+}

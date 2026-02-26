@@ -40,16 +40,12 @@ const BANNER_PHRASES = [
   "DIGEART — MUSIC DISCOVERY",
   "DIG DEEPER",
   "SUPERSOUNDS FROM THE UNDERGROUND",
-  "SUPPORT LOCAL ARTISTS",
-  "IT'S ALL ABOUT THE MUSIC",
   "KEEP DIGGING",
-  "FEED YOUR EARS",
   "RARE CUTS ONLY",
-  "LESS NOISE MORE SOUL",
-  "MUSIC IS THE ANSWER",
   "STRAIGHT FROM THE SOURCE",
-  "REAL MUSIC FOR REAL PEOPLE",
-  "UNDERGROUND NEVER DIES",
+  "DEEP CUTS DEEP LOVE",
+  "TRUST YOUR EARS",
+  "LET THE MUSIC FIND YOU",
 ];
 
 const SEPARATOR_ICONS = ["✦", "◇", "⬥", "✧", "◆", "⏣", "✦"];
@@ -145,11 +141,15 @@ const NAV_ITEMS: NavItem[] = [
   },
 ];
 
+export type TagFilter = "all" | "top" | "hot" | "rare" | "new";
+
 interface SidebarProps {
   activeView: ViewType;
   onViewChange: (view: ViewType) => void;
   activeGenre: number;
   onGenreChange: (index: number) => void;
+  activeTagFilter: TagFilter;
+  onTagFilterChange: (tag: TagFilter) => void;
 }
 
 export { GENRE_PRESETS };
@@ -170,16 +170,28 @@ const GearIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const TAG_OPTIONS: { value: TagFilter; label: string; dotColor?: string }[] = [
+  { value: "all", label: "All" },
+  { value: "top", label: "Top", dotColor: "bg-orange-500" },
+  { value: "hot", label: "Hot", dotColor: "bg-red-500" },
+  { value: "rare", label: "Rare", dotColor: "bg-pink-500" },
+  { value: "new", label: "New", dotColor: "bg-emerald-500" },
+];
+
 export default function Sidebar({
   activeView,
   onViewChange,
   activeGenre,
   onGenreChange,
+  activeTagFilter,
+  onTagFilterChange,
 }: SidebarProps) {
   const [placeholder, setPlaceholder] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const [settingsAnchor, setSettingsAnchor] = useState<DOMRect | null>(null);
+  const [showTagDropdown, setShowTagDropdown] = useState(false);
+  const tagDropdownRef = useRef<HTMLDivElement>(null);
   const gearRef = useRef<HTMLButtonElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const phraseIndex = useRef(
@@ -210,6 +222,28 @@ export default function Sidebar({
     };
   }, [showAbout]);
 
+  // Close tag dropdown on outside click or Escape
+  useEffect(() => {
+    if (!showTagDropdown) return;
+    const handleClick = (e: MouseEvent) => {
+      if (tagDropdownRef.current && !tagDropdownRef.current.contains(e.target as Node)) {
+        setShowTagDropdown(false);
+      }
+    };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setShowTagDropdown(false);
+    };
+    const timer = setTimeout(() => {
+      window.addEventListener("mousedown", handleClick);
+      window.addEventListener("keydown", handleKey);
+    }, 10);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousedown", handleClick);
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [showTagDropdown]);
+
   useEffect(() => {
     const tick = () => {
       const current = SEARCH_PHRASES[phraseIndex.current];
@@ -235,15 +269,18 @@ export default function Sidebar({
     return () => clearTimeout(timer);
   }, []);
 
+
   return (
     <>
       {/* ===== SCROLLING BANNER ===== */}
-      <div className="fixed top-0 left-0 right-0 z-[60] h-[var(--banner-height)] marquee-hue text-[var(--accent-text)] overflow-hidden flex items-center">
+      <div
+        className="fixed top-0 left-0 right-0 z-[60] h-[var(--banner-height)] marquee-aurora overflow-hidden flex items-center"
+      >
         <div className="marquee-track inline-flex whitespace-nowrap">
-          <span className="font-[family-name:var(--font-banner)] text-[13px] font-bold uppercase tracking-[0.15em] shrink-0 px-2">
+          <span className="font-[family-name:var(--font-banner)] text-[13px] font-medium uppercase tracking-[0.3em] shrink-0 px-2">
             {BANNER_TEXT}
           </span>
-          <span aria-hidden="true" className="font-[family-name:var(--font-banner)] text-[13px] font-bold uppercase tracking-[0.15em] shrink-0 px-2">
+          <span aria-hidden="true" className="font-[family-name:var(--font-banner)] text-[13px] font-medium uppercase tracking-[0.3em] shrink-0 px-2">
             {BANNER_TEXT}
           </span>
         </div>
@@ -255,15 +292,18 @@ export default function Sidebar({
         style={{ top: "var(--banner-height)" }}
       >
         <div className="shrink-0 min-w-[var(--sidebar-width)] flex justify-start pl-[5px]">
-          <span className="font-[family-name:var(--font-display)] text-4xl text-[var(--text)] tracking-[-0.04em] select-none">
+          <span
+            className="font-[family-name:var(--font-display)] text-5xl text-[var(--text)] select-none mr-1.5 cursor-pointer"
+            onClick={() => { onViewChange("home"); onTagFilterChange("all"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          >
             digeart
           </span>
         </div>
 
         <div className="flex-1">
-          <div className="relative">
+          <div className="relative" ref={tagDropdownRef}>
             <svg
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]"
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-secondary)]"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -279,13 +319,59 @@ export default function Sidebar({
               type="text"
               placeholder={placeholder}
               disabled
-              className="w-full pl-12 pr-4 py-2.5 bg-[var(--bg-alt)] border border-[var(--border)] rounded-xl font-mono text-sm text-[var(--text-secondary)] placeholder:text-[var(--text-muted)] cursor-not-allowed focus:border-[var(--text-secondary)] transition-colors"
+              className="w-full pl-12 pr-10 py-2.5 bg-[var(--bg-alt)] border border-[var(--border)] rounded-xl font-mono text-sm text-[var(--text-secondary)] placeholder:text-[var(--text-muted)] cursor-not-allowed focus:border-[var(--text-secondary)] transition-colors"
             />
+            {activeTagFilter !== "all" && (
+              <button
+                onClick={() => onTagFilterChange("all")}
+                className="absolute right-10 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors duration-150"
+                title="Clear filter"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            )}
+            <button
+              onClick={() => setShowTagDropdown((v) => !v)}
+              className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 flex items-center justify-center transition-colors duration-200 ${activeTagFilter !== "all" ? "text-[var(--text)]" : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
+            >
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={activeTagFilter !== "all" ? 2.5 : 2} strokeLinecap="round" strokeLinejoin="round">
+                <line x1="4" y1="21" x2="4" y2="14" />
+                <line x1="4" y1="10" x2="4" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="12" />
+                <line x1="12" y1="8" x2="12" y2="3" />
+                <line x1="20" y1="21" x2="20" y2="16" />
+                <line x1="20" y1="12" x2="20" y2="3" />
+                <line x1="1" y1="14" x2="7" y2="14" />
+                <line x1="9" y1="8" x2="15" y2="8" />
+                <line x1="17" y1="16" x2="23" y2="16" />
+              </svg>
+            </button>
+            {showTagDropdown && (
+              <div className="absolute right-0 top-full mt-2 bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg shadow-lg z-50 py-1 min-w-[120px]">
+                {TAG_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => { onTagFilterChange(opt.value); setShowTagDropdown(false); }}
+                    className={`w-full flex items-center gap-2 px-3 py-1.5 font-mono text-xs uppercase transition-colors duration-150 ${
+                      activeTagFilter === opt.value
+                        ? "text-[var(--text)] bg-[var(--border)]/50"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/30"
+                    }`}
+                  >
+                    {opt.dotColor && <span className={`w-2 h-2 rounded-full ${opt.dotColor} shrink-0`} />}
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="shrink-0">
-          <AuthButton />
+        <div className="shrink-0 mr-1">
+          <AuthButton onGoToSaved={() => onViewChange("saved")} />
         </div>
       </header>
 
@@ -303,17 +389,17 @@ export default function Sidebar({
             return (
               <div key={item.key} className="relative group/nav">
                 <button
-                  onClick={() => onViewChange(item.key)}
-                  className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-200 ${
+                  onClick={() => { onViewChange(item.key); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                  className={`w-12 h-12 flex items-center justify-center rounded-xl cursor-pointer transition-all duration-200 ${
                     isActive
-                      ? "text-[var(--text)] bg-[var(--bg-alt)]"
-                      : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)]"
+                      ? "text-[var(--text)] bg-[var(--bg-alt)] opacity-100 shadow-sm"
+                      : "text-[var(--text-muted)] opacity-60 hover:text-[var(--text)] hover:opacity-100 hover:bg-[var(--bg-alt)]"
                   }`}
                 >
                   {item.icon(isActive)}
                 </button>
                 {/* Tooltip */}
-                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-[var(--text)] text-[var(--bg)] rounded-lg font-mono text-xs whitespace-nowrap opacity-0 pointer-events-none group-hover/nav:opacity-100 transition-opacity duration-150 shadow-lg">
+                <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[11px] whitespace-nowrap opacity-0 pointer-events-none group-hover/nav:opacity-100 transition-opacity duration-150 z-50">
                   {item.label}
                 </div>
               </div>
@@ -334,7 +420,7 @@ export default function Sidebar({
             </svg>
           </button>
           {!showAbout && (
-            <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[10px] whitespace-nowrap opacity-0 pointer-events-none group-hover/about:opacity-100 transition-opacity duration-150 z-50">
+            <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[11px] whitespace-nowrap opacity-0 pointer-events-none group-hover/about:opacity-100 transition-opacity duration-150 z-50">
               About
             </div>
           )}
@@ -357,7 +443,7 @@ export default function Sidebar({
           >
             <GearIcon className="w-7 h-7" />
           </button>
-          <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[10px] whitespace-nowrap opacity-0 pointer-events-none group-hover/gear:opacity-100 transition-opacity duration-150 z-50">
+          <div className="absolute left-full ml-3 top-1/2 -translate-y-1/2 px-2.5 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[11px] whitespace-nowrap opacity-0 pointer-events-none group-hover/gear:opacity-100 transition-opacity duration-150 z-50">
             Settings
           </div>
         </div>
@@ -369,12 +455,15 @@ export default function Sidebar({
         className="flex lg:hidden fixed left-0 right-0 z-50 h-14 bg-[var(--bg)]/80 backdrop-blur-md backdrop-saturate-150 border-b border-[var(--border)]/50 items-center px-2 gap-2"
         style={{ top: "var(--banner-height)" }}
       >
-        <span className="shrink-0 font-[family-name:var(--font-display)] text-2xl text-[var(--text)] tracking-[-0.02em] select-none">
+        <span
+          className="shrink-0 font-[family-name:var(--font-display)] text-4xl text-[var(--text)] select-none mr-1 cursor-pointer"
+          onClick={() => { onViewChange("home"); onTagFilterChange("all"); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+        >
           digeart
         </span>
         <div className="flex-1 relative">
           <svg
-            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-muted)]"
+            className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[var(--text-secondary)]"
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
@@ -390,8 +479,54 @@ export default function Sidebar({
             type="text"
             placeholder={placeholder}
             disabled
-            className="w-full pl-8 pr-3 py-1.5 bg-[var(--bg-alt)] border border-[var(--border)] rounded-xl font-mono text-xs text-[var(--text-secondary)] placeholder:text-[var(--text-muted)] cursor-not-allowed"
+            className="w-full pl-8 pr-8 py-1.5 bg-[var(--bg-alt)] border border-[var(--border)] rounded-xl font-mono text-xs text-[var(--text-secondary)] placeholder:text-[var(--text-muted)] cursor-not-allowed"
           />
+          {activeTagFilter !== "all" && (
+            <button
+              onClick={() => onTagFilterChange("all")}
+              className="absolute right-8 top-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors duration-150"
+              title="Clear filter"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          )}
+          <button
+            onClick={() => setShowTagDropdown((v) => !v)}
+            className={`absolute right-2.5 top-1/2 -translate-y-1/2 w-4 h-4 flex items-center justify-center transition-colors duration-200 ${activeTagFilter !== "all" ? "text-[var(--text)]" : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"}`}
+          >
+            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={activeTagFilter !== "all" ? 2.5 : 2} strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="21" x2="4" y2="14" />
+              <line x1="4" y1="10" x2="4" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12" y2="3" />
+              <line x1="20" y1="21" x2="20" y2="16" />
+              <line x1="20" y1="12" x2="20" y2="3" />
+              <line x1="1" y1="14" x2="7" y2="14" />
+              <line x1="9" y1="8" x2="15" y2="8" />
+              <line x1="17" y1="16" x2="23" y2="16" />
+            </svg>
+          </button>
+          {showTagDropdown && (
+            <div className="absolute right-0 top-full mt-1.5 bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg shadow-lg z-50 py-1 min-w-[110px]">
+              {TAG_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => { onTagFilterChange(opt.value); setShowTagDropdown(false); }}
+                  className={`w-full flex items-center gap-2 px-3 py-1.5 font-mono text-[11px] uppercase transition-colors duration-150 ${
+                    activeTagFilter === opt.value
+                      ? "text-[var(--text)] bg-[var(--border)]/50"
+                      : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/30"
+                  }`}
+                >
+                  {opt.dotColor && <span className={`w-1.5 h-1.5 rounded-full ${opt.dotColor} shrink-0`} />}
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <button
           onClick={() => {
@@ -403,7 +538,7 @@ export default function Sidebar({
           <GearIcon className="w-4.5 h-4.5" />
         </button>
         <div className="shrink-0">
-          <AuthButton />
+          <AuthButton mobile onGoToSaved={() => onViewChange("saved")} onOpenSettings={() => { setSettingsAnchor(null); setSettingsOpen(true); }} />
         </div>
       </header>
 
@@ -417,11 +552,11 @@ export default function Sidebar({
           return (
             <button
               key={item.key}
-              onClick={() => onViewChange(item.key)}
-              className={`flex-1 h-full flex items-center justify-center transition-all duration-200 ${
+              onClick={() => { onViewChange(item.key); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+              className={`flex-1 h-full flex items-center justify-center cursor-pointer transition-all duration-200 ${
                 isActive
-                  ? "text-[var(--text)]"
-                  : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                  ? "text-[var(--text)] opacity-100"
+                  : "text-[var(--text-muted)] opacity-60 hover:text-[var(--text)] hover:opacity-100"
               }`}
             >
               {item.icon(isActive)}

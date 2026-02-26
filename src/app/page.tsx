@@ -70,6 +70,7 @@ export default function Home() {
   const isAuthenticated = !!session;
   const [activeView, setActiveView] = useState<ViewType>("home");
   const [activeGenre, setActiveGenre] = useState(0);
+  const [activeTagFilter, setActiveTagFilter] = useState<"all" | "top" | "hot" | "rare" | "new">("all");
   const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
   const [playingId, setPlayingId] = useState<string | null>(null);
   const [nowPlayingCard, setNowPlayingCard] = useState<CardData | null>(null);
@@ -190,8 +191,13 @@ export default function Home() {
       },
       events: {
         onReady: (event: YTPlayerEvent) => {
-          event.target.setVolume(volume);
-          if (isMuted) event.target.mute();
+          // iOS Safari: must start muted for autoplay policy
+          event.target.mute();
+          event.target.playVideo();
+          setTimeout(() => {
+            event.target.setVolume(volume);
+            if (!isMuted) event.target.unMute();
+          }, 300);
           startYTProgressPoller();
         },
         onStateChange: (event: YTPlayerEvent) => {
@@ -277,6 +283,11 @@ export default function Home() {
     setAudioProgress(0);
     setAudioDuration(card.duration || 0);
     setNowPlayingCard(card);
+
+    // Update origin view so locate points to the card's actual view
+    if (skipHistory) {
+      playOriginView.current = cardViewMap.current.get(card.id) || null;
+    }
 
     if (card.source === "youtube" && card.videoId) {
       if (ytApiReady.current) {
@@ -591,6 +602,8 @@ export default function Home() {
         onViewChange={handleViewChange}
         activeGenre={activeGenre}
         onGenreChange={setActiveGenre}
+        activeTagFilter={activeTagFilter}
+        onTagFilterChange={setActiveTagFilter}
       />
 
       <div style={{ display: activeView === "home" ? undefined : "none" }}>
@@ -603,7 +616,7 @@ export default function Home() {
           onToggleSave={toggleLike}
           onToggleLike={toggleLike}
           activeGenre={activeGenre}
-
+          activeTagFilter={activeTagFilter}
           onCardsLoaded={registerHomeCards}
           isAuthenticated={isAuthenticated}
         />
@@ -618,6 +631,7 @@ export default function Home() {
           onPlay={handlePlay}
           onToggleSave={toggleLike}
           onToggleLike={toggleLike}
+          activeTagFilter={activeTagFilter}
           onCardsLoaded={registerSamplesCards}
           isAuthenticated={isAuthenticated}
         />
@@ -632,6 +646,7 @@ export default function Home() {
           onPlay={handlePlay}
           onToggleSave={toggleLike}
           onToggleLike={toggleLike}
+          activeTagFilter={activeTagFilter}
           onCardsLoaded={registerMixesCards}
           isAuthenticated={isAuthenticated}
         />
@@ -648,7 +663,7 @@ export default function Home() {
           onToggleSave={toggleLike}
           onToggleLike={toggleLike}
           activeGenre={activeGenre}
-
+          activeTagFilter={activeTagFilter}
           onCardsLoaded={registerSavedCards}
           isAuthenticated={isAuthenticated}
         />

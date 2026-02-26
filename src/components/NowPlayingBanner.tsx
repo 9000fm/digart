@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
+import Tooltip from "./Tooltip";
 import type { CardData } from "@/lib/types";
 
 interface NowPlayingBannerProps {
@@ -35,24 +36,6 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-// Tooltip wrapper component
-function Tooltip({ label, children, position = "top" }: { label: string; children: React.ReactNode; position?: "top" | "bottom" | "left" | "right" }) {
-  const positionClasses = {
-    top: "bottom-full left-1/2 -translate-x-1/2 mb-2",
-    bottom: "top-full left-1/2 -translate-x-1/2 mt-2",
-    left: "right-full top-1/2 -translate-y-1/2 mr-2",
-    right: "left-full top-1/2 -translate-y-1/2 ml-2",
-  };
-  return (
-    <div className="relative group/tip">
-      {children}
-      <div className={`absolute ${positionClasses[position]} px-2 py-1 bg-[var(--text)] text-[var(--bg)] rounded-md font-mono text-[10px] whitespace-nowrap opacity-0 pointer-events-none group-hover/tip:opacity-100 transition-opacity duration-150 z-50`}>
-        {label}
-      </div>
-    </div>
-  );
-}
-
 export default function NowPlayingBanner({
   card,
   isPlaying,
@@ -82,6 +65,9 @@ export default function NowPlayingBanner({
   const progressBarRef = useRef<HTMLDivElement>(null);
   const mobileProgressBarRef = useRef<HTMLDivElement>(null);
 
+  // Hover preview tooltip
+  const [hoverPercent, setHoverPercent] = useState<number | null>(null);
+
   // EQ collapse
   const [eqActive, setEqActive] = useState(isPlaying);
   const eqBarRefs = useRef<(HTMLSpanElement | null)[]>([]);
@@ -91,7 +77,14 @@ export default function NowPlayingBanner({
   const [showVolumeFader, setShowVolumeFader] = useState(false);
   const volumeFaderRef = useRef<HTMLDivElement>(null);
   const volumeIconRef = useRef<HTMLButtonElement>(null);
+  const mobileVolumeFaderRef = useRef<HTMLDivElement>(null);
+  const mobileVolumeIconRef = useRef<HTMLButtonElement>(null);
   const volumeIdleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Mobile minimize state
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const expandedHeightRef = useRef(116);
 
   const hasDuration = audioDuration > 0;
 
@@ -143,10 +136,10 @@ export default function NowPlayingBanner({
   useEffect(() => {
     if (!showVolumeFader) return;
     const handler = (e: PointerEvent) => {
-      if (
-        volumeFaderRef.current && !volumeFaderRef.current.contains(e.target as Node) &&
-        volumeIconRef.current && !volumeIconRef.current.contains(e.target as Node)
-      ) {
+      const t = e.target as Node;
+      const insideFader = volumeFaderRef.current?.contains(t) || mobileVolumeFaderRef.current?.contains(t);
+      const insideIcon = volumeIconRef.current?.contains(t) || mobileVolumeIconRef.current?.contains(t);
+      if (!insideFader && !insideIcon) {
         setShowVolumeFader(false);
       }
     };
@@ -162,6 +155,35 @@ export default function NowPlayingBanner({
     return () => { if (volumeIdleTimer.current) clearTimeout(volumeIdleTimer.current); };
   }, [showVolumeFader, volume, isMuted]);
 
+  // Mobile viewport detection — reset minimize on desktop resize
+  useEffect(() => {
+    const update = () => {
+      const mobile = window.innerWidth < 900;
+      setIsMobile(mobile);
+      if (!mobile) setIsMinimized(false);
+      // Read CSS-defined expanded height (temporarily remove inline override)
+      const el = document.documentElement;
+      const inlineVal = el.style.getPropertyValue('--player-height');
+      if (inlineVal) el.style.removeProperty('--player-height');
+      const val = parseInt(getComputedStyle(el).getPropertyValue('--player-height'), 10);
+      if (val > 0) expandedHeightRef.current = val;
+      if (inlineVal) el.style.setProperty('--player-height', inlineVal);
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  // Sync --player-height CSS variable for page padding
+  useEffect(() => {
+    if (isMobile && isMinimized) {
+      document.documentElement.style.setProperty('--player-height', '44px');
+    } else {
+      document.documentElement.style.removeProperty('--player-height');
+    }
+    return () => { document.documentElement.style.removeProperty('--player-height'); };
+  }, [isMinimized, isMobile]);
+
   // --- Unified pointer seek handler ---
   const calcRatio = useCallback(
     (clientX: number, barEl: HTMLDivElement) => {
@@ -175,7 +197,7 @@ export default function NowPlayingBanner({
     (e: React.PointerEvent<HTMLDivElement>, barRef: React.RefObject<HTMLDivElement | null>) => {
       if (!onSeek || !barRef.current || !hasDuration) return;
       e.preventDefault();
-      barRef.current.setPointerCapture(e.pointerId);
+      (e.currentTarget as HTMLDivElement).setPointerCapture(e.pointerId);
       isDraggingRef.current = true;
       setIsDragging(true);
       const ratio = calcRatio(e.clientX, barRef.current);
@@ -221,16 +243,22 @@ export default function NowPlayingBanner({
   );
 
   // Like/Heart button
+  const [likeNudge, setLikeNudge] = useState(false);
+  const [tipLocked, setTipLocked] = useState(false);
   const likeButton = (size: "sm" | "md" = "md") => onToggleLike ? (
-    <Tooltip label={!isAuthenticated ? "Log in to save" : isLiked ? "Unlike" : "Like"}>
+    <Tooltip label={!isAuthenticated ? "Log in to save" : isLiked ? "Unlike" : "Like"} show={likeNudge || tipLocked} hoverable={isAuthenticated}>
       <button
         onClick={(e) => {
           e.stopPropagation();
+          setLikeNudge(true);
           if (isAuthenticated) onToggleLike();
+          else setTipLocked(true);
         }}
+        onAnimationEnd={() => setLikeNudge(false)}
+        onMouseLeave={() => setTipLocked(false)}
         className={`shrink-0 flex items-center justify-center rounded-full transition-all duration-200 ease-out active:scale-90 ${
           size === "sm" ? "w-6 h-6" : "w-7 h-7"
-        } ${!isAuthenticated ? "opacity-50 cursor-default" : ""}`}
+        } ${!isAuthenticated ? "opacity-50 cursor-default" : ""} ${likeNudge ? "heart-nudge" : ""}`}
       >
         <svg
           className={size === "sm" ? "w-3.5 h-3.5" : "w-4 h-4"}
@@ -327,29 +355,63 @@ export default function NowPlayingBanner({
     );
 
     return (
-      <div className="group/vol flex items-center gap-1.5">
-        <Tooltip label={isMuted ? "Unmute" : "Mute"}>
+      <div className="group/vol relative flex items-center gap-1.5">
+        {/* Speaker button: mute toggle at ≥1111px, popup toggle below */}
+        <Tooltip label={isMuted ? "Unmute" : "Mute"} className="hidden min-[1111px]:block">
           <button
+            ref={volumeIconRef}
             onClick={(e) => {
               e.stopPropagation();
-              onToggleMute?.();
+              if (window.innerWidth >= 1111) {
+                onToggleMute?.();
+              } else {
+                setShowVolumeFader((prev) => !prev);
+              }
             }}
             className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--text)] transition-all duration-200 ease-out active:scale-95"
           >
             {speakerIcon}
           </button>
         </Tooltip>
+        {/* Horizontal slider — wide screens only */}
         <input
           type="range"
           min={0}
           max={100}
           value={effectiveVolume}
           onChange={(e) => onVolumeChange?.(parseInt(e.target.value, 10))}
-          className="volume-slider w-20 cursor-pointer hidden lg:block"
+          className="volume-slider w-20 h-7 cursor-pointer hidden min-[1111px]:block"
           style={{
-            background: `linear-gradient(to right, var(--vol-fill) ${effectiveVolume}%, var(--border) ${effectiveVolume}%)`,
-          }}
+            '--vol-bg': `linear-gradient(to right, var(--text) ${effectiveVolume}%, color-mix(in srgb, var(--text-muted) 50%, var(--border)) ${effectiveVolume}%)`,
+          } as React.CSSProperties}
         />
+        {/* Vertical fader popup — narrow screens */}
+        {showVolumeFader && (
+          <div
+            ref={volumeFaderRef}
+            className="absolute left-1/2 -translate-x-1/2 px-2 py-3 bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg shadow-lg z-50 min-[1111px]:hidden"
+            style={{ bottom: "calc(100% + 8px)" }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={effectiveVolume}
+              onChange={(e) => {
+                onVolumeChange?.(parseInt(e.target.value, 10));
+                if (volumeIdleTimer.current) clearTimeout(volumeIdleTimer.current);
+                volumeIdleTimer.current = setTimeout(() => setShowVolumeFader(false), 3000);
+              }}
+              className="h-24 accent-[var(--text)] cursor-pointer"
+              style={{
+                writingMode: "vertical-lr",
+                direction: "rtl",
+                width: "20px",
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   };
@@ -360,14 +422,14 @@ export default function NowPlayingBanner({
     return (
       <div className="relative shrink-0">
         <button
-          ref={volumeIconRef}
+          ref={mobileVolumeIconRef}
           onClick={(e) => {
             e.stopPropagation();
             setShowVolumeFader((prev) => !prev);
           }}
           className="w-6 h-6 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--text)] transition-all duration-200 ease-out active:scale-95"
         >
-          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+          <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
             {isMuted || effectiveVolume === 0 ? (
               <>
@@ -388,8 +450,8 @@ export default function NowPlayingBanner({
         {/* Vertical fader popup */}
         {showVolumeFader && (
           <div
-            ref={volumeFaderRef}
-            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 flex flex-col items-center gap-1.5 px-2 py-3 bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg shadow-lg z-50"
+            ref={mobileVolumeFaderRef}
+            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-3 bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg shadow-lg z-50"
             onClick={(e) => e.stopPropagation()}
           >
             <input
@@ -405,29 +467,11 @@ export default function NowPlayingBanner({
               }}
               className="h-24 accent-[var(--text)] cursor-pointer"
               style={{
-                accentColor: "var(--text)",
                 writingMode: "vertical-lr",
                 direction: "rtl",
                 width: "20px",
               }}
             />
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleMute?.();
-              }}
-              className="w-5 h-5 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors"
-            >
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
-                {isMuted ? (
-                  <>
-                    <line x1="23" y1="9" x2="17" y2="15" />
-                    <line x1="17" y1="9" x2="23" y2="15" />
-                  </>
-                ) : null}
-              </svg>
-            </button>
           </div>
         )}
       </div>
@@ -436,14 +480,29 @@ export default function NowPlayingBanner({
 
   // Seek bar
   const seekBar = (barRef: React.RefObject<HTMLDivElement | null>) => (
-    <div className="flex-1 py-2 px-2">
+    <div
+      className="group/seek flex-1 py-3 px-2 cursor-pointer touch-none"
+      onMouseMove={(e) => {
+        if (!barRef.current || !hasDuration) return;
+        const rect = barRef.current.getBoundingClientRect();
+        setHoverPercent(Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100)));
+      }}
+      onMouseLeave={() => setHoverPercent(null)}
+      onPointerDown={(e) => handlePointerDown(e, barRef)}
+      onPointerMove={(e) => handlePointerMove(e, barRef)}
+      onPointerUp={(e) => handlePointerUp(e, barRef)}
+    >
       <div
         ref={barRef}
-        className="relative h-1.5 bg-[var(--border)] rounded-full cursor-pointer touch-none"
-        onPointerDown={(e) => handlePointerDown(e, barRef)}
-        onPointerMove={(e) => handlePointerMove(e, barRef)}
-        onPointerUp={(e) => handlePointerUp(e, barRef)}
+        className="relative h-1 bg-[color-mix(in_srgb,var(--text-muted)_50%,var(--border))] rounded-full"
       >
+        {/* Hover preview fill */}
+        {hoverPercent !== null && !isDragging && (
+          <div
+            className="absolute inset-y-0 left-0 bg-[var(--text)] opacity-45 rounded-full pointer-events-none"
+            style={{ width: `${hoverPercent}%` }}
+          />
+        )}
         <div
           className="h-full bg-[var(--text)] rounded-full pointer-events-none"
           style={{
@@ -452,14 +511,22 @@ export default function NowPlayingBanner({
           }}
         />
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full bg-[var(--bg)] border-2 border-[var(--text)] shadow-md pointer-events-none"
+          className="seek-thumb absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full bg-[var(--bg)] border-2 border-[var(--text)] shadow-md pointer-events-none"
           style={{
             left: `${progressPercent}%`,
-            width: isDragging ? "16px" : "14px",
-            height: isDragging ? "16px" : "14px",
-            transition: isDragging ? "width 100ms, height 100ms" : "left 75ms linear, width 100ms, height 100ms",
+            width: 14,
+            height: 14,
           }}
         />
+        {/* Hover timestamp tooltip */}
+        {hoverPercent !== null && hasDuration && !isDragging && (
+          <div
+            className="absolute -top-7 -translate-x-1/2 pointer-events-none px-1.5 py-0.5 bg-[var(--text)] text-[var(--bg)] rounded font-mono text-[10px] tabular-nums whitespace-nowrap z-50"
+            style={{ left: `${hoverPercent}%` }}
+          >
+            {formatTime((hoverPercent / 100) * audioDuration)}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -543,45 +610,43 @@ export default function NowPlayingBanner({
     </button>
   );
 
-  // Close button (desktop) — hatched gutter + half-diamond bg
-  const closeGutter = (
-    <div className="group/close self-stretch shrink-0 flex items-stretch">
-      {/* Diagonal hatch separator */}
-      <div className="self-stretch w-[6px] hatch-separator" />
-      <button
-        onClick={(e) => { e.stopPropagation(); onClose(); }}
-        className="relative w-10 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/60 active:scale-95 transition-all duration-200 ease-out"
-      >
-        <svg
-          className="w-4 h-4 transition-transform duration-200 group-hover/close:scale-110"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2.5}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18" />
-          <line x1="6" y1="6" x2="18" y2="18" />
-        </svg>
-      </button>
-    </div>
-  );
-
-  // Close button — mobile (round pill, no rotate)
-  const mobileCloseButton = (
+  // Corner-fold close button — shared between desktop and mobile
+  const cornerClose = (size: number, idPrefix: string) => (
     <button
       onClick={(e) => { e.stopPropagation(); onClose(); }}
-      className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--border)]/50 active:scale-90 transition-all duration-200 ease-out"
+      className="absolute top-0 right-0 z-20 flex items-center justify-center cursor-pointer group/close"
+      style={{ width: size, height: size }}
+      aria-label="Close player"
     >
+      <svg className="absolute top-0 right-0 w-full h-full" viewBox={`0 0 ${size} ${size}`} fill="none">
+        <defs>
+          <linearGradient id={`${idPrefix}Grad`} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="var(--text)" stopOpacity="0.12" />
+            <stop offset="100%" stopColor="var(--text)" stopOpacity="0.03" />
+          </linearGradient>
+        </defs>
+        {/* Base fill */}
+        <path d={`M0 0 L${size} 0 L${size} ${size} Z`} fill="var(--bg-alt)" />
+        {/* Gradient overlay */}
+        <path
+          d={`M0 0 L${size} 0 L${size} ${size} Z`}
+          fill={`url(#${idPrefix}Grad)`}
+          className="opacity-100 group-hover/close:opacity-[1.8] transition-opacity duration-200"
+        />
+        {/* Crease */}
+        <line
+          x1="0" y1="0" x2={size} y2={size}
+          stroke="var(--text)"
+          className="[stroke-opacity:0.15] group-hover/close:[stroke-opacity:0.25] transition-all duration-200"
+          strokeWidth="1"
+        />
+      </svg>
+      {/* X icon — positioned at triangle centroid */}
       <svg
-        className="w-3 h-3"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
+        className={`absolute w-3.5 h-3.5 text-[var(--text-muted)] group-hover/close:text-[var(--text)] transition-colors duration-200`}
+        style={{ top: size * 0.12, right: size * 0.12 }}
+        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"
       >
         <line x1="18" y1="6" x2="6" y2="18" />
         <line x1="6" y1="6" x2="18" y2="18" />
@@ -592,19 +657,26 @@ export default function NowPlayingBanner({
   return (
     <motion.div
       initial={{ y: "100%", opacity: 0.5 }}
-      animate={{ y: 0, opacity: 1 }}
+      animate={{
+        y: 0,
+        opacity: 1,
+        ...(isMobile ? { height: isMinimized ? 44 : expandedHeightRef.current } : {}),
+      }}
       exit={{ y: "100%", opacity: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
-      className="player-banner fixed left-0 right-0 lg:left-[var(--sidebar-width)] bg-[var(--bg-alt)]/85 backdrop-blur-2xl backdrop-saturate-150 border-t border-[var(--border)]/50"
-      style={{ bottom: 0, height: "var(--player-height)" }}
+      className="player-banner fixed left-0 right-0 lg:left-[var(--sidebar-width)] bg-[var(--bg-alt)]/85 backdrop-blur-2xl backdrop-saturate-150 border-t border-[var(--border)]/50 overflow-hidden"
+      style={{ bottom: 0, ...(!isMobile ? { height: "var(--player-height)" } : {}) }}
     >
+      {/* Corner close — desktop */}
+      <div className="hidden min-[900px]:block">{cornerClose(36, "fold")}</div>
+
       {/* ===== DESKTOP layout (sm+): single row, 96px ===== */}
-      <div className="h-full hidden sm:flex items-center pl-0 pr-4 gap-2">
+      <div className="h-full hidden min-[900px]:flex items-center pl-3 pr-12 gap-2">
         {/* Album art thumbnail */}
         {thumbUrl && (
           <div
             key={card.id}
-            className={`shrink-0 self-stretch aspect-square rounded-none overflow-hidden bg-[var(--bg)] shadow-md animate-art-in relative group/art cursor-pointer transition-opacity duration-300 ${isUnavailable ? "opacity-40" : ""}`}
+            className={`shrink-0 w-[72px] h-[72px] rounded-md overflow-hidden bg-[var(--bg)] shadow-md animate-art-in relative group/art cursor-pointer transition-opacity duration-300 ${isUnavailable ? "opacity-40" : ""}`}
             onClick={(e) => {
               e.stopPropagation();
               if (card.youtubeUrl) window.open(card.youtubeUrl, "_blank", "noopener,noreferrer");
@@ -622,7 +694,7 @@ export default function NowPlayingBanner({
         )}
 
         {/* Track info — fixed width + like */}
-        <div className="shrink-0 w-[140px] lg:w-[200px] xl:w-[280px] 2xl:w-[320px] flex items-center gap-2">
+        <div className="shrink-0 flex items-center gap-2" style={{ width: "clamp(200px, 18vw, 320px)" }}>
           <div className="flex-1 min-w-0">
             {isUnavailable ? (
               <p className="font-mono text-sm text-[var(--text-muted)] uppercase truncate leading-tight">
@@ -630,10 +702,10 @@ export default function NowPlayingBanner({
               </p>
             ) : (
               <>
-                <p className="font-mono text-sm text-[var(--text)] uppercase truncate leading-tight font-bold">
+                <p className="font-mono text-[15px] text-[var(--text)] uppercase truncate leading-tight font-bold">
                   {card.name}
                 </p>
-                <p className="font-mono text-xs text-[var(--text-secondary)] uppercase truncate leading-tight">
+                <p className="font-mono text-[13px] text-[var(--text-secondary)] uppercase truncate leading-tight">
                   {card.artist}
                 </p>
               </>
@@ -646,9 +718,11 @@ export default function NowPlayingBanner({
         {eqBars}
 
         {/* Transport */}
-        {prevButton(36)}
-        {playPauseButton(44, 18)}
-        {nextButton(36)}
+        <div className="flex items-center gap-0.5">
+          {prevButton(36)}
+          {playPauseButton(44, 18)}
+          {nextButton(36)}
+        </div>
 
         {/* Progress */}
         <div className="flex flex-1 items-center gap-1.5 min-w-[80px]">
@@ -658,94 +732,132 @@ export default function NowPlayingBanner({
         </div>
 
         {/* Controls */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           {volumeControl()}
           <div className="hidden md:flex">{autoPlayButton}</div>
           <div className="hidden lg:flex">{locateButton("md")}</div>
         </div>
-
-        {/* Edge gutter — close */}
-        {closeGutter}
       </div>
 
-      {/* ===== MOBILE layout (below sm): 2-row, 120px ===== */}
-      <div className="h-full flex sm:hidden flex-col px-3 py-2 gap-1.5">
-        {/* Row 1: Art + Info+Like + Volume + Transport + Locate */}
-        <div className="flex items-center gap-2 min-w-0 flex-1">
-          {thumbUrl && (
-            <a
-              href={card.source === "youtube" && card.youtubeUrl ? card.youtubeUrl : undefined}
-              target="_blank"
-              rel="noopener noreferrer"
-              key={card.id}
-              className={`shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-[var(--bg)] shadow-md animate-art-in relative group/art transition-opacity duration-300 ${isUnavailable ? "opacity-40" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (!card.youtubeUrl) e.preventDefault();
-              }}
-            >
-              <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
-              {card.source === "youtube" && card.youtubeUrl && (
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/art:opacity-100 transition-opacity duration-200">
-                  <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M21.582 6.186a2.506 2.506 0 00-1.768-1.768C18.254 4 12 4 12 4s-6.254 0-7.814.418c-.86.23-1.538.908-1.768 1.768C2 7.746 2 12 2 12s0 4.254.418 5.814c.23.86.908 1.538 1.768 1.768C5.746 20 12 20 12 20s6.254 0 7.814-.418a2.506 2.506 0 001.768-1.768C22 16.254 22 12 22 12s0-4.254-.418-5.814zM10 15.464V8.536L16 12l-6 3.464z" />
-                  </svg>
-                </div>
-              )}
-            </a>
-          )}
-          <div className="flex-1 min-w-0">
-            {isUnavailable ? (
-              <p className="font-mono text-sm text-[var(--text-muted)] uppercase truncate leading-tight">
-                Unavailable &middot; skipping&hellip;
-              </p>
-            ) : (
-              <>
-                <p className="font-mono text-sm text-[var(--text)] uppercase truncate leading-tight font-bold">
-                  {card.name}
-                </p>
-                <p className="font-mono text-[11px] text-[var(--text-secondary)] uppercase truncate leading-tight">
-                  {card.artist}
-                </p>
-              </>
-            )}
-          </div>
-          {prevButton(32)}
-          {playPauseButton(36, 14)}
-          {nextButton(32)}
-          {mobileVolumePopup()}
-          {/* Compact mobile shuffle */}
-          {onToggleAutoPlay && (
+      {/* ===== MOBILE layout ===== */}
+      <div className="h-full min-[900px]:hidden overflow-hidden">
+        {isMinimized ? (
+          /* Minimized micro-strip */
+          <div className="h-full flex items-center gap-2 px-3 pb-1">
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onToggleAutoPlay();
-              }}
-              className={`relative shrink-0 w-6 h-6 flex items-center justify-center transition-all duration-200 ease-out active:scale-95 ${
-                autoPlay
-                  ? "text-[var(--text)]"
-                  : "text-[var(--text-muted)]/50"
-              }`}
+              onClick={(e) => { e.stopPropagation(); setIsMinimized(false); }}
+              className="shrink-0 w-7 h-7 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-all duration-200 active:scale-95"
             >
-              <svg className="w-3 h-3" viewBox="0 0 24 24" fill={autoPlay ? "currentColor" : "none"} stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 3h5v5" />
-                <path d="M4 20L21 3" />
-                <path d="M21 16v5h-5" />
-                <path d="M15 15l6 6" />
-                <path d="M4 4l5 5" />
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="18 15 12 9 6 15" />
               </svg>
-              <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0.5 h-0.5 rounded-full bg-current transition-opacity duration-200 ${autoPlay ? "opacity-100" : "opacity-0"}`} />
             </button>
-          )}
-          {mobileCloseButton}
-        </div>
+            {thumbUrl && (
+              <div className="shrink-0 w-7 h-7 rounded overflow-hidden bg-[var(--bg)]">
+                <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
+              </div>
+            )}
+            {playPauseButton(28, 12)}
+            {seekBar(mobileProgressBarRef)}
+            <button
+              onClick={(e) => { e.stopPropagation(); onClose(); }}
+              className="shrink-0 w-7 h-7 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-all duration-200 active:scale-95"
+            >
+              <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+        ) : (
+          /* Expanded 2-row layout */
+          <div className="h-full flex flex-col px-3 py-2 gap-1.5">
+            {/* Row 1: Chevron + Art + Info + Like + Transport + Volume + Shuffle */}
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <button
+                onClick={(e) => { e.stopPropagation(); setIsMinimized(true); }}
+                className="shrink-0 w-7 h-7 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-all duration-200 active:scale-95"
+              >
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </button>
+              {thumbUrl && (
+                <a
+                  href={card.source === "youtube" && card.youtubeUrl ? card.youtubeUrl : undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={card.id}
+                  className={`shrink-0 w-14 h-14 rounded-lg overflow-hidden bg-[var(--bg)] shadow-md animate-art-in relative group/art transition-opacity duration-300 ${isUnavailable ? "opacity-40" : ""}`}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (!card.youtubeUrl) e.preventDefault();
+                  }}
+                >
+                  <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
+                  {card.source === "youtube" && card.youtubeUrl && (
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/art:opacity-100 transition-opacity duration-200">
+                      <svg className="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21.582 6.186a2.506 2.506 0 00-1.768-1.768C18.254 4 12 4 12 4s-6.254 0-7.814.418c-.86.23-1.538.908-1.768 1.768C2 7.746 2 12 2 12s0 4.254.418 5.814c.23.86.908 1.538 1.768 1.768C5.746 20 12 20 12 20s6.254 0 7.814-.418a2.506 2.506 0 001.768-1.768C22 16.254 22 12 22 12s0-4.254-.418-5.814zM10 15.464V8.536L16 12l-6 3.464z" />
+                      </svg>
+                    </div>
+                  )}
+                </a>
+              )}
+              <div className="flex-1 min-w-0">
+                {isUnavailable ? (
+                  <p className="font-mono text-sm text-[var(--text-muted)] uppercase truncate leading-tight">
+                    Unavailable &middot; skipping&hellip;
+                  </p>
+                ) : (
+                  <>
+                    <p className="font-mono text-[15px] text-[var(--text)] uppercase truncate leading-tight font-bold">
+                      {card.name}
+                    </p>
+                    <p className="font-mono text-xs text-[var(--text-secondary)] uppercase truncate leading-tight">
+                      {card.artist}
+                    </p>
+                  </>
+                )}
+              </div>
+              {likeButton("sm")}
+              {prevButton(32)}
+              {playPauseButton(36, 14)}
+              {nextButton(32)}
+              {mobileVolumePopup()}
+              {/* Compact mobile shuffle */}
+              {onToggleAutoPlay && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onToggleAutoPlay();
+                  }}
+                  className={`relative shrink-0 w-6 h-6 flex items-center justify-center transition-all duration-200 ease-out active:scale-95 ${
+                    autoPlay
+                      ? "text-[var(--text)]"
+                      : "text-[var(--text-muted)]/50"
+                  }`}
+                >
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill={autoPlay ? "currentColor" : "none"} stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 3h5v5" />
+                    <path d="M4 20L21 3" />
+                    <path d="M21 16v5h-5" />
+                    <path d="M15 15l6 6" />
+                    <path d="M4 4l5 5" />
+                  </svg>
+                  <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-0.5 h-0.5 rounded-full bg-current transition-opacity duration-200 ${autoPlay ? "opacity-100" : "opacity-0"}`} />
+                </button>
+              )}
+            </div>
 
-        {/* Row 2: Seek bar only */}
-        <div className="flex items-center gap-1.5">
-          {mobileElapsedLabel}
-          {seekBar(mobileProgressBarRef)}
-          {mobileRemainingLabel}
-        </div>
+            {/* Row 2: Seek bar only */}
+            <div className="flex items-center gap-1.5">
+              {mobileElapsedLabel}
+              {seekBar(mobileProgressBarRef)}
+              {mobileRemainingLabel}
+            </div>
+          </div>
+        )}
       </div>
     </motion.div>
   );

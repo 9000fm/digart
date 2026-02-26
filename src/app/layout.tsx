@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Space_Mono, Rubik_Broken_Fax, Big_Shoulders } from "next/font/google";
+import { Space_Mono, Big_Shoulders } from "next/font/google";
+import localFont from "next/font/local";
 import { SessionProvider } from "next-auth/react";
 import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
@@ -11,10 +12,10 @@ const bigShoulders = Big_Shoulders({
   variable: "--font-banner",
   adjustFontFallback: false,
 });
-const rubikBrokenFax = Rubik_Broken_Fax({
-  subsets: ["latin"],
-  weight: "400",
+const displayFont = localFont({
+  src: "./fonts/FlexingDemoRegular.ttf",
   variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${spaceMono.className} ${rubikBrokenFax.variable} ${bigShoulders.variable} antialiased`}>
+      <body className={`${spaceMono.className} ${displayFont.variable} ${bigShoulders.variable} antialiased`}>
         <SessionProvider>
           <ThemeProvider>
             {children}

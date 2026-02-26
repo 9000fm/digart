@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import MusicCard from "./MusicCard";
+import type { TagFilter } from "./Sidebar";
 import type { CardData } from "@/lib/types";
 
 interface SamplesGridProps {
@@ -12,6 +13,7 @@ interface SamplesGridProps {
   onPlay: (id: string) => void;
   onToggleSave: (id: string) => void;
   onToggleLike: (id: string) => void;
+  activeTagFilter?: TagFilter;
   onCardsLoaded?: (cards: CardData[]) => void;
   isAuthenticated?: boolean;
 }
@@ -24,6 +26,7 @@ export default function SamplesGrid({
   onPlay,
   onToggleSave,
   onToggleLike,
+  activeTagFilter = "all",
   onCardsLoaded,
   isAuthenticated = true,
 }: SamplesGridProps) {
@@ -32,18 +35,25 @@ export default function SamplesGrid({
   const [loadingMore, setLoadingMore] = useState(false);
   const observerRef = useRef<HTMLDivElement | null>(null);
   const pageRef = useRef(0);
+  const hasMore = useRef(true);
 
   const fetchSamples = useCallback(
-    async (append = false) => {
+    async (append = false, sort?: string) => {
+      if (append && !hasMore.current) return;
       if (append) setLoadingMore(true);
-      else setLoading(true);
+      else { setLoading(true); hasMore.current = true; }
 
       try {
-        const offset = append ? pageRef.current * 30 : 0;
-        const res = await fetch(`/api/samples?limit=30&offset=${offset}`);
+        const limit = 30;
+        const offset = append ? pageRef.current * limit : 0;
+        let url = `/api/samples?limit=${limit}&offset=${offset}`;
+        if (sort) url += `&sort=${sort}`;
+        const res = await fetch(url);
         const data = await res.json();
         const newCards: CardData[] = data.cards || [];
         onCardsLoaded?.(newCards);
+
+        if (newCards.length < limit) hasMore.current = false;
 
         if (append) {
           setCards((prev) => {
@@ -66,8 +76,18 @@ export default function SamplesGrid({
     [] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  const prevTagRef = useRef(activeTagFilter);
   useEffect(() => {
-    fetchSamples();
+    const wasTop = prevTagRef.current === "top";
+    const isTop = activeTagFilter === "top";
+    prevTagRef.current = activeTagFilter;
+    if (wasTop !== isTop) {
+      fetchSamples(false, isTop ? "top" : undefined);
+    }
+  }, [activeTagFilter, fetchSamples]);
+
+  useEffect(() => {
+    fetchSamples(false, activeTagFilter === "top" ? "top" : undefined);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -79,7 +99,7 @@ export default function SamplesGrid({
           !loadingMore &&
           cards.length > 0
         ) {
-          fetchSamples(true);
+          fetchSamples(true, activeTagFilter === "top" ? "top" : undefined);
         }
       },
       { rootMargin: "400px" }
@@ -90,7 +110,7 @@ export default function SamplesGrid({
     return () => {
       if (el) observer.unobserve(el);
     };
-  }, [loading, loadingMore, cards.length, fetchSamples]);
+  }, [activeTagFilter, loading, loadingMore, cards.length, fetchSamples]);
 
   const shareCard = async (card: CardData) => {
     const url = card.youtubeUrl || "";
@@ -103,6 +123,24 @@ export default function SamplesGrid({
       await navigator.clipboard.writeText(url);
     }
   };
+
+  const top10Ids = useMemo(() => {
+    const sorted = [...cards]
+      .filter((c) => c.viewCount != null && c.viewCount > 0)
+      .sort((a, b) => (b.viewCount ?? 0) - (a.viewCount ?? 0));
+    return new Set(sorted.slice(0, 10).map((c) => c.id));
+  }, [cards]);
+
+  const displayCards = useMemo(() => {
+    if (activeTagFilter === "all") return cards;
+    if (activeTagFilter === "top") return cards; // server already sorted by viewCount
+    return cards.filter((card) => {
+      if (activeTagFilter === "hot") return card.viewCount != null && card.viewCount >= 100_000;
+      if (activeTagFilter === "rare") return card.viewCount != null && card.viewCount < 5_000;
+      if (activeTagFilter === "new") return card.publishedAt && (Date.now() - new Date(card.publishedAt).getTime()) / 86400000 <= 30;
+      return true;
+    });
+  }, [cards, activeTagFilter, top10Ids]);
 
   if (loading) {
     return (
@@ -133,12 +171,13 @@ export default function SamplesGrid({
   return (
     <>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-[11px] p-2 sm:p-[11px]">
-        {cards.map((card) => (
+        {displayCards.map((card) => (
           <MusicCard
             key={card.id}
             card={card}
             saved={likedIds.has(card.id)}
             isPlaying={playingId === card.id && isPlaying}
+            isTop10={top10Ids.has(card.id)}
             onPlay={() => onPlay(card.id)}
             onSave={() => onToggleLike(card.id)}
             onShare={() => shareCard(card)}

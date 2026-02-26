@@ -5,6 +5,7 @@ import path from "path";
 const API_KEY = process.env.YOUTUBE_API_KEY!;
 const DATA_DIR = path.join(process.cwd(), "src/data");
 const CHANNELS_PATH = path.join(DATA_DIR, "music-channels.json");
+const REGISTRY_PATH = path.join(DATA_DIR, "channel-registry.json");
 
 function readJson(filePath: string) {
   return JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -193,6 +194,29 @@ export async function POST(req: NextRequest) {
 
   if (added.length > 0) {
     writeJson(CHANNELS_PATH, channels);
+
+    // Update registry with new imports
+    let registry: Record<string, unknown> = {};
+    try {
+      registry = JSON.parse(fs.readFileSync(REGISTRY_PATH, "utf-8"));
+    } catch { /* empty */ }
+
+    const now = new Date().toISOString();
+    for (const ch of channels) {
+      if (!registry[ch.id]) {
+        registry[ch.id] = {
+          id: ch.id,
+          name: ch.name,
+          importedAt: now,
+          importSource: "paste",
+          reviewedAt: null,
+          lastScannedAt: null,
+          uploadsFetched: 0,
+          scanError: null,
+        };
+      }
+    }
+    writeJson(REGISTRY_PATH, registry);
   }
 
   return NextResponse.json({

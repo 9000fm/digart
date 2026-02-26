@@ -6,7 +6,8 @@ export async function GET(request: NextRequest) {
     const { searchParams } = request.nextUrl;
     const limit = parseInt(searchParams.get("limit") || "30", 10);
     const offset = parseInt(searchParams.get("offset") || "0", 10);
-    const cards = await discoverSamples(limit, offset);
+    const sort = searchParams.get("sort") || undefined;
+    const cards = await discoverSamples(limit, offset, sort);
     return NextResponse.json({ cards });
   } catch (error) {
     console.error("Samples API error:", error);

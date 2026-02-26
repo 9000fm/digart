@@ -7,9 +7,10 @@ export async function GET(req: NextRequest) {
     50
   );
   const offset = Number(req.nextUrl.searchParams.get("offset") || 0);
+  const sort = req.nextUrl.searchParams.get("sort") || undefined;
 
   try {
-    const cards = await discoverFromYouTube(limit, offset);
+    const cards = await discoverFromYouTube(limit, offset, sort);
     return NextResponse.json({ cards, hasMore: true });
   } catch (err) {
     console.error("Discover API error:", err);
