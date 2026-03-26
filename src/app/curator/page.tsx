@@ -237,9 +237,12 @@ export default function CuratorPage() {
     [fetchPending, fetchStats]
   );
 
+  const [syncDone, setSyncDone] = useState(false);
+
   const handleSync = useCallback(async () => {
     setSyncing(true);
     setSyncError(undefined);
+    setSyncDone(false);
     try {
       const res = await fetch("/api/curator/subscriptions", { method: "POST" });
       const result = await res.json();
@@ -251,6 +254,7 @@ export default function CuratorPage() {
         fetchFiltered();
         fetchRejected();
         fetchStats();
+        setSyncDone(true);
       }
     } catch {
       setSyncError("Sync failed — check your connection");
@@ -468,6 +472,7 @@ export default function CuratorPage() {
             onSync={handleSync}
             syncing={syncing}
             syncError={syncError}
+            syncDone={syncDone}
             onQuickImport={handleQuickImport}
             importing={importing}
           />

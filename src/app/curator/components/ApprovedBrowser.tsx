@@ -72,7 +72,7 @@ export function ApprovedBrowser({
     return result;
   }, [channels, search, genreFilter, sortMode]);
 
-  const showResults = search.trim().length > 0 || genreFilter !== null;
+  // Always show filtered (which includes sorting) — no separate "default" view
 
   return (
     <>
@@ -162,15 +162,15 @@ export function ApprovedBrowser({
         </div>
       </div>
 
-      {/* Results */}
+      {/* Results — always uses filtered (which includes sorting) */}
       {loading ? (
         <div className="flex items-center justify-center py-12">
           <span className="animate-pulse text-[var(--text-muted)]">LOADING...</span>
         </div>
-      ) : showResults ? (
+      ) : (
         <>
-          <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mb-2">
-            {filtered.length} result{filtered.length !== 1 ? "s" : ""}
+          <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mb-2 pt-3">
+            {filtered.length} channel{filtered.length !== 1 ? "s" : ""}
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pb-8">
             {filtered.map((ch) => (
@@ -215,51 +215,6 @@ export function ApprovedBrowser({
               No channels match
             </p>
           )}
-        </>
-      ) : (
-        /* Default: show all channels */
-        <>
-          <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider mb-2">
-            {channels.length} approved channels
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pb-8">
-            {channels.map((ch) => (
-              <button
-                key={ch.id}
-                onClick={() => onEnterAudit(ch)}
-                className="rounded-lg border border-[var(--border)] hover:border-[var(--text-muted)] p-3 text-left transition-colors group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm font-bold text-[var(--text)] group-hover:text-emerald-500 transition-colors truncate block">
-                      {ch.name}
-                    </span>
-                    {ch.labels && ch.labels.length > 0 ? (
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {ch.labels.map((l) => (
-                          <span
-                            key={l}
-                            className="text-[8px] px-1.5 py-0.5 bg-[var(--bg-alt)] text-[var(--text-muted)] rounded uppercase tracking-wider"
-                          >
-                            {l}
-                          </span>
-                        ))}
-                      </div>
-                    ) : (
-                      <span className="text-[9px] text-[var(--text-muted)]/50 uppercase tracking-wider mt-1 block">
-                        No labels
-                      </span>
-                    )}
-                  </div>
-                  {ch.isStarred && (
-                    <span className="text-amber-400 text-sm leading-none shrink-0">
-                      &#9733;
-                    </span>
-                  )}
-                </div>
-              </button>
-            ))}
-          </div>
         </>
       )}
 

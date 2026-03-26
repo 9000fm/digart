@@ -77,36 +77,22 @@ export function useCuratorActions({
     [data, fetchNext, selectedLabels, notes, isStarred]
   );
 
+  // Navigate back to previous channel (does NOT undo the decision)
   const handleGoBack = useCallback(async () => {
     if (history.length === 0 || actingRef.current) return;
-    actingRef.current = true;
-    setActing(true);
 
     const last = history[history.length - 1];
-    await fetch("/api/curator", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ channelId: last.id }),
-    });
-
     setHistory((prev) => prev.slice(0, -1));
     setPlayingVideoId(null);
     setSelectedLabels(new Set(last.labels));
     setIsStarred(last.wasStarred);
     setData((prev) => ({
-      reviewed: (prev?.reviewed || 1) - 1,
+      ...prev,
+      reviewed: prev?.reviewed || 0,
       total: prev?.total || 0,
-      remaining: (prev?.remaining || 0) + 1,
-      approvedCount:
-        last.decision === "approve"
-          ? (prev?.approvedCount || 1) - 1
-          : prev?.approvedCount || 0,
       channel: { name: last.name, id: last.id },
       uploads: last.uploads,
     }));
-
-    actingRef.current = false;
-    setActing(false);
   }, [history, setData, setIsStarred, setSelectedLabels, setPlayingVideoId]);
 
   const handleToggleStar = useCallback(async () => {

@@ -85,6 +85,7 @@ export const GENRE_LABELS = [
   "World",
   "Experimental",
   "IDM",
+  "VGM",
   "Samples",
   "DJ Sets",
   "Live Sets",

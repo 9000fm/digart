@@ -16,6 +16,7 @@ interface ReviewListProps {
   onSync: () => void;
   syncing: boolean;
   syncError?: string;
+  syncDone?: boolean;
   onQuickImport: (url: string) => void;
   importing: boolean;
 }
@@ -39,6 +40,7 @@ export function ReviewList({
   onSync,
   syncing,
   syncError,
+  syncDone,
   onQuickImport,
   importing,
 }: ReviewListProps) {
@@ -77,10 +79,14 @@ export function ReviewList({
           )}
           <button
             onClick={onSync}
-            disabled={syncing}
-            className="px-8 py-3 text-sm font-bold uppercase tracking-[0.15em] bg-[var(--accent)] text-[var(--accent-text)] hover:opacity-90 transition-opacity disabled:opacity-40 rounded-lg"
+            disabled={syncing || syncDone}
+            className={`px-8 py-3 text-sm font-bold uppercase tracking-[0.15em] rounded-lg transition-all disabled:opacity-40 ${
+              syncDone
+                ? "bg-[var(--bg-alt)] border border-[var(--border)] text-[var(--text-muted)]"
+                : "bg-[var(--accent)] text-[var(--accent-text)] hover:opacity-90"
+            }`}
           >
-            {syncing ? "SYNCING..." : "SYNC SUBSCRIPTIONS"}
+            {syncing ? "SYNCING..." : syncDone ? "UP TO DATE" : "SYNC SUBSCRIPTIONS"}
           </button>
         </div>
 
@@ -120,10 +126,12 @@ export function ReviewList({
         {!channels.length || channels.length <= 10 ? <div className="flex-1" /> : null}
         <button
           onClick={onSync}
-          disabled={syncing}
-          className="px-3 py-2 text-[10px] font-bold uppercase tracking-wider border border-[var(--border)] rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text-secondary)] transition-all disabled:opacity-40 shrink-0"
+          disabled={syncing || syncDone}
+          className={`px-3 py-2 text-[10px] font-bold uppercase tracking-wider border rounded-lg transition-all disabled:opacity-40 shrink-0 ${
+            syncDone ? "border-emerald-500/30 text-emerald-500" : "border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text-secondary)]"
+          }`}
         >
-          {syncing ? "..." : "SYNC"}
+          {syncing ? "..." : syncDone ? "SYNCED" : "SYNC"}
         </button>
         <form onSubmit={handleSubmitUrl} className="flex items-center gap-1.5 shrink-0">
           <input
