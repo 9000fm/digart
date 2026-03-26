@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { ApprovedChannel, CuratorStats } from "../types";
 import { ChannelAuditBody } from "./ChannelAuditBody";
 import { CuratorStatsBar } from "./CuratorStatsBar";
@@ -16,7 +16,7 @@ interface AuditModeProps {
   onChangeDecision: (
     id: string,
     name: string,
-    d: "reject" | "unsubscribe"
+    d: "reject"
   ) => void;
   fetchStats: () => void;
 }
@@ -71,6 +71,19 @@ export function AuditMode({
     });
   };
 
+  // Keyboard shortcuts for audit mode
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "l" || e.key === "L") handleSaveLabels();
+      if (e.key === "r" || e.key === "R") onChangeDecision(channel.id, channel.name, "reject");
+      if (e.key === "f" || e.key === "F") handleToggleStar();
+      if (e.key === "b" || e.key === "B" || e.key === "Escape") onExit();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [handleSaveLabels, handleToggleStar, onChangeDecision, onExit, channel.id, channel.name]);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] font-mono">
       <div className="max-w-7xl mx-auto px-4 py-3 lg:px-8 lg:py-3">
@@ -83,9 +96,9 @@ export function AuditMode({
             >
               &larr;
             </button>
-            <h1 className="text-lg font-bold uppercase tracking-[0.25em] text-[var(--text-secondary)]">
+            <button onClick={onExit} className="text-3xl font-bold uppercase tracking-[0.25em] text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
               CURATOR
-            </h1>
+            </button>
           </div>
         </div>
 
@@ -135,22 +148,6 @@ export function AuditMode({
                 </kbd>
               </div>
             </button>
-            <button
-              onClick={() =>
-                onChangeDecision(channel.id, channel.name, "unsubscribe")
-              }
-              className="relative flex-1 flex items-center rounded-none bg-red-500/5 text-red-400 transition-all duration-100 hover:bg-red-500 hover:text-white active:scale-[0.93]"
-            >
-              <div className="w-1 self-stretch bg-red-500 shrink-0" />
-              <div className="flex-1 flex items-center justify-between px-3 py-2.5">
-                <span className="text-xs font-bold uppercase tracking-wider">
-                  &oslash; UNSUB
-                </span>
-                <kbd className="text-[9px] font-normal opacity-40 border border-current/20 px-1.5 py-0.5">
-                  U
-                </kbd>
-              </div>
-            </button>
           </div>
           <div className="flex items-center gap-3">
             <button
@@ -176,12 +173,6 @@ export function AuditMode({
                   R
                 </kbd>
                 Reject
-              </span>
-              <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  U
-                </kbd>
-                Unsub
               </span>
               <span>
                 <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">

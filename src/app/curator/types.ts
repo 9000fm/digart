@@ -14,17 +14,11 @@ export interface CuratorData {
   total: number;
   remaining?: number;
   approvedCount?: number;
-  unsubCount?: number;
   starredCount?: number;
   isStarred?: boolean;
   done?: boolean;
-  hasNewSubscriptions?: boolean;
-  newSubCount?: number;
-  skippedCount?: number;
-  starredChannels?: { name: string; id: string }[];
-  approvedChannels?: { name: string; id: string; labels?: string[] }[];
   rejectedCount?: number;
-  unsubChannels?: { name: string; id: string }[];
+  topics?: string[];
 }
 
 export interface ApprovedChannel {
@@ -32,30 +26,19 @@ export interface ApprovedChannel {
   id: string;
   labels?: string[];
   isStarred?: boolean;
-}
-
-export interface BookmarkEntry {
-  name: string;
-  url: string;
-  path: string;
+  reviewedAt?: string | null;
+  notes?: string;
 }
 
 export interface CuratorStats {
   imported: number;
   approved: number;
-  skipped: number;
   rejected: number;
-  unsub: number;
   starred: number;
   pending: number;
-  conflicts?: number;
-  unreviewed?: number;
-  noLabels?: number;
 }
 
-export type CuratorTab = "review" | "library" | "rejected";
-export type ApprovedFilter = "all" | "has-labels" | "no-labels" | "starred";
-export type QueueType = "tag-untagged" | "spot-check-rejected" | "re-audit-starred";
+export type CuratorTab = "approved" | "review" | "rejected";
 
 export interface FilteredChannel {
   name: string;
@@ -64,10 +47,15 @@ export interface FilteredChannel {
   importedAt?: string | null;
 }
 
+export interface RejectedChannel {
+  name: string;
+  id: string;
+  rejectedAt?: string | null;
+}
+
 export type ApprovedView =
   | { mode: "landing" }
-  | { mode: "direct-audit"; channel: ApprovedChannel }
-  | { mode: "queue"; queueType: QueueType; channels: ApprovedChannel[] };
+  | { mode: "audit"; channel: ApprovedChannel };
 
 export const GENRE_LABELS = [
   "House",
@@ -96,34 +84,8 @@ export const GENRE_LABELS = [
   "Pop",
   "World",
   "Experimental",
+  "IDM",
   "Samples",
   "DJ Sets",
   "Live Sets",
 ];
-
-export interface CoverageSegment {
-  count: number;
-  channels: { name: string; id: string; labels?: string[]; isStarred?: boolean }[];
-}
-
-export interface CoverageData {
-  total: number;
-  segments: {
-    approved: CoverageSegment;
-    rejected: CoverageSegment;
-    unsub: CoverageSegment;
-    skipped: CoverageSegment;
-    unreviewed: CoverageSegment;
-    conflict: CoverageSegment;
-  };
-}
-
-export interface HealthData {
-  conflicts: { name: string; id: string; issue: string }[];
-  noLabels: number;
-  noLabelsList: { name: string; id: string }[];
-  scanErrors: number;
-  scanErrorsList: { name: string; id: string; issue: string }[];
-  neverScanned: number;
-  neverScannedList: { name: string; id: string }[];
-}

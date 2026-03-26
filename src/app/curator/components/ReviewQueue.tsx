@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import type { CuratorData, Upload } from "../types";
+import { useState, useEffect, useCallback } from "react";
+import type { CuratorData } from "../types";
 import { GenreLabels } from "./GenreLabels";
 import { ChannelUploadGrid } from "./ChannelUploadGrid";
 
@@ -13,11 +13,12 @@ interface ReviewQueueProps {
   isStarred: boolean;
   selectedLabels: Set<string>;
   onToggleLabel: (label: string) => void;
-  onDecision: (d: "approve" | "reject" | "unsubscribe") => void;
-  onSkip: () => void;
+  onDecision: (d: "approve" | "reject") => void;
   onGoBack: () => void;
-  onToggleStar: () => void;
+  onToggleStar: (starred: boolean) => void;
   onRescan: () => void;
+  notes: string;
+  onNotesChange: (notes: string) => void;
 }
 
 export function ReviewQueue({
@@ -29,44 +30,91 @@ export function ReviewQueue({
   selectedLabels,
   onToggleLabel,
   onDecision,
-  onSkip,
   onGoBack,
   onToggleStar,
   onRescan,
+  notes,
+  onNotesChange,
 }: ReviewQueueProps) {
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
+  const [localStarred, setLocalStarred] = useState(isStarred);
   const channel = data.channel;
   const uploads = data.uploads || [];
-  const progress = Math.round((data.reviewed / data.total) * 100);
+
+  // Sync from parent
+  useEffect(() => { setLocalStarred(isStarred); }, [isStarred]);
+
+  // Direct star toggle — calls API directly, no stale closures
+  const toggleStar = useCallback(async () => {
+    if (!channel) return;
+    const res = await fetch("/api/curator", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ channelId: channel.id, channelName: channel.name }),
+    });
+    const result = await res.json();
+    setLocalStarred(result.starred);
+    onToggleStar(result.starred);
+  }, [channel, onToggleStar]);
+
+  // Own keyboard shortcuts — ensures F/A/R/B/X/ESC always work
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+      if (e.key === "a" || e.key === "A") onDecision("approve");
+      if (e.key === "r" || e.key === "R") onDecision("reject");
+      if (e.key === "f" || e.key === "F") toggleStar();
+      if (e.key === "b" || e.key === "B") onGoBack();
+      if (e.key === "x" || e.key === "X") onRescan();
+      if (e.key === "Escape") setPlayingVideoId(null);
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onDecision, toggleStar, onGoBack, onRescan]);
 
   if (!channel) return null;
 
   return (
     <>
-      {/* Progress bar */}
-      <div className="w-full h-px bg-[var(--border)] mb-2 relative">
-        <div
-          className="absolute top-0 left-0 h-[3px] -translate-y-[1px] bg-[var(--accent)] transition-all duration-500 rounded-full"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
-
       {/* Channel info */}
       <div className="mb-2">
         <div className="flex items-center gap-3 mb-0.5">
           <h2 className="text-2xl font-bold tracking-tight">{channel.name}</h2>
           <button
-            onClick={onToggleStar}
-            className={`text-2xl leading-none transition-colors ${
-              isStarred
-                ? "text-amber-400"
-                : "text-[var(--text-muted)] hover:text-amber-400"
+            onClick={toggleStar}
+            className={`text-2xl leading-none transition-all duration-200 active:scale-150 ${
+              localStarred
+                ? "text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+                : "text-[var(--text-muted)]/30 hover:text-amber-400"
             }`}
-            title={isStarred ? "Unstar (F)" : "Star (F)"}
+            title={localStarred ? "Unstar (F)" : "Star (F)"}
           >
-            {isStarred ? "\u2605" : "\u2606"}
+            {localStarred ? "\u2605" : "\u2606"}
           </button>
+          {localStarred && (
+            <span className="text-[9px] text-amber-400 uppercase tracking-[0.2em] font-bold animate-pulse">
+              STARRED
+            </span>
+          )}
         </div>
+        {/* YouTube topics */}
+        {data.topics && data.topics.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="text-[11px] text-[var(--text-muted)]/60 uppercase tracking-wider mr-1">YT topics</span>
+            {data.topics.map((t) => (
+              <span
+                key={t}
+                className={`text-[11px] px-2.5 py-1 rounded-full uppercase tracking-wider ${
+                  t.toLowerCase().includes("music")
+                    ? "bg-emerald-500/15 text-emerald-500"
+                    : "bg-[var(--bg-alt)] text-[var(--text-muted)]"
+                }`}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
         <div className="flex items-center gap-3">
           <a
             href={`https://www.youtube.com/channel/${channel.id}`}
@@ -87,6 +135,17 @@ export function ReviewQueue({
       </div>
 
       <GenreLabels selected={selectedLabels} onToggle={onToggleLabel} />
+
+      {/* Notes */}
+      <div className="mb-3">
+        <input
+          type="text"
+          value={notes}
+          onChange={(e) => onNotesChange(e.target.value)}
+          placeholder="Add a note... (e.g. embed disabled, vinyl only)"
+          className="w-full bg-transparent border-b border-[var(--border)] px-1 py-2 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)]/30 focus:outline-none focus:border-[var(--text-secondary)] transition-colors font-mono"
+        />
+      </div>
 
       {/* Uploads */}
       <div className="pb-36">
@@ -134,34 +193,8 @@ export function ReviewQueue({
                 </kbd>
               </div>
             </button>
-            <button
-              onClick={() => onDecision("unsubscribe")}
-              disabled={acting}
-              className="relative flex-1 flex items-center rounded-none bg-red-500/5 text-red-400 transition-all duration-100 hover:bg-red-500 hover:text-white active:scale-[0.93] disabled:opacity-30 disabled:active:scale-100"
-            >
-              <div className="w-1 self-stretch bg-red-500 shrink-0" />
-              <div className="flex-1 flex items-center justify-between px-3 py-2.5">
-                <span className="text-xs font-bold uppercase tracking-wider">
-                  &oslash; UNSUB
-                </span>
-                <kbd className="text-[9px] font-normal opacity-40 border border-current/20 px-1.5 py-0.5">
-                  U
-                </kbd>
-              </div>
-            </button>
           </div>
           <div className="flex items-center gap-3">
-            <button
-              onClick={onSkip}
-              className="py-1.5 px-4 text-[11px] uppercase tracking-wider text-[var(--text-muted)] rounded-none border border-transparent transition-all duration-100 hover:border-[var(--border)] hover:text-[var(--text)] active:scale-[0.93]"
-            >
-              <span className="inline-flex items-center gap-2">
-                SKIP{" "}
-                <kbd className="text-[9px] opacity-40 border border-[var(--border)] px-1 py-0.5">
-                  S
-                </kbd>
-              </span>
-            </button>
             <button
               onClick={onGoBack}
               disabled={acting || history.length === 0}
@@ -174,60 +207,27 @@ export function ReviewQueue({
                 </kbd>
               </span>
             </button>
-            <div className="ml-auto flex items-center gap-3 text-[var(--text-muted)] text-[11px] tracking-wider uppercase">
+            <div className="ml-auto flex items-center gap-4 text-[var(--text-muted)] text-xs tracking-wider uppercase">
               <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  A
-                </kbd>
+                <kbd className="text-[10px] opacity-50 border border-[var(--border)] px-1.5 py-0.5 rounded mr-1.5">A</kbd>
                 Approve
               </span>
               <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  R
-                </kbd>
+                <kbd className="text-[10px] opacity-50 border border-[var(--border)] px-1.5 py-0.5 rounded mr-1.5">R</kbd>
                 Reject
               </span>
               <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  U
-                </kbd>
-                Unsub
+                <kbd className="text-[10px] opacity-50 border border-[var(--border)] px-1.5 py-0.5 rounded mr-1.5">F</kbd>
+                Star
               </span>
               <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  S
-                </kbd>
-                Skip
-              </span>
-              <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  B
-                </kbd>
-                Back
-              </span>
-              <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  F
-                </kbd>
-                Flag
-              </span>
-              <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  X
-                </kbd>
+                <kbd className="text-[10px] opacity-50 border border-[var(--border)] px-1.5 py-0.5 rounded mr-1.5">X</kbd>
                 Rescan
               </span>
               <span>
-                <kbd className="text-[9px] opacity-50 border border-[var(--border)] px-1 py-0.5 rounded-sm mr-1">
-                  ESC
-                </kbd>
-                Close
+                <kbd className="text-[10px] opacity-50 border border-[var(--border)] px-1.5 py-0.5 rounded mr-1.5">ESC</kbd>
+                Back
               </span>
-              {history.length > 0 && (
-                <span className="text-[var(--text-secondary)] ml-1 tabular-nums">
-                  {history.length} reviewed
-                </span>
-              )}
             </div>
           </div>
         </div>

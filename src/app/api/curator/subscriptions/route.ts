@@ -147,12 +147,56 @@ export async function POST() {
     pageToken = data.nextPageToken;
   } while (pageToken);
 
+  const APPROVED_PATH = path.join(DATA_DIR, "approved-channels.json");
+  const REJECTED_PATH = path.join(DATA_DIR, "rejected-channels.json");
+
   const existingChannels: Channel[] = readJson(CHANNELS_PATH);
   const existingIds = new Set(existingChannels.map((c) => c.id));
-  const newChannels = allSubs.filter((c) => !existingIds.has(c.id));
+  const approved: Channel[] = readJson(APPROVED_PATH);
+  const approvedIds = new Set(approved.map((c) => c.id));
+  const rejected: Channel[] = readJson(REJECTED_PATH);
+  const rejectedIds = new Set(rejected.map((c) => c.id));
+  const existingFiltered: { name: string; id: string; topics: string[] }[] = readJson(FILTERED_PATH);
+  const filteredIds = new Set(existingFiltered.map((c) => c.id));
 
-  if (newChannels.length === 0) {
-    return NextResponse.json({ added: 0, filtered: 0 });
+  // Channels not in any list yet
+  const brandNew = allSubs.filter((c) =>
+    !existingIds.has(c.id) && !approvedIds.has(c.id) && !rejectedIds.has(c.id) && !filteredIds.has(c.id)
+  );
+
+  // Re-subscribed channels: in rejected but user subscribed again → move back to New
+  const reSubscribed = allSubs.filter((c) => rejectedIds.has(c.id));
+  if (reSubscribed.length > 0) {
+    const updatedRejected = rejected.filter((c) => !allSubs.some((s) => s.id === c.id));
+    fs.writeFileSync(REJECTED_PATH, JSON.stringify(updatedRejected, null, 2));
+    // Add re-subscribed to music-channels so they appear in New
+    for (const ch of reSubscribed) {
+      if (!existingIds.has(ch.id)) {
+        existingChannels.push(ch);
+        existingIds.add(ch.id);
+      }
+    }
+    fs.writeFileSync(CHANNELS_PATH, JSON.stringify(existingChannels, null, 2));
+  }
+
+  // Also rescue any re-subscribed channels from filtered
+  const reSubFiltered = allSubs.filter((c) => filteredIds.has(c.id));
+  if (reSubFiltered.length > 0) {
+    const updatedFiltered = existingFiltered.filter((c) => !allSubs.some((s) => s.id === c.id));
+    fs.writeFileSync(FILTERED_PATH, JSON.stringify(updatedFiltered, null, 2));
+    for (const ch of reSubFiltered) {
+      if (!existingIds.has(ch.id)) {
+        existingChannels.push(ch);
+        existingIds.add(ch.id);
+      }
+    }
+    fs.writeFileSync(CHANNELS_PATH, JSON.stringify(existingChannels, null, 2));
+  }
+
+  const newChannels = brandNew;
+
+  if (newChannels.length === 0 && reSubscribed.length === 0 && reSubFiltered.length === 0) {
+    return NextResponse.json({ added: 0, filtered: 0, rescued: reSubscribed.length + reSubFiltered.length });
   }
 
   // Batch-fetch topicDetails for new channels (up to 50 per request)

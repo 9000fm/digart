@@ -16,6 +16,7 @@ interface UseCuratorActionsProps {
   fetchNext: () => Promise<CuratorData>;
   fetchStats: () => Promise<void>;
   selectedLabels: Set<string>;
+  notes: string;
   isStarred: boolean;
   setIsStarred: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedLabels: React.Dispatch<React.SetStateAction<Set<string>>>;
@@ -28,6 +29,7 @@ export function useCuratorActions({
   fetchNext,
   fetchStats,
   selectedLabels,
+  notes,
   isStarred,
   setIsStarred,
   setSelectedLabels,
@@ -39,18 +41,20 @@ export function useCuratorActions({
   const [rescanning, setRescanning] = useState(false);
 
   const handleDecision = useCallback(
-    async (decision: "approve" | "reject" | "unsubscribe") => {
+    async (decision: "approve" | "reject") => {
       if (!data?.channel || actingRef.current) return;
       actingRef.current = true;
       setActing(true);
-      const labels = decision === "approve" ? Array.from(selectedLabels) : [];
+      const labelsToSave = decision === "approve" ? Array.from(selectedLabels) : [];
+      // Always save current labels to history so go-back restores them
+      const labelsForHistory = Array.from(selectedLabels);
       setHistory((prev) => [
         ...prev,
         {
           id: data.channel!.id,
           name: data.channel!.name,
           decision,
-          labels,
+          labels: labelsForHistory,
           uploads: data.uploads || [],
           wasStarred: isStarred,
         },
@@ -62,14 +66,15 @@ export function useCuratorActions({
           channelId: data.channel.id,
           channelName: data.channel.name,
           decision,
-          labels,
+          labels: labelsToSave,
+          notes: notes || undefined,
         }),
       });
       actingRef.current = false;
       setActing(false);
       fetchNext();
     },
-    [data, fetchNext, selectedLabels, isStarred]
+    [data, fetchNext, selectedLabels, notes, isStarred]
   );
 
   const handleGoBack = useCallback(async () => {
@@ -96,10 +101,6 @@ export function useCuratorActions({
         last.decision === "approve"
           ? (prev?.approvedCount || 1) - 1
           : prev?.approvedCount || 0,
-      unsubCount:
-        last.decision === "unsubscribe"
-          ? (prev?.unsubCount || 1) - 1
-          : prev?.unsubCount || 0,
       channel: { name: last.name, id: last.id },
       uploads: last.uploads,
     }));

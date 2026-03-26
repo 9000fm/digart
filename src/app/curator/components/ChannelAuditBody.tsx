@@ -56,15 +56,20 @@ export function ChannelAuditBody({
           {onToggleStar && (
             <button
               onClick={onToggleStar}
-              className={`text-2xl leading-none transition-colors ${
+              className={`text-2xl leading-none transition-all duration-200 active:scale-150 ${
                 isStarred
-                  ? "text-amber-400"
-                  : "text-[var(--text-muted)] hover:text-amber-400"
+                  ? "text-amber-400 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]"
+                  : "text-[var(--text-muted)]/30 hover:text-amber-400"
               }`}
               title={isStarred ? "Unstar (F)" : "Star (F)"}
             >
               {isStarred ? "\u2605" : "\u2606"}
             </button>
+          )}
+          {isStarred && (
+            <span className="text-[9px] text-amber-400 uppercase tracking-[0.2em] font-bold animate-pulse">
+              STARRED
+            </span>
           )}
         </div>
         <div className="flex items-center gap-3">

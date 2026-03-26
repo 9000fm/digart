@@ -21,6 +21,7 @@ interface Channel {
 
 interface ApprovedChannel extends Channel {
   labels?: string[];
+  notes?: string;
 }
 
 interface RejectedChannel {
@@ -289,10 +290,12 @@ export async function GET(req: NextRequest) {
 
   // Return full approved list for the Approved Browser
   if (mode === "approved") {
+    const registry = readRegistry();
     return NextResponse.json({
       channels: approved.map((c) => ({
         ...c,
         isStarred: starredIds.has(c.id),
+        reviewedAt: registry[c.id]?.reviewedAt || null,
       })),
     });
   }
@@ -309,6 +312,20 @@ export async function GET(req: NextRequest) {
       (c) => !c.labels || c.labels.length === 0
     );
     return NextResponse.json({ channels: untagged });
+  }
+
+  // Return all pending (unreviewed) channels for the NEW tab
+  if (mode === "pending") {
+    const registry = readRegistry();
+    const pending = allChannels.filter(
+      (c) => !approvedIds.has(c.id) && !rejectedIds.has(c.id) && !unsubIds.has(c.id)
+    );
+    return NextResponse.json({
+      channels: pending.map((c) => ({
+        ...c,
+        importedAt: registry[c.id]?.importedAt || null,
+      })),
+    });
   }
 
   const unreviewed = allChannels.filter(
@@ -352,14 +369,34 @@ export async function GET(req: NextRequest) {
 
     const uploads = pickUploads(allUploads);
 
+    // Fetch YouTube topic categories for this channel
+    let topics: string[] = [];
+    try {
+      const topicUrl = new URL("https://www.googleapis.com/youtube/v3/channels");
+      topicUrl.searchParams.set("part", "topicDetails");
+      topicUrl.searchParams.set("id", channel.id);
+      topicUrl.searchParams.set("key", process.env.YOUTUBE_API_KEY || "");
+      const topicRes = await fetch(topicUrl.toString());
+      if (topicRes.ok) {
+        const topicData = await topicRes.json();
+        const item = topicData.items?.[0];
+        if (item?.topicDetails?.topicCategories) {
+          topics = item.topicDetails.topicCategories.map((url: string) => {
+            const match = url.match(/wiki\/(.+)$/);
+            return match ? match[1].replace(/_/g, " ") : url;
+          });
+        }
+      }
+    } catch { /* ignore topic fetch errors */ }
+
     return NextResponse.json({
       channel,
       uploads,
+      topics,
       reviewed,
       total,
       remaining: unreviewed.length,
       approvedCount: approved.length,
-      unsubCount: unsub.length,
       starredCount: starred.length,
       isStarred: starredIds.has(channel.id),
     });
@@ -460,16 +497,15 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const { channelId, channelName, decision, labels } = await req.json();
+  const { channelId, channelName, decision, labels, notes } = await req.json();
   const now = new Date().toISOString();
 
   if (decision === "approve") {
     const approved: ApprovedChannel[] = readJson(APPROVED_PATH);
     if (!approved.some((c) => c.id === channelId)) {
       const entry: ApprovedChannel = { name: channelName, id: channelId };
-      if (labels && labels.length > 0) {
-        entry.labels = labels;
-      }
+      if (labels && labels.length > 0) entry.labels = labels;
+      if (notes) entry.notes = notes;
       approved.push(entry);
       writeJson(APPROVED_PATH, approved);
     }
@@ -492,8 +528,10 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  // Write reviewedAt to registry
-  updateRegistry(channelId, { reviewedAt: now });
+  // Write reviewedAt + notes to registry
+  const regUpdates: Record<string, unknown> = { reviewedAt: now };
+  if (notes) regUpdates.notes = notes;
+  updateRegistry(channelId, regUpdates as Partial<RegistryEntry>);
 
   // Also remove from skipped if it was skipped before
   const skipped: string[] = readJson(SKIPPED_PATH);
@@ -583,6 +621,72 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  // Send channel from New to Pending (filtered) for second look before final rejection
+  if (body.action === "sendToPending" && body.channelId) {
+    // Remove from music-channels.json
+    const channels: Channel[] = readJson(CHANNELS_PATH);
+    const chIdx = channels.findIndex((c) => c.id === body.channelId);
+    if (chIdx !== -1) {
+      channels.splice(chIdx, 1);
+      writeJson(CHANNELS_PATH, channels);
+    }
+    // Add to filtered-channels.json (pending review)
+    const filtered: { name: string; id: string; topics: string[] }[] = readJson(FILTERED_PATH);
+    if (!filtered.some((c) => c.id === body.channelId)) {
+      filtered.push({ name: body.channelName || "", id: body.channelId, topics: ["Rejected from New"] });
+      writeJson(FILTERED_PATH, filtered);
+    }
+    return NextResponse.json({ ok: true });
+  }
+
+  // Rescue from Rejected → move to Pending (filtered) for second look
+  if (body.action === "rescueToFiltered" && body.channelId) {
+    const rejected: RejectedChannel[] = readJson(REJECTED_PATH);
+    const rejIdx = rejected.findIndex((c) => c.id === body.channelId);
+    let channelName = body.channelName || "";
+    if (rejIdx !== -1) {
+      if (!channelName) channelName = rejected[rejIdx].name;
+      rejected.splice(rejIdx, 1);
+      writeJson(REJECTED_PATH, rejected);
+    }
+    // Remove from music-channels too (prevent appearing in New AND Pending)
+    const channels: Channel[] = readJson(CHANNELS_PATH);
+    const chIdx = channels.findIndex((c) => c.id === body.channelId);
+    if (chIdx !== -1) {
+      channels.splice(chIdx, 1);
+      writeJson(CHANNELS_PATH, channels);
+    }
+    // Add to filtered (pending)
+    const filtered: { name: string; id: string; topics: string[] }[] = readJson(FILTERED_PATH);
+    if (!filtered.some((c) => c.id === body.channelId)) {
+      filtered.push({ name: channelName, id: body.channelId, topics: ["Rescued from Rejected"] });
+      writeJson(FILTERED_PATH, filtered);
+    }
+    return NextResponse.json({ ok: true });
+  }
+
+  // Confirm reject from Pending → move to final Rejected
+  if (body.action === "confirmRejectFiltered" && body.channelId) {
+    // Remove from filtered
+    const filtered: { name: string; id: string; topics: string[] }[] = readJson(FILTERED_PATH);
+    const idx = filtered.findIndex((c) => c.id === body.channelId);
+    let channelName = body.channelName || "";
+    if (idx !== -1) {
+      if (!channelName) channelName = filtered[idx].name;
+      filtered.splice(idx, 1);
+      writeJson(FILTERED_PATH, filtered);
+    }
+    // Add to rejected
+    const rejected: RejectedChannel[] = readJson(REJECTED_PATH);
+    if (!rejected.some((c) => c.id === body.channelId)) {
+      rejected.push({ name: channelName, id: body.channelId });
+      writeJson(REJECTED_PATH, rejected);
+    }
+    // Update registry
+    updateRegistry(body.channelId, { reviewedAt: new Date().toISOString() });
+    return NextResponse.json({ ok: true });
+  }
+
   // Rescue a filtered channel → move to music-channels.json for review
   if (body.action === "rescueFiltered" && body.channelId) {
     const filtered: { name: string; id: string; topics: string[] }[] = readJson(FILTERED_PATH);
@@ -606,7 +710,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
-  // Rescue a channel from rejected → approved
+  // Rescue a channel from rejected → music-channels (for review)
   if (body.action === "rescueChannel" && body.channelId) {
     const rejected: RejectedChannel[] = readJson(REJECTED_PATH);
     const rejIdx = rejected.findIndex((c) => c.id === body.channelId);
@@ -617,14 +721,11 @@ export async function PUT(req: NextRequest) {
       writeJson(REJECTED_PATH, rejected);
     }
 
-    const approved: ApprovedChannel[] = readJson(APPROVED_PATH);
-    if (!approved.some((c) => c.id === body.channelId)) {
-      const entry: ApprovedChannel = { name: channelName, id: body.channelId };
-      if (body.labels && body.labels.length > 0) {
-        entry.labels = body.labels;
-      }
-      approved.push(entry);
-      writeJson(APPROVED_PATH, approved);
+    // Add to music-channels so it appears in Review tab
+    const channels: Channel[] = readJson(CHANNELS_PATH);
+    if (!channels.some((c) => c.id === body.channelId)) {
+      channels.push({ name: channelName, id: body.channelId });
+      writeJson(CHANNELS_PATH, channels);
     }
 
     return NextResponse.json({ ok: true });

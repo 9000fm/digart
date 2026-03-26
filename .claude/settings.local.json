@@ -27,7 +27,10 @@
       "Bash(sed -n '/Keep handleYTStateChange/,/^\\\\s*\\\\], \\\\[/p' src/app/page.tsx)",
       "Bash(sed -n '/const createYTPlayer/,/eslint-disable/p')",
       "Bash(sed -n '/const createYTPlayer/,/eslint-disable/p' src/app/page.tsx)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(node:*)"
     ]
   }
 }

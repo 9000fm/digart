@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { FilteredChannel, ApprovedChannel, QueueType } from "../types";
 
-interface RejectedChannel {
+interface RejectedChannelItem {
   name: string;
   id: string;
   reviewedAt?: string | null;
@@ -11,14 +10,10 @@ interface RejectedChannel {
 }
 
 interface RejectedBrowserProps {
-  rejectedChannels: RejectedChannel[];
-  filteredChannels: FilteredChannel[];
-  rejectedLoading: boolean;
-  filteredLoading: boolean;
-  onRescueFiltered: (channelId: string, channelName: string) => void;
-  onRescueRejected: (channelId: string, channelName: string) => void;
-  onStartQueue: (queueType: QueueType, channels: ApprovedChannel[]) => void;
-  onEnterAudit: (ch: ApprovedChannel) => void;
+  channels: RejectedChannelItem[];
+  loading: boolean;
+  onRescue: (channelId: string, channelName: string) => void;
+  onReviewChannel?: (ch: { name: string; id: string }) => void;
 }
 
 function relativeDate(dateStr: string | null | undefined): string {
@@ -34,164 +29,87 @@ function relativeDate(dateStr: string | null | undefined): string {
 }
 
 export function RejectedBrowser({
-  rejectedChannels,
-  filteredChannels,
-  rejectedLoading,
-  filteredLoading,
-  onRescueFiltered,
-  onRescueRejected,
-  onStartQueue,
-  onEnterAudit,
+  channels,
+  loading,
+  onRescue,
+  onReviewChannel,
 }: RejectedBrowserProps) {
   const [search, setSearch] = useState("");
 
-  const filteredFiltered = useMemo(() => {
-    if (!search.trim()) return filteredChannels;
+  const filtered = useMemo(() => {
+    if (!search.trim()) return channels;
     const q = search.toLowerCase();
-    return filteredChannels.filter((c) => c.name.toLowerCase().includes(q));
-  }, [filteredChannels, search]);
-
-  const filteredRejected = useMemo(() => {
-    if (!search.trim()) return rejectedChannels;
-    const q = search.toLowerCase();
-    return rejectedChannels.filter((c) => c.name.toLowerCase().includes(q));
-  }, [rejectedChannels, search]);
-
-  const loading = rejectedLoading || filteredLoading;
+    return channels.filter((c) => c.name.toLowerCase().includes(q));
+  }, [channels, search]);
 
   return (
-    <div className="space-y-8 pb-8">
-      {/* Search */}
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search rejected & filtered channels..."
-        className="w-full bg-[var(--bg-alt)] border border-[var(--border)] px-4 py-2.5 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)]/50 focus:outline-none focus:border-[var(--text-muted)] transition-colors font-mono"
-      />
+    <div className="space-y-3 pb-8">
+      {channels.length > 5 && (
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search rejected channels..."
+          className="w-full bg-[var(--bg-alt)] border border-[var(--border)] rounded-lg px-4 py-3 text-sm text-[var(--text)] placeholder:text-[var(--text-muted)]/40 focus:outline-none focus:border-[var(--text-muted)] transition-colors font-mono"
+        />
+      )}
+
+      <div className="text-[10px] text-[var(--text-muted)] uppercase tracking-[0.2em] pt-3">
+        {filtered.length} rejected channel{filtered.length !== 1 ? "s" : ""}
+      </div>
 
       {loading ? (
-        <div className="flex items-center justify-center py-12">
-          <span className="animate-pulse text-[var(--text-muted)]">LOADING...</span>
+        <div className="flex items-center justify-center py-16">
+          <span className="animate-pulse text-[var(--text-muted)] text-sm">LOADING...</span>
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="py-16 text-center">
+          <p className="text-[var(--text-muted)] text-sm">
+            {search.trim() ? `No channels match "${search}"` : "No rejected channels"}
+          </p>
         </div>
       ) : (
-        <>
-          {/* Section 1: Auto-Filtered */}
-          <section>
-            <div className="mb-3">
-              <h3 className="text-[11px] text-[var(--text-muted)] uppercase tracking-[0.2em]">
-                AUTO-FILTERED &middot; {filteredFiltered.length} channel{filteredFiltered.length !== 1 ? "s" : ""}
-              </h3>
-              <p className="text-[10px] text-[var(--text-muted)]/60 mt-0.5">
-                These didn&apos;t match music topics &mdash; some might be wrong
-              </p>
-            </div>
-
-            {filteredFiltered.length === 0 ? (
-              <p className="text-[var(--text-muted)] text-sm py-4 text-center">
-                {search.trim() ? "No filtered channels match" : "No auto-filtered channels"}
-              </p>
-            ) : (
-              <div className="space-y-1">
-                {filteredFiltered.map((ch) => (
-                  <div
-                    key={ch.id}
-                    className="flex items-center gap-3 px-3 py-2.5 border border-[var(--border)] hover:border-[var(--text-muted)] transition-colors group cursor-pointer"
-                    onClick={() => onEnterAudit({ name: ch.name, id: ch.id })}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <span className="text-sm font-bold text-[var(--text)] group-hover:text-emerald-500 transition-colors truncate block">
-                        {ch.name}
-                      </span>
-                      <div className="flex flex-wrap gap-1 mt-0.5">
-                        {ch.topics.map((t) => (
-                          <span
-                            key={t}
-                            className="text-[8px] px-1.5 py-0.5 bg-[var(--bg-alt)] text-[var(--text-muted)] rounded uppercase tracking-wider"
-                          >
-                            {t}
-                          </span>
-                        ))}
-                        {ch.importedAt && (
-                          <span className="text-[8px] text-[var(--text-muted)]/50 ml-1">
-                            {relativeDate(ch.importedAt)}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onRescueFiltered(ch.id, ch.name);
-                      }}
-                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-500 border border-emerald-500/30 hover:bg-emerald-500/10 transition-all rounded shrink-0"
-                    >
-                      RESCUE
-                    </button>
-                  </div>
-                ))}
+        <div className="space-y-2">
+          {filtered.map((ch) => (
+            <div
+              key={ch.id}
+              onClick={() => onReviewChannel?.(ch)}
+              className={`flex items-center gap-4 px-4 py-3.5 border border-[var(--border)] rounded-lg hover:border-[var(--text-muted)]/50 hover:bg-[var(--bg-alt)]/30 transition-all group ${onReviewChannel ? "cursor-pointer" : ""}`}
+            >
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-bold text-[var(--text)] group-hover:text-[var(--text-secondary)] transition-colors truncate block">
+                  {ch.name}
+                </span>
+                {ch.reviewedAt && (
+                  <span className="text-[9px] text-[var(--text-muted)]/40 mt-0.5 block">
+                    rejected {relativeDate(ch.reviewedAt)}
+                  </span>
+                )}
               </div>
-            )}
-          </section>
-
-          {/* Section 2: Manually Rejected */}
-          <section>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-[11px] text-[var(--text-muted)] uppercase tracking-[0.2em]">
-                REJECTED &middot; {filteredRejected.length} channel{filteredRejected.length !== 1 ? "s" : ""}
-              </h3>
-              {rejectedChannels.length > 0 && (
-                <button
-                  onClick={() =>
-                    onStartQueue(
-                      "spot-check-rejected",
-                      rejectedChannels.map((c) => ({ name: c.name, id: c.id }))
-                    )
-                  }
-                  className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-amber-500 border border-amber-500/30 hover:bg-amber-500/10 transition-all rounded"
-                >
-                  SPOT-CHECK ALL
-                </button>
-              )}
+              <a
+                href={`https://www.youtube.com/channel/${ch.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="shrink-0 w-8 h-8 flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--bg-alt)] transition-all opacity-0 group-hover:opacity-100"
+                title="Preview on YouTube"
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              </a>
+              <button
+                onClick={(e) => { e.stopPropagation(); onRescue(ch.id, ch.name); }}
+                className="px-3.5 py-2 text-[10px] font-bold uppercase tracking-wider text-emerald-500 border border-emerald-500/30 rounded-lg hover:bg-emerald-500/10 transition-all shrink-0 opacity-0 group-hover:opacity-100"
+                title="Move back to Review"
+              >
+                RESCUE
+              </button>
             </div>
-
-            {filteredRejected.length === 0 ? (
-              <p className="text-[var(--text-muted)] text-sm py-4 text-center">
-                {search.trim() ? "No rejected channels match" : "No rejected channels"}
-              </p>
-            ) : (
-              <div className="space-y-1">
-                {filteredRejected.map((ch) => (
-                  <div
-                    key={ch.id}
-                    className="flex items-center gap-3 px-3 py-2.5 border border-[var(--border)] hover:border-[var(--text-muted)] transition-colors group cursor-pointer"
-                    onClick={() => onEnterAudit({ name: ch.name, id: ch.id })}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <span className="text-sm font-bold text-[var(--text)] group-hover:text-amber-500 transition-colors truncate block">
-                        {ch.name}
-                      </span>
-                      {ch.reviewedAt && (
-                        <span className="text-[9px] text-[var(--text-muted)]/50">
-                          rejected {relativeDate(ch.reviewedAt)}
-                        </span>
-                      )}
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onRescueRejected(ch.id, ch.name);
-                      }}
-                      className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-emerald-500 border border-emerald-500/30 hover:bg-emerald-500/10 transition-all rounded shrink-0"
-                    >
-                      RESCUE
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </section>
-        </>
+          ))}
+        </div>
       )}
     </div>
   );

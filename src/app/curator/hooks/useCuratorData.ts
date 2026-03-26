@@ -3,8 +3,6 @@ import type {
   CuratorData,
   CuratorStats,
   ApprovedChannel,
-  CoverageData,
-  HealthData,
   FilteredChannel,
 } from "../types";
 
@@ -12,9 +10,7 @@ export function useCuratorData() {
   const [data, setData] = useState<CuratorData | null>(null);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState<CuratorStats | null>(null);
-  const [approvedChannels, setApprovedChannels] = useState<ApprovedChannel[]>(
-    []
-  );
+  const [approvedChannels, setApprovedChannels] = useState<ApprovedChannel[]>([]);
   const [approvedLoading, setApprovedLoading] = useState(false);
   const [rejectedChannels, setRejectedChannels] = useState<
     { name: string; id: string; reviewedAt?: string | null; importedAt?: string | null }[]
@@ -22,11 +18,14 @@ export function useCuratorData() {
   const [rejectedLoading, setRejectedLoading] = useState(false);
   const [filteredChannels, setFilteredChannels] = useState<FilteredChannel[]>([]);
   const [filteredLoading, setFilteredLoading] = useState(false);
+  const [pendingChannels, setPendingChannels] = useState<
+    { name: string; id: string; topics?: string[]; importedAt?: string | null }[]
+  >([]);
+  const [pendingLoading, setPendingLoading] = useState(false);
 
   // Subscription check state
   const [newSubCount, setNewSubCount] = useState(0);
   const [subCheckError, setSubCheckError] = useState<string | undefined>();
-  const [subChecking, setSubChecking] = useState(false);
 
   const fetchNext = useCallback(async () => {
     setLoading(true);
@@ -67,18 +66,15 @@ export function useCuratorData() {
     setFilteredLoading(false);
   }, []);
 
-  const fetchCoverage = useCallback(async (): Promise<CoverageData> => {
-    const res = await fetch("/api/curator?mode=coverage");
-    return res.json();
-  }, []);
-
-  const fetchHealth = useCallback(async (): Promise<HealthData> => {
-    const res = await fetch("/api/curator?mode=health");
-    return res.json();
+  const fetchPending = useCallback(async () => {
+    setPendingLoading(true);
+    const res = await fetch("/api/curator?mode=pending");
+    const json = await res.json();
+    setPendingChannels(json.channels || []);
+    setPendingLoading(false);
   }, []);
 
   const checkSubs = useCallback(async () => {
-    setSubChecking(true);
     setSubCheckError(undefined);
     try {
       const res = await fetch("/api/curator?mode=check-subs");
@@ -88,14 +84,13 @@ export function useCuratorData() {
     } catch (e) {
       setSubCheckError(e instanceof Error ? e.message : "Check failed");
     }
-    setSubChecking(false);
   }, []);
 
   useEffect(() => {
-    fetchNext();
     fetchStats();
-    checkSubs();
-  }, [fetchNext, fetchStats, checkSubs]);
+    fetchPending();
+    fetchFiltered();
+  }, [fetchStats, fetchPending, fetchFiltered]);
 
   return {
     data,
@@ -109,17 +104,17 @@ export function useCuratorData() {
     rejectedLoading,
     filteredChannels,
     filteredLoading,
+    pendingChannels,
+    pendingLoading,
     newSubCount,
     setNewSubCount,
     subCheckError,
-    subChecking,
     fetchNext,
     fetchStats,
     fetchApproved,
     fetchRejected,
     fetchFiltered,
-    fetchCoverage,
-    fetchHealth,
+    fetchPending,
     checkSubs,
   };
 }

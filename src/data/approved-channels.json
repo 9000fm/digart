@@ -9,34 +9,6 @@
     ]
   },
   {
-    "name": "-koen.fm-",
-    "id": "UCWcTj_F2rUgfyMncqoI_efw"
-  },
-  {
-    "name": "0000",
-    "id": "UC0MbImAZ5VBy0CKANa17Rrg"
-  },
-  {
-    "name": "030esar0303",
-    "id": "UCWJ0h-sGerHCxjAo2vRtkbg"
-  },
-  {
-    "name": "192 uploads",
-    "id": "UCJY8C2HoNUE6UUVAgt-ftBw"
-  },
-  {
-    "name": "2trancentral",
-    "id": "UCL4J20Y1UpQGttcNXMB2j9Q"
-  },
-  {
-    "name": "4AM Breaks",
-    "id": "UCwS_EHjafevNbFx9DlkSNBw"
-  },
-  {
-    "name": "Abandoned Tools",
-    "id": "UC6xQwZHVyACaWwIDe8DKoeQ"
-  },
-  {
     "name": "Ades & X-Man",
     "id": "UC8sfFBWK4obFzUXm-4BU3JQ",
     "labels": [
@@ -234,10 +206,6 @@
       "Acid",
       "Disco"
     ]
-  },
-  {
-    "name": "Collector Drum Breaks",
-    "id": "UCckSlww8DDaPJ0VQRvvHU-Q"
   },
   {
     "name": "Cubensis Records",
@@ -452,14 +420,6 @@
       "Acid",
       "House"
     ]
-  },
-  {
-    "name": "Lumbago",
-    "id": "UCRFXjOCQWX6xCjN4_-FI14A"
-  },
-  {
-    "name": "Made Fresh Daily",
-    "id": "UCy6aV9hce1viNJGTvLa7oJw"
   },
   {
     "name": "magrosi65",
@@ -1191,6 +1151,288 @@
       "Deep House",
       "Electro",
       "Funk",
+      "House"
+    ]
+  },
+  {
+    "name": "FreedomOfSpeed",
+    "id": "UCi0VaoauYYlaAcpuOd7q1Vw",
+    "labels": [
+      "House",
+      "Tech House",
+      "Breaks",
+      "Acid",
+      "Techno",
+      "Minimal"
+    ]
+  },
+  {
+    "name": "-koen.fm-",
+    "id": "UCWcTj_F2rUgfyMncqoI_efw",
+    "labels": [
+      "Deep House",
+      "House",
+      "Breaks",
+      "Ambient",
+      "Minimal",
+      "Electro"
+    ]
+  },
+  {
+    "name": "0000",
+    "id": "UC0MbImAZ5VBy0CKANa17Rrg",
+    "labels": [
+      "Samples",
+      "Experimental",
+      "Ambient",
+      "Downtempo"
+    ]
+  },
+  {
+    "name": "030esar0303",
+    "id": "UCWJ0h-sGerHCxjAo2vRtkbg",
+    "labels": [
+      "Electro",
+      "Tech House",
+      "House",
+      "Deep House",
+      "Minimal"
+    ]
+  },
+  {
+    "name": "192 uploads",
+    "id": "UCJY8C2HoNUE6UUVAgt-ftBw",
+    "labels": [
+      "House",
+      "Deep House",
+      "Minimal",
+      "Breaks",
+      "Electro"
+    ]
+  },
+  {
+    "name": "2trancentral",
+    "id": "UCL4J20Y1UpQGttcNXMB2j9Q",
+    "labels": [
+      "Trance",
+      "Acid"
+    ]
+  },
+  {
+    "name": "4AM Breaks",
+    "id": "UCwS_EHjafevNbFx9DlkSNBw",
+    "labels": [
+      "Garage / UKG",
+      "Samples",
+      "Jungle",
+      "Breaks"
+    ]
+  },
+  {
+    "name": "Abandoned Tools",
+    "id": "UC6xQwZHVyACaWwIDe8DKoeQ",
+    "labels": [
+      "House",
+      "Acid",
+      "Ambient",
+      "Deep House",
+      "Breaks"
+    ]
+  },
+  {
+    "name": "Act of Remembrance",
+    "id": "UCYlxnUqnV80PUdY03J9fBSw",
+    "labels": [
+      "Rominimal",
+      "Minimal",
+      "Ambient",
+      "House",
+      "Downtempo"
+    ]
+  },
+  {
+    "name": "Bearfam",
+    "id": "UCtE7gn4X9td_zbgtpn9AYsA",
+    "labels": [
+      "Disco",
+      "House",
+      "Minimal",
+      "Rominimal",
+      "DJ Sets"
+    ]
+  },
+  {
+    "name": "BIGMEDV' VINYL CHANNEL",
+    "id": "UCTuAt9ktWEar-PGyG9i9dhA",
+    "labels": [
+      "World",
+      "Experimental",
+      "Samples",
+      "Reggae"
+    ]
+  },
+  {
+    "name": "Cicular",
+    "id": "UCr9MlaSE4d-3K8WL3BKZ07g",
+    "labels": [
+      "Samples",
+      "Downtempo",
+      "Experimental"
+    ]
+  },
+  {
+    "name": "Collector Drum Breaks",
+    "id": "UCckSlww8DDaPJ0VQRvvHU-Q",
+    "labels": [
+      "Breaks",
+      "Samples"
+    ]
+  },
+  {
+    "name": "dedeco /// VGM DJ",
+    "id": "UCqH-NZi0qLRxMxim8omhTPg",
+    "labels": [
+      "DJ Sets",
+      "Samples",
+      "Experimental",
+      "Jungle",
+      "Garage / UKG",
+      "DnB",
+      "Downtempo"
+    ]
+  },
+  {
+    "name": "Do Funkk",
+    "id": "UCqSMQXJ8MieGFIxgZNDeLdQ",
+    "labels": [
+      "Minimal",
+      "Rominimal",
+      "Deep House",
+      "House",
+      "Tech House",
+      "Techno",
+      "Electro",
+      "Breaks"
+    ]
+  },
+  {
+    "name": "ElFamosoDemon",
+    "id": "UCRUOfuNIb_sk__7snjK3aVg",
+    "labels": [
+      "Hip Hop",
+      "Experimental",
+      "Samples",
+      "Downtempo",
+      "Jazz"
+    ]
+  },
+  {
+    "name": "FIREWALKER",
+    "id": "UCr6eoRY1tYpMiwxpqCjtiyA",
+    "labels": [
+      "DJ Sets",
+      "Samples",
+      "DnB",
+      "Jungle",
+      "Garage / UKG"
+    ]
+  },
+  {
+    "name": "House0fBass",
+    "id": "UCV8WVfYVg9ZUYyiVLHrf62w",
+    "labels": [
+      "Minimal",
+      "Tech House",
+      "Deep House"
+    ]
+  },
+  {
+    "name": "Human 80",
+    "id": "UCynfIactZH2eXPNIflqkfDg",
+    "labels": [
+      "Samples",
+      "Experimental",
+      "World",
+      "Industrial",
+      "EBM"
+    ]
+  },
+  {
+    "name": "jdtrackhl",
+    "id": "UCam2kLbstBgHqaHKXSOhB4w",
+    "labels": [
+      "Downtempo",
+      "Tech House",
+      "Breaks",
+      "IDM",
+      "Techno",
+      "World",
+      "Ambient",
+      "Experimental"
+    ]
+  },
+  {
+    "name": "Ken Trash",
+    "id": "UCykMeRvNBU-xkCo7SsJMgMQ",
+    "labels": [
+      "House",
+      "Deep House",
+      "Tech House",
+      "Ambient",
+      "Downtempo",
+      "Breaks",
+      "Electro"
+    ]
+  },
+  {
+    "name": "Kevin Polzer",
+    "id": "UCDHRK1_cIbhxF850F3IbS2Q",
+    "labels": [
+      "Samples",
+      "Experimental",
+      "IDM",
+      "Ambient",
+      "Downtempo"
+    ]
+  },
+  {
+    "name": "Limited White Label",
+    "id": "UCjp9sLBH49wxNq0b9UFu_TQ",
+    "labels": [
+      "World",
+      "Downtempo",
+      "Ambient",
+      "Experimental",
+      "Samples",
+      "Minimal",
+      "House"
+    ]
+  },
+  {
+    "name": "Lumbago",
+    "id": "UCRFXjOCQWX6xCjN4_-FI14A",
+    "labels": [
+      "Electro",
+      "House",
+      "Acid"
+    ]
+  },
+  {
+    "name": "Magical Mystery Mix",
+    "id": "UCwsGfP7Y3D84a_zcwKg_2Vw",
+    "labels": [
+      "World",
+      "Jazz",
+      "Experimental",
+      "Samples"
+    ]
+  },
+  {
+    "name": "ModeratorUK",
+    "id": "UCAySG82ra866kPwMBv2Xe9w",
+    "labels": [
+      "Garage / UKG",
+      "Jungle",
       "House"
     ]
   }

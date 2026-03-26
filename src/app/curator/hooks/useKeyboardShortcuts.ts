@@ -4,113 +4,48 @@ import type { CuratorTab, ApprovedChannel } from "../types";
 interface UseKeyboardShortcutsProps {
   activeTab: CuratorTab;
   setActiveTab: (tab: CuratorTab) => void;
-  // Review mode
-  handleDecision: (d: "approve" | "reject" | "unsubscribe") => void;
-  handleSkip: () => void;
+  // Review mode (viewing a channel)
+  isReviewing: boolean;
+  handleDecision: (d: "approve" | "reject") => void;
   handleGoBack: () => void;
   handleToggleStar: () => void;
   handleRescan: () => void;
-  setPlayingVideoId: (id: string | null) => void;
-  // Audit mode
+  exitReview: () => void;
+  // Audit mode (approved tab)
   auditChannel: ApprovedChannel | null;
-  handleSaveAuditLabels: () => void;
-  handleChangeDecision: (
-    id: string,
-    name: string,
-    d: "reject" | "unsubscribe"
-  ) => void;
-  handleToggleStarAudit: () => void;
-  handleAuditRescan: () => void;
-  exitAudit: () => void;
 }
 
 export function useKeyboardShortcuts({
   activeTab,
   setActiveTab,
+  isReviewing,
   handleDecision,
-  handleSkip,
   handleGoBack,
   handleToggleStar,
   handleRescan,
-  setPlayingVideoId,
+  exitReview,
   auditChannel,
-  handleSaveAuditLabels,
-  handleChangeDecision,
-  handleToggleStarAudit,
-  handleAuditRescan,
-  exitAudit,
 }: UseKeyboardShortcutsProps) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (
-        e.target instanceof HTMLInputElement ||
-        e.target instanceof HTMLTextAreaElement
-      )
-        return;
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+      // Audit mode: AuditMode handles its own shortcuts
+      if (auditChannel) return;
 
       // Tab keyboard nav: 1/2/3
-      if (e.key === "1") {
-        setActiveTab("review");
-        return;
-      }
-      if (e.key === "2") {
-        setActiveTab("library");
-        return;
-      }
-      if (e.key === "3") {
-        setActiveTab("rejected");
-        return;
-      }
+      if (e.key === "1") { setActiveTab("approved"); return; }
+      if (e.key === "2") { setActiveTab("review"); return; }
+      if (e.key === "3") { setActiveTab("rejected"); return; }
 
-      // Audit mode shortcuts (library tab)
-      if (auditChannel) {
-        if (e.key === "l" || e.key === "L") handleSaveAuditLabels();
-        if (e.key === "r" || e.key === "R")
-          handleChangeDecision(
-            auditChannel.id,
-            auditChannel.name,
-            "reject"
-          );
-        if (e.key === "u" || e.key === "U")
-          handleChangeDecision(
-            auditChannel.id,
-            auditChannel.name,
-            "unsubscribe"
-          );
-        if (e.key === "f" || e.key === "F") handleToggleStarAudit();
-        if (e.key === "x" || e.key === "X") handleAuditRescan();
-        if (e.key === "b" || e.key === "B" || e.key === "Escape") {
-          exitAudit();
-        }
-        return;
-      }
-
-      if (activeTab !== "review") return;
-      if (e.key === "a" || e.key === "A") handleDecision("approve");
-      if (e.key === "r" || e.key === "R") handleDecision("reject");
-      if (e.key === "u" || e.key === "U") handleDecision("unsubscribe");
-      if (e.key === "s" || e.key === "S") handleSkip();
-      if (e.key === "b" || e.key === "B") handleGoBack();
-      if (e.key === "f" || e.key === "F") handleToggleStar();
-      if (e.key === "x" || e.key === "X") handleRescan();
-      if (e.key === "Escape") setPlayingVideoId(null);
+      // Review mode: ReviewQueue component handles its own shortcuts
+      if (isReviewing) return;
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [
-    activeTab,
-    setActiveTab,
-    handleDecision,
-    handleSkip,
-    handleGoBack,
-    handleToggleStar,
-    handleRescan,
-    setPlayingVideoId,
+    activeTab, setActiveTab, isReviewing,
+    handleDecision, handleGoBack, handleToggleStar, handleRescan, exitReview,
     auditChannel,
-    handleSaveAuditLabels,
-    handleChangeDecision,
-    handleToggleStarAudit,
-    handleAuditRescan,
-    exitAudit,
   ]);
 }

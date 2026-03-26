@@ -1,115 +1,138 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import type {
-  CuratorTab,
-  ApprovedChannel,
-  ApprovedView,
-  QueueType,
-} from "./types";
+import { useState, useEffect, useCallback, useRef } from "react";
+import type { CuratorTab, ApprovedChannel, ApprovedView } from "./types";
 import { useCuratorData } from "./hooks/useCuratorData";
 import { useCuratorActions } from "./hooks/useCuratorActions";
-import { useImport } from "./hooks/useImport";
 import { useKeyboardShortcuts } from "./hooks/useKeyboardShortcuts";
 import { CuratorStatsBar } from "./components/CuratorStatsBar";
 import { CuratorTabBar } from "./components/CuratorTabBar";
-import { ReviewQueue } from "./components/ReviewQueue";
-import { ReviewEmptyState } from "./components/ReviewEmptyState";
+import { ReviewList } from "./components/ReviewList";
 import { ApprovedBrowser } from "./components/ApprovedBrowser";
 import { AuditMode } from "./components/AuditMode";
-import { QueueAuditView } from "./components/QueueAuditView";
 import { RejectedBrowser } from "./components/RejectedBrowser";
-import { GearMenu } from "./components/GearMenu";
+import { RejectedReview } from "./components/RejectedReview";
+import { ReviewQueue } from "./components/ReviewQueue";
 import AuthButton from "@/components/AuthButton";
+
+interface ReviewChannel {
+  name: string;
+  id: string;
+  origin?: string;
+  importedAt?: string | null;
+}
 
 export default function CuratorPage() {
   const [activeTab, setActiveTab] = useState<CuratorTab>("review");
   const [selectedLabels, setSelectedLabels] = useState<Set<string>>(new Set());
+  const [channelNotes, setChannelNotes] = useState("");
   const [isStarred, setIsStarred] = useState(false);
   const [playingVideoId, setPlayingVideoId] = useState<string | null>(null);
-  const [approvedView, setApprovedView] = useState<ApprovedView>({
-    mode: "landing",
-  });
-  const [gearOpen, setGearOpen] = useState(false);
+  const [approvedView, setApprovedView] = useState<ApprovedView>({ mode: "landing" });
+  const [reviewingChannel, setReviewingChannel] = useState<ReviewChannel | null>(null);
+  // Rejected review state
+  const [rejectedReviewChannel, setRejectedReviewChannel] = useState<{ name: string; id: string } | null>(null);
+  const [rejectedReviewData, setRejectedReviewData] = useState<{ uploads: import("./types").Upload[]; topics: string[] }>({ uploads: [], topics: [] });
+  const [rejectedReviewActing, setRejectedReviewActing] = useState(false);
+
+  // Track the full review list so we can auto-advance
+  const reviewListRef = useRef<ReviewChannel[]>([]);
 
   const {
-    data,
-    setData,
-    loading,
-    stats,
-    approvedChannels,
-    setApprovedChannels,
-    approvedLoading,
-    rejectedChannels,
-    rejectedLoading,
-    filteredChannels,
-    filteredLoading,
-    newSubCount,
-    setNewSubCount,
-    subCheckError,
-    fetchNext,
-    fetchStats,
-    fetchApproved,
-    fetchRejected,
-    fetchFiltered,
-    fetchCoverage,
-    fetchHealth,
-    checkSubs,
+    data, setData, loading, stats,
+    approvedChannels, setApprovedChannels, approvedLoading,
+    rejectedChannels, rejectedLoading,
+    filteredChannels, filteredLoading,
+    pendingChannels, pendingLoading,
+    newSubCount, setNewSubCount, subCheckError,
+    fetchNext, fetchStats, fetchApproved, fetchRejected, fetchFiltered, fetchPending, checkSubs,
   } = useCuratorData();
 
-  const importProps = useImport({ fetchNext, fetchStats });
+  // Build unified review list: pending (unreviewed from music-channels) + filtered (auto-filtered)
+  const reviewChannels: ReviewChannel[] = [
+    ...pendingChannels.map((c) => ({ ...c, origin: undefined })),
+    ...filteredChannels.map((c) => ({ name: c.name, id: c.id, origin: "auto-filtered", importedAt: c.importedAt })),
+  ];
+  reviewListRef.current = reviewChannels;
 
   const {
-    acting,
-    history,
-    rescanning,
-    handleDecision,
-    handleGoBack,
-    handleToggleStar,
-    handleSkip,
-    handleReviewSkipped,
-    handleRescan,
+    acting, history, rescanning,
+    handleDecision: rawHandleDecision,
+    handleGoBack, handleToggleStar, handleRescan,
   } = useCuratorActions({
-    data,
-    setData,
-    fetchNext,
-    fetchStats,
-    selectedLabels,
-    isStarred,
-    setIsStarred,
-    setSelectedLabels,
-    setPlayingVideoId,
+    data, setData, fetchNext, fetchStats, selectedLabels, notes: channelNotes,
+    isStarred, setIsStarred, setSelectedLabels, setPlayingVideoId,
   });
 
-  // Sync starred state from data
+  // Wrap handleDecision: after approve/reject, auto-advance to next channel
+  const handleDecision = useCallback(
+    async (decision: "approve" | "reject") => {
+      if (!reviewingChannel) return;
+      const currentId = reviewingChannel.id;
+
+      await rawHandleDecision(decision);
+
+      // Refresh lists
+      await Promise.all([fetchPending(), fetchFiltered(), fetchStats()]);
+
+      // Find next channel in the list (after current one)
+      const list = reviewListRef.current;
+      const currentIdx = list.findIndex((c) => c.id === currentId);
+      const remaining = list.filter((c) => c.id !== currentId);
+
+      if (remaining.length === 0) {
+        // No more channels — show "all caught up"
+        setReviewingChannel(null);
+        return;
+      }
+
+      // Pick next: the one after current, or first if at end
+      const nextIdx = currentIdx >= 0 && currentIdx < remaining.length ? currentIdx : 0;
+      const next = remaining[nextIdx] || remaining[0];
+
+      // Load next channel — skip any that get auto-rejected (< 6 uploads)
+      let loaded = false;
+      let tryIdx = nextIdx;
+      let pool = remaining;
+      while (!loaded && pool.length > 0) {
+        const candidate = pool[tryIdx] || pool[0];
+        loaded = await loadChannelForReview(candidate, pool.length);
+        if (!loaded) {
+          pool = pool.filter((c) => c.id !== candidate.id);
+          tryIdx = 0;
+        }
+      }
+      if (!loaded) {
+        setReviewingChannel(null); // all remaining got auto-rejected
+      }
+    },
+    [rawHandleDecision, fetchPending, fetchFiltered, fetchStats, reviewingChannel, setData, setSelectedLabels, setPlayingVideoId]
+  );
+
+  // Sync starred state
   useEffect(() => {
     if (data) setIsStarred(data.isStarred || false);
   }, [data]);
 
-  // Fetch approved list when switching to library tab
+  // Fetch data when switching tabs
   useEffect(() => {
-    if (activeTab === "library") fetchApproved();
-  }, [activeTab, fetchApproved]);
+    if (activeTab === "approved") fetchApproved();
+    if (activeTab === "review") { fetchPending(); fetchFiltered(); }
+    if (activeTab === "rejected") fetchRejected();
+  }, [activeTab, fetchApproved, fetchPending, fetchFiltered, fetchRejected]);
 
-  // Fetch rejected + filtered when switching to rejected tab
+  // Reset views when switching tabs
   useEffect(() => {
-    if (activeTab === "rejected") {
-      fetchRejected();
-      fetchFiltered();
-    }
-  }, [activeTab, fetchRejected, fetchFiltered]);
-
-  // Reset to landing when switching to library tab
-  useEffect(() => {
-    if (activeTab === "library") {
-      setApprovedView({ mode: "landing" });
-    }
+    setApprovedView({ mode: "landing" });
+    setReviewingChannel(null);
+    setRejectedReviewChannel(null);
   }, [activeTab]);
 
-  // Reset labels when data changes (new channel)
+  // Reset labels when channel changes
   useEffect(() => {
     setSelectedLabels(new Set());
     setPlayingVideoId(null);
+    setChannelNotes("");
   }, [data?.channel?.id]);
 
   const toggleLabel = useCallback((label: string) => {
@@ -121,9 +144,9 @@ export default function CuratorPage() {
     });
   }, []);
 
-  // Audit mode handlers
+  // --- Approved tab: audit mode ---
   const handleEnterAudit = useCallback((ch: ApprovedChannel) => {
-    setApprovedView({ mode: "direct-audit", channel: ch });
+    setApprovedView({ mode: "audit", channel: ch });
   }, []);
 
   const handleExitAudit = useCallback(() => {
@@ -132,61 +155,73 @@ export default function CuratorPage() {
     fetchStats();
   }, [fetchApproved, fetchStats]);
 
-  const handleStartQueue = useCallback(
-    async (queueType: QueueType, channels: ApprovedChannel[]) => {
-      if (queueType === "spot-check-rejected") {
-        await fetchRejected();
-        const res = await fetch("/api/curator?mode=rejected");
-        const json = await res.json();
-        const rejected = (json.channels || []) as ApprovedChannel[];
-        setApprovedView({ mode: "queue", queueType, channels: rejected });
-      } else {
-        setApprovedView({ mode: "queue", queueType, channels });
-      }
-    },
-    [fetchRejected]
-  );
-
   const handleChangeDecision = useCallback(
-    async (
-      channelId: string,
-      channelName: string,
-      newDecision: "reject" | "unsubscribe"
-    ) => {
+    async (channelId: string, channelName: string, newDecision: "reject") => {
       await fetch("/api/curator", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "changeDecision",
-          channelId,
-          channelName,
-          newDecision,
-        }),
+        body: JSON.stringify({ action: "changeDecision", channelId, channelName, newDecision }),
       });
-      setApprovedChannels((prev) =>
-        prev.filter((c) => c.id !== channelId)
-      );
+      setApprovedChannels((prev) => prev.filter((c) => c.id !== channelId));
       setApprovedView({ mode: "landing" });
       fetchStats();
     },
     [fetchStats, setApprovedChannels]
   );
 
-  const handleSaveAuditLabels = useCallback(async () => {
-    // Placeholder — AuditMode handles its own label save
-  }, []);
+  // --- Review tab: enter/exit review ---
+  // Load a channel for review, auto-skipping if it gets auto-rejected (< 6 uploads)
+  const loadChannelForReview = useCallback(
+    async (ch: ReviewChannel, listLength: number) => {
+      setSelectedLabels(new Set());
+      setPlayingVideoId(null);
+      const res = await fetch(`/api/curator?rescan=true&channelId=${ch.id}`);
+      const json = await res.json();
 
-  const handleToggleStarAudit = useCallback(async () => {
-    // Placeholder — AuditMode handles its own star toggle
-  }, []);
+      if (json.autoRejected) {
+        // Channel auto-rejected (too few uploads) — refresh lists and try next
+        await Promise.all([fetchPending(), fetchFiltered(), fetchStats()]);
+        return false; // signal: didn't load, try next
+      }
 
-  const handleAuditRescan = useCallback(async () => {
-    // Placeholder — AuditMode handles its own rescan
-  }, []);
+      setReviewingChannel(ch);
+      setData({
+        channel: { name: ch.name, id: ch.id },
+        uploads: json.uploads || [],
+        topics: json.topics || [],
+        reviewed: 0,
+        total: listLength,
+      });
+      return true; // loaded successfully
+    },
+    [setData, setSelectedLabels, setPlayingVideoId, fetchPending, fetchFiltered, fetchStats]
+  );
 
-  // Quick import from empty state (single URL)
+  const handleReviewChannel = useCallback(
+    async (ch: ReviewChannel) => {
+      const loaded = await loadChannelForReview(ch, reviewChannels.length);
+      if (!loaded) {
+        // Auto-rejected, stay on list — it'll refresh and show updated list
+        setReviewingChannel(null);
+      }
+    },
+    [loadChannelForReview, reviewChannels.length]
+  );
+
+  const handleExitReview = useCallback(() => {
+    setReviewingChannel(null);
+    fetchPending();
+    fetchFiltered();
+  }, [fetchPending, fetchFiltered]);
+
+  // --- Import ---
+  const [importing, setImporting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncError, setSyncError] = useState<string | undefined>();
+
   const handleQuickImport = useCallback(
     async (url: string) => {
+      setImporting(true);
       const res = await fetch("/api/curator/import", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -194,104 +229,134 @@ export default function CuratorPage() {
       });
       const result = await res.json();
       if (result.added?.length > 0) {
-        fetchNext();
+        fetchPending();
         fetchStats();
       }
+      setImporting(false);
     },
-    [fetchNext, fetchStats]
+    [fetchPending, fetchStats]
   );
 
-  // Import new YouTube subscriptions
-  const handleImportSubscriptions = useCallback(async () => {
-    const res = await fetch("/api/curator/subscriptions", { method: "POST" });
-    const result = await res.json();
-    if (result.added > 0 || result.filtered > 0) {
-      setNewSubCount(0);
-      fetchNext();
-      fetchStats();
+  const handleSync = useCallback(async () => {
+    setSyncing(true);
+    setSyncError(undefined);
+    try {
+      const res = await fetch("/api/curator/subscriptions", { method: "POST" });
+      const result = await res.json();
+      if (result.error) {
+        setSyncError(result.error);
+      } else {
+        setNewSubCount(0);
+        fetchPending();
+        fetchFiltered();
+        fetchRejected();
+        fetchStats();
+      }
+    } catch {
+      setSyncError("Sync failed — check your connection");
     }
-  }, [fetchNext, fetchStats, setNewSubCount]);
+    setSyncing(false);
+  }, [fetchPending, fetchFiltered, fetchRejected, fetchStats, setNewSubCount]);
 
-  // Rescue a filtered channel → move to review queue
-  const handleRescueFiltered = useCallback(
-    async (channelId: string, channelName: string) => {
-      await fetch("/api/curator", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ action: "rescueFiltered", channelId, channelName }),
-      });
-      fetchFiltered();
-      fetchNext();
-      fetchStats();
-    },
-    [fetchFiltered, fetchNext, fetchStats]
-  );
-
-  // Rescue a rejected channel → move to approved
+  // --- Rescue from Rejected ---
   const handleRescueRejected = useCallback(
     async (channelId: string, channelName: string) => {
+      // Move from rejected back to music-channels (New/Review)
       await fetch("/api/curator", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "rescueChannel", channelId, channelName }),
       });
       fetchRejected();
+      fetchPending();
       fetchStats();
     },
-    [fetchRejected, fetchStats]
+    [fetchRejected, fetchPending, fetchStats]
   );
 
-  // Refresh handler for empty state
-  const handleRefresh = useCallback(() => {
-    fetchNext();
-    fetchStats();
-    checkSubs();
-  }, [fetchNext, fetchStats, checkSubs]);
+  // --- Rejected review handlers ---
+  const handleReviewRejectedChannel = useCallback(
+    async (ch: { name: string; id: string }) => {
+      setRejectedReviewChannel(ch);
+      const res = await fetch(`/api/curator?rescan=true&channelId=${ch.id}`);
+      const json = await res.json();
+      setRejectedReviewData({ uploads: json.uploads || [], topics: json.topics || [] });
+    },
+    []
+  );
 
-  // Only use keyboard shortcuts when NOT in queue mode
-  const auditChannel =
-    approvedView.mode === "direct-audit" ? approvedView.channel : null;
+  const handleRescueFromReview = useCallback(async () => {
+    if (!rejectedReviewChannel || rejectedReviewActing) return;
+    setRejectedReviewActing(true);
+    await fetch("/api/curator", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "rescueChannel", channelId: rejectedReviewChannel.id, channelName: rejectedReviewChannel.name }),
+    });
+    // Auto-advance to next rejected
+    const currentId = rejectedReviewChannel.id;
+    await fetchRejected();
+    fetchPending();
+    fetchStats();
+    setRejectedReviewActing(false);
+    // Find next
+    const remaining = rejectedChannels.filter((c) => c.id !== currentId);
+    if (remaining.length > 0) {
+      handleReviewRejectedChannel(remaining[0]);
+    } else {
+      setRejectedReviewChannel(null);
+    }
+  }, [rejectedReviewChannel, rejectedReviewActing, rejectedChannels, fetchRejected, fetchPending, fetchStats, handleReviewRejectedChannel]);
+
+  const handleNextRejected = useCallback(() => {
+    if (!rejectedReviewChannel) return;
+    const currentIdx = rejectedChannels.findIndex((c) => c.id === rejectedReviewChannel.id);
+    const nextIdx = (currentIdx + 1) % rejectedChannels.length;
+    if (rejectedChannels.length > 1 || nextIdx !== currentIdx) {
+      handleReviewRejectedChannel(rejectedChannels[nextIdx]);
+    }
+  }, [rejectedReviewChannel, rejectedChannels, handleReviewRejectedChannel]);
+
+  const handleExitRejectedReview = useCallback(() => {
+    setRejectedReviewChannel(null);
+    fetchRejected();
+  }, [fetchRejected]);
+
+  // --- Keyboard shortcuts ---
+  const auditChannel = approvedView.mode === "audit" ? approvedView.channel : null;
 
   useKeyboardShortcuts({
     activeTab,
     setActiveTab,
+    isReviewing: !!reviewingChannel,
     handleDecision,
-    handleSkip,
     handleGoBack,
     handleToggleStar,
     handleRescan,
-    setPlayingVideoId,
+    exitReview: handleExitReview,
     auditChannel,
-    handleSaveAuditLabels,
-    handleChangeDecision,
-    handleToggleStarAudit,
-    handleAuditRescan,
-    exitAudit: handleExitAudit,
   });
 
   // --- Render ---
 
-  // Queue mode (full screen takeover)
-  if (activeTab === "library" && approvedView.mode === "queue") {
+  // Rejected review mode (full-screen)
+  if (rejectedReviewChannel) {
     return (
-      <QueueAuditView
-        queueType={approvedView.queueType}
-        initialChannels={approvedView.channels}
-        stats={stats}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        onExit={handleExitAudit}
-        fetchStats={fetchStats}
-        onChannelRescued={() => fetchApproved()}
-        onChannelRemoved={(id) =>
-          setApprovedChannels((prev) => prev.filter((c) => c.id !== id))
-        }
+      <RejectedReview
+        channel={rejectedReviewChannel}
+        uploads={rejectedReviewData.uploads}
+        topics={rejectedReviewData.topics}
+        onRescue={handleRescueFromReview}
+        onNext={handleNextRejected}
+        onExit={handleExitRejectedReview}
+        acting={rejectedReviewActing}
+        remaining={rejectedChannels.filter((c) => c.id !== rejectedReviewChannel.id).length}
       />
     );
   }
 
-  // Direct audit mode (full screen takeover) — from library or rejected tab
-  if (approvedView.mode === "direct-audit") {
+  // Audit mode (Approved tab, full-screen)
+  if (approvedView.mode === "audit") {
     return (
       <AuditMode
         channel={approvedView.channel}
@@ -305,11 +370,62 @@ export default function CuratorPage() {
     );
   }
 
-  // Loading
-  if (loading && activeTab === "review") {
+  // Review mode (Review tab, full-screen channel review)
+  if (reviewingChannel && data?.channel) {
     return (
-      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] flex items-center justify-center font-mono">
-        <span className="animate-pulse">LOADING...</span>
+      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] font-mono">
+        <div className="max-w-7xl mx-auto px-4 py-3 lg:px-8 lg:py-3">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-5">
+              <button
+                onClick={handleExitReview}
+                className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors text-3xl leading-none"
+              >
+                &larr;
+              </button>
+              <button onClick={handleExitReview} className="text-3xl font-bold uppercase tracking-[0.25em] text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
+                CURATOR
+              </button>
+              <span className="text-lg text-[var(--text-muted)] uppercase tracking-wider flex items-center gap-1">
+                <span className="inline-flex">
+                  {String(reviewChannels.length - 1).split("").map((digit, i) => (
+                    <span
+                      key={`${i}-${digit}`}
+                      className="relative overflow-hidden h-[1.4em] w-[0.65em] inline-flex justify-center"
+                    >
+                      <span className="text-[var(--text)] font-bold tabular-nums text-2xl inline-block animate-[digit-flip_0.35s_cubic-bezier(0.2,0.8,0.2,1)]">
+                        {digit}
+                      </span>
+                    </span>
+                  ))}
+                </span>
+                <span className="ml-1">left</span>
+              </span>
+              <style>{`
+                @keyframes digit-flip {
+                  0% { transform: translateY(-110%); opacity: 0; }
+                  60% { transform: translateY(5%); opacity: 1; }
+                  100% { transform: translateY(0); }
+                }
+              `}</style>
+            </div>
+          </div>
+          <ReviewQueue
+            data={data}
+            acting={acting}
+            history={history}
+            rescanning={rescanning}
+            isStarred={isStarred}
+            selectedLabels={selectedLabels}
+            onToggleLabel={toggleLabel}
+            onDecision={handleDecision}
+            onGoBack={handleGoBack}
+            onToggleStar={(starred: boolean) => setIsStarred(starred)}
+            onRescan={handleRescan}
+            notes={channelNotes}
+            onNotesChange={setChannelNotes}
+          />
+        </div>
       </div>
     );
   }
@@ -320,139 +436,52 @@ export default function CuratorPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-5">
-            <a
-              href="/"
-              className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors text-2xl leading-none"
-            >
-              &larr;
-            </a>
-            <h1 className="text-lg font-bold uppercase tracking-[0.25em] text-[var(--text-secondary)]">
+            <a href="/" className="text-3xl font-bold uppercase tracking-[0.25em] text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors">
               CURATOR
-            </h1>
+            </a>
           </div>
-          <div className="flex items-center gap-4">
-            <AuthButton />
-            {/* Gear icon */}
-            <button
-              onClick={() => setGearOpen((v) => !v)}
-              className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors text-lg"
-              title="Ops tools"
-            >
-              &#9881;
-            </button>
-            {activeTab === "review" && data?.channel && (
-              <div className="text-right space-y-1">
-                <span className="text-[var(--text)] text-sm font-bold block tabular-nums">
-                  {data.reviewed}
-                  <span className="text-[var(--text-muted)] font-normal">
-                    {" "}
-                    / {data.total}
-                  </span>
-                </span>
-                <span className="text-[var(--text-muted)] text-[11px] tracking-wide">
-                  {data.approvedCount} approved &middot;{" "}
-                  {data.starredCount || 0} starred &middot;{" "}
-                  {data.unsubCount} unsub &middot; {data.remaining} left
-                </span>
-              </div>
-            )}
-          </div>
+          <AuthButton />
         </div>
 
-        <CuratorStatsBar stats={stats} newSubCount={newSubCount} />
+        <CuratorStatsBar stats={stats} />
         <CuratorTabBar
           activeTab={activeTab}
           onChange={setActiveTab}
-          pendingCount={stats?.pending}
+          approvedCount={stats?.approved}
+          reviewCount={reviewChannels.length}
           rejectedCount={stats?.rejected}
-          filteredCount={filteredChannels.length}
         />
 
-        {/* Sync Banner — shows in review tab when new subs detected */}
-        {activeTab === "review" && newSubCount > 0 && !data?.done && (
-          <div className="mb-4 flex items-center justify-between px-4 py-3 border border-[var(--text-secondary)]/30 bg-[var(--bg-alt)] rounded-lg">
-            <span className="text-sm text-[var(--text-secondary)]">
-              <span className="font-bold">{newSubCount}</span> new channel{newSubCount !== 1 ? "s" : ""} from your subscriptions
-            </span>
-            <button
-              onClick={handleImportSubscriptions}
-              className="px-4 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-[var(--text-secondary)] text-[var(--bg)] hover:opacity-80 transition-opacity rounded"
-            >
-              IMPORT
-            </button>
-          </div>
-        )}
-
-        {/* Tab content */}
-        {activeTab === "review" && (
-          <>
-            {data?.done ? (
-              <ReviewEmptyState
-                approvedCount={data.approvedCount || 0}
-                total={data.total}
-                skippedCount={data.skippedCount || 0}
-                onReviewSkipped={handleReviewSkipped}
-                onQuickImport={handleQuickImport}
-                onImportSubscriptions={handleImportSubscriptions}
-                importing={importProps.importing}
-                onRefresh={handleRefresh}
-                newSubCount={newSubCount}
-                subCheckError={subCheckError}
-              />
-            ) : data?.channel ? (
-              <ReviewQueue
-                data={data}
-                acting={acting}
-                history={history}
-                rescanning={rescanning}
-                isStarred={isStarred}
-                selectedLabels={selectedLabels}
-                onToggleLabel={toggleLabel}
-                onDecision={handleDecision}
-                onSkip={handleSkip}
-                onGoBack={handleGoBack}
-                onToggleStar={handleToggleStar}
-                onRescan={handleRescan}
-              />
-            ) : null}
-          </>
-        )}
-
-        {activeTab === "library" && (
+        {activeTab === "approved" && (
           <ApprovedBrowser
             channels={approvedChannels}
             loading={approvedLoading}
             onEnterAudit={handleEnterAudit}
-            onStartQueue={handleStartQueue}
+          />
+        )}
+
+        {activeTab === "review" && (
+          <ReviewList
+            channels={reviewChannels}
+            loading={pendingLoading || filteredLoading}
+            onReviewChannel={handleReviewChannel}
+            onSync={handleSync}
+            syncing={syncing}
+            syncError={syncError}
+            onQuickImport={handleQuickImport}
+            importing={importing}
           />
         )}
 
         {activeTab === "rejected" && (
           <RejectedBrowser
-            rejectedChannels={rejectedChannels}
-            filteredChannels={filteredChannels}
-            rejectedLoading={rejectedLoading}
-            filteredLoading={filteredLoading}
-            onRescueFiltered={handleRescueFiltered}
-            onRescueRejected={handleRescueRejected}
-            onStartQueue={handleStartQueue}
-            onEnterAudit={handleEnterAudit}
+            channels={rejectedChannels}
+            loading={rejectedLoading}
+            onRescue={handleRescueRejected}
+            onReviewChannel={handleReviewRejectedChannel}
           />
         )}
       </div>
-
-      {/* Gear Menu overlay */}
-      <GearMenu
-        open={gearOpen}
-        onClose={() => setGearOpen(false)}
-        fetchCoverage={fetchCoverage}
-        fetchHealth={fetchHealth}
-        fetchStats={fetchStats}
-        importProps={importProps}
-        skippedCount={stats?.skipped || 0}
-        onReviewSkipped={handleReviewSkipped}
-        setActiveTab={setActiveTab}
-      />
     </div>
   );
 }
