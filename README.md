@@ -1,76 +1,60 @@
 # digeart
 
-Pinterest-style music discovery powered by Spotify + YouTube. Preview tracks, explore by genre, watch DJ sets and sample packs.
+Deep cuts from 150+ curated channels. All underground. All human-selected.
 
-## Quick Start
+**[digeart.vercel.app](https://digeart.vercel.app)**
+
+## Features
+
+- Multi-genre & multi-tag filtering (Hot, Rare, New)
+- YouTube-powered playback with persistent player
+- 150+ curated underground channels
+- Samples, mixes & DJ sets
+- Dark/light themes
+- Google auth + saved tracks
+- Keyboard shortcuts
+
+## How it works
+
+1. Browse curated tracks across **For You**, **Samples**, and **Mixes** tabs
+2. Filter by genre (House, Techno, Breaks...) and tags (Hot, Rare, New)
+3. Click any card to play — controls, seek, and volume live in the player bar
+4. Sign in with Google to save tracks and sync across devices
+5. Press `?` for keyboard shortcuts
+
+## Under the hood
+
+- **Seeded daily shuffle** — track pool reshuffles every 24h so the feed feels fresh without losing consistency
+- **3-tier channel pipeline** — channels go through import → curation (approve/reject) → Supabase storage
+- **Tag engine** — Hot (50k+ views), Rare (<5k views), New (last 30 days) computed from YouTube metadata
+- **YouTube player reuse** — single iframe, `loadVideoById()` for seamless track switching with no reload
+
+## Roadmap
+
+- [ ] Multi-curator support (invite other diggers to curate)
+- [ ] Social follows (follow curators, personalized feeds)
+- [ ] Discogs integration (label discovery, release metadata, rarity)
+- [ ] Playlist export
+
+## Stack
+
+Next.js 16 / TypeScript / Tailwind CSS v4 / YouTube Data API / Supabase / NextAuth
+
+## Setup
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+## Contributing
 
-## Environment
+This is a personal project in active development. If you have ideas or want to contribute, open an issue or reach out.
 
-Create `.env.local` with your own keys:
+## License
 
-```
-SPOTIFY_CLIENT_ID=
-SPOTIFY_CLIENT_SECRET=
-YOUTUBE_API_KEY=
-```
+MIT
 
-Spotify uses **Client Credentials** flow (no user login needed). YouTube uses a standard Data API v3 key.
+---
 
-## Architecture
-
-```
-src/
-  app/
-    page.tsx              # Main layout, persistent audio, view switching
-    globals.css           # CSS variables, theme, animations
-    api/
-      discover/route.ts   # Spotify search + YouTube channel discovery
-      mixes/route.ts      # Long-form DJ sets (>40min)
-      samples/route.ts    # Short-form samples (<15min, niche channels)
-      curator/route.ts    # Channel review (approve/reject/undo)
-    curator/page.tsx      # Channel curation UI
-  components/
-    Sidebar.tsx           # Nav, genre filters, banner, search, theme toggle
-    DiscoverGrid.tsx      # Infinite-scroll card grid with genre presets
-    MixesGrid.tsx         # DJ sets grid
-    SamplesGrid.tsx       # Samples grid
-    MusicCard.tsx         # Album art, metadata, play/save controls
-    NowPlayingBanner.tsx  # Persistent player bar with progress, seek, album art
-  lib/
-    spotify.ts            # Spotify Client Credentials auth + search + audio features
-    youtube.ts            # YouTube Data API helpers
-    types.ts              # Shared CardData type
-  data/
-    music-channels.json   # All imported YouTube channels
-    approved-channels.json
-    rejected-channels.json
-```
-
-## Features
-
-- Genre filter tabs (House, Techno, Electro, Breaks, Ambient, Dub, Disco)
-- Spotify track search with 30s audio previews, progress bar + seeking
-- YouTube inline embed player
-- Persistent audio playback across view switches
-- Now-playing banner with album art, EQ visualizer, seek bar
-- Infinite scroll (30 cards/page)
-- Samples grid (short-form from curated YouTube channels)
-- Mixes grid (long-form DJ sets)
-- Like/Save toggles
-- Dark/Light theme (Space Mono typography)
-- Curator page with keyboard shortcuts (A/R/U/S/B) + undo
-- Chrome bookmarks import for channel discovery
-
-## Stack
-
-- Next.js 16 + TypeScript
-- Tailwind CSS v4
-- Spotify Web API (Client Credentials)
-- YouTube Data API v3
+a [superself](https://superself.online) project — v1.1-beta
