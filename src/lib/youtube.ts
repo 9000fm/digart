@@ -78,9 +78,15 @@ async function getApprovedChannels(): Promise<ApprovedChannel[]> {
 
 /* ── Persistent pool cache (Supabase) ────────────────────────────────── */
 
-const POOL_MAX_AGE = 6 * 60 * 60 * 1000; // 6 hours
+const POOL_MAX_AGE = 3 * 60 * 60 * 1000; // 3 hours
+const RAW_CACHE_MAX_AGE = 12 * 60 * 60 * 1000; // 12 hours (deep fetch 2x/day)
 
-async function getPoolFromSupabase(key: string): Promise<CardData[] | null> {
+interface PoolCacheResult<T = CardData[]> {
+  data: T;
+  isStale: boolean;
+}
+
+async function getPoolFromSupabase<T = CardData[]>(key: string, maxAge = POOL_MAX_AGE): Promise<PoolCacheResult<T> | null> {
   try {
     const { data } = await supabase
       .from("pool_cache")
@@ -89,14 +95,23 @@ async function getPoolFromSupabase(key: string): Promise<CardData[] | null> {
       .single();
     if (!data) return null;
     const age = Date.now() - new Date(data.updated_at).getTime();
-    if (age > POOL_MAX_AGE) return null;
-    return data.data as CardData[];
+    return { data: data.data as T, isStale: age > maxAge };
   } catch {
     return null;
   }
 }
 
-async function savePoolToSupabase(key: string, pool: CardData[]): Promise<void> {
+/* ── Rebuild lock (prevents concurrent rebuilds of the same pool) ──── */
+
+const globalRebuild = globalThis as typeof globalThis & {
+  __digeartRebuilding?: Set<string>;
+};
+if (!globalRebuild.__digeartRebuilding) {
+  globalRebuild.__digeartRebuilding = new Set();
+}
+const rebuildingPools = globalRebuild.__digeartRebuilding;
+
+async function savePoolToSupabase(key: string, pool: unknown): Promise<void> {
   try {
     await supabase
       .from("pool_cache")
@@ -431,6 +446,7 @@ function videoToCard(v: YouTubeVideo): CardData {
 interface PoolResult {
   cards: CardData[];
   totalFiltered: number;
+  needsRebuild: boolean;
 }
 
 /* ── Genre label filtering ────────────────────────────────────────────── */
@@ -448,6 +464,144 @@ function filterChannelsByGenre(
   );
 }
 
+/* ── Raw video cache (deep fetch, stored in pool_cache) ─────────────── */
+
+interface RawVideo {
+  video: YouTubeVideo;
+  starred: boolean;
+}
+
+async function getRawVideos(
+  poolType: "discover" | "mixes" | "samples",
+  genre?: string
+): Promise<{ raw: RawVideo[]; isStale: boolean }> {
+  const rawKey = genre
+    ? `raw-${poolType}-${genre.toLowerCase()}`
+    : `raw-${poolType}`;
+
+  // Check raw cache (12h TTL)
+  const cached = await getPoolFromSupabase<RawVideo[]>(rawKey, RAW_CACHE_MAX_AGE);
+  if (cached && cached.data.length > 0 && !cached.isStale) {
+    return { raw: cached.data, isStale: false };
+  }
+
+  // Raw cache miss or stale → deep fetch from YouTube
+  const allApproved = await getApprovedChannels();
+
+  let channels: ApprovedChannel[];
+  let maxPages: number;
+  let maxResults: number;
+
+  if (poolType === "discover") {
+    channels = allApproved.filter((c) => {
+      if (!c.labels || c.labels.length === 0) return false;
+      if (isNonElectronicOnly(c.labels)) return false;
+      return true;
+    });
+    maxPages = 8;
+    maxResults = 50;
+  } else if (poolType === "mixes") {
+    channels = allApproved.filter(
+      (c) => c.labels?.some((l) =>
+        MIX_CHANNEL_LABELS.some((ml) => ml.toLowerCase() === l.toLowerCase())
+      )
+    );
+    maxPages = 5;
+    maxResults = 50;
+  } else {
+    channels = allApproved.filter(
+      (c) => c.labels?.some((l) =>
+        STRICT_SAMPLE_LABELS.some((sl) => l.toLowerCase() === sl.toLowerCase())
+      )
+    );
+    maxPages = 8;
+    maxResults = 50;
+  }
+
+  channels = filterChannelsByGenre(channels, genre);
+
+  const allRaw: RawVideo[] = [];
+  const BATCH_SIZE = 10;
+  for (let i = 0; i < channels.length; i += BATCH_SIZE) {
+    const batch = channels.slice(i, i + BATCH_SIZE);
+    const results = await Promise.allSettled(
+      batch.map((ch) => getChannelUploads(ch.id, maxResults, true, false, maxPages))
+    );
+    for (let j = 0; j < batch.length; j++) {
+      if (results[j].status === "fulfilled") {
+        for (const v of (results[j] as PromiseFulfilledResult<YouTubeVideo[]>).value) {
+          allRaw.push({ video: v, starred: batch[j].starred === true });
+        }
+      }
+    }
+  }
+
+  if (allRaw.length > 0) {
+    await savePoolToSupabase(rawKey, allRaw);
+  }
+
+  return { raw: allRaw, isStale: cached?.isStale ?? false };
+}
+
+/* ── Smart sampling (recientes + populares + random) ────────────────── */
+
+function smartSample(
+  raw: RawVideo[],
+  videoFilter: (v: YouTubeVideo) => boolean,
+  recentPct = 0.4,
+  popularPct = 0.4,
+  randomPct = 0.2
+): CardData[] {
+  const filtered = raw.filter(({ video }) => videoFilter(video));
+  const starred = filtered.filter((v) => v.starred);
+  const regular = filtered.filter((v) => !v.starred);
+
+  const sampleGroup = (group: RawVideo[]) => {
+    const total = group.length;
+    if (total === 0) return [] as YouTubeVideo[];
+    const recentCount = Math.ceil(total * recentPct);
+    const popularCount = Math.ceil(total * popularPct);
+    const randomCount = Math.ceil(total * randomPct);
+
+    const byDate = [...group].sort(
+      (a, b) => new Date(b.video.publishedAt || 0).getTime() - new Date(a.video.publishedAt || 0).getTime()
+    );
+    const byViews = [...group].sort(
+      (a, b) => (b.video.viewCount || 0) - (a.video.viewCount || 0)
+    );
+
+    const selected = new Set<string>();
+    const result: YouTubeVideo[] = [];
+
+    for (const v of byDate) {
+      if (selected.size >= recentCount) break;
+      if (!selected.has(v.video.id)) { selected.add(v.video.id); result.push(v.video); }
+    }
+    for (const v of byViews) {
+      if (result.length >= recentCount + popularCount) break;
+      if (!selected.has(v.video.id)) { selected.add(v.video.id); result.push(v.video); }
+    }
+    const remaining = group.filter((v) => !selected.has(v.video.id));
+    const shuffled = seededShuffle(remaining);
+    for (const v of shuffled.slice(0, randomCount)) {
+      result.push(v.video);
+    }
+
+    return result;
+  };
+
+  const starredCards = sampleGroup(starred).map(videoToCard);
+  const regularCards = sampleGroup(regular).map(videoToCard);
+  const totalAvailable = starredCards.length + regularCards.length;
+  const starredTarget = Math.min(starredCards.length, Math.round(totalAvailable * 0.35));
+  const regularTarget = totalAvailable - starredTarget;
+
+  return seededShuffle([
+    ...seededShuffle(starredCards).slice(0, starredTarget),
+    ...seededShuffle(regularCards).slice(0, regularTarget),
+  ]);
+}
+
 /* ── Discover (homepage) ─────────────────────────────────────────────── */
 
 /** Common video filter for homepage */
@@ -463,73 +617,53 @@ function isValidHomepageVideo(v: YouTubeVideo): boolean {
   return true;
 }
 
-async function getDiscoverPool(genre?: string): Promise<CardData[]> {
+async function getDiscoverPool(genre?: string): Promise<{ pool: CardData[]; needsRebuild: boolean }> {
   const poolKey = genre ? `discover-${genre.toLowerCase()}` : "discover";
   const memoryCacheKey = `pool-${poolKey}`;
 
   // Layer 1: in-memory cache (instant)
   const memCached = cacheGet<CardData[]>(memoryCacheKey);
-  if (memCached && memCached.length > 0) return memCached;
+  if (memCached && memCached.length > 0) return { pool: memCached, needsRebuild: false };
 
   // Layer 2: Supabase persistent cache (survives cold starts)
   const sbCached = await getPoolFromSupabase(poolKey);
-  if (sbCached && sbCached.length > 0) {
-    cacheSet(memoryCacheKey, sbCached, POOL_MAX_AGE);
-    return sbCached;
+  if (sbCached && sbCached.data.length > 0) {
+    cacheSet(memoryCacheKey, sbCached.data, POOL_MAX_AGE);
+    // Stale-while-revalidate: serve stale data, signal background rebuild
+    return { pool: sbCached.data, needsRebuild: sbCached.isStale };
   }
 
-  // Layer 3: rebuild from YouTube
-  const allApproved = await getApprovedChannels();
+  // Layer 3: rebuild from YouTube (only on true cold start — no data at all)
+  const pool = await buildDiscoverPool(genre);
+  return { pool, needsRebuild: false };
+}
 
-  let homepageChannels = allApproved.filter((c) => {
-    if (!c.labels || c.labels.length === 0) return false;
-    if (isNonElectronicOnly(c.labels)) return false;
-    return true;
-  });
+/** Full YouTube rebuild for discover pool — called synchronously on cold start or via after() on stale */
+async function buildDiscoverPool(genre?: string): Promise<CardData[]> {
+  const poolKey = genre ? `discover-${genre.toLowerCase()}` : "discover";
+  const memoryCacheKey = `pool-${poolKey}`;
 
-  homepageChannels = filterChannelsByGenre(homepageChannels, genre);
+  const { raw } = await getRawVideos("discover", genre);
+  const pool = smartSample(raw, isValidHomepageVideo);
 
-  const starredCards: CardData[] = [];
-  const regularCards: CardData[] = [];
-
-  const BATCH_SIZE = 10;
-  for (let i = 0; i < homepageChannels.length; i += BATCH_SIZE) {
-    const batch = homepageChannels.slice(i, i + BATCH_SIZE);
-    const results = await Promise.allSettled(
-      batch.map((ch) => getChannelUploads(ch.id, 30, true))
-    );
-    for (let j = 0; j < batch.length; j++) {
-      const result = results[j];
-      if (result.status === "fulfilled") {
-        const cards = result.value
-          .filter(isValidHomepageVideo)
-          .map(videoToCard);
-        if (batch[j].starred) {
-          starredCards.push(...cards);
-        } else {
-          regularCards.push(...cards);
-        }
-      }
-    }
-  }
-
-  // Compose pool: ~35% starred, ~65% regular
-  const totalAvailable = starredCards.length + regularCards.length;
-  const starredTarget = Math.min(starredCards.length, Math.round(totalAvailable * 0.35));
-  const regularTarget = totalAvailable - starredTarget;
-
-  const pool = seededShuffle([
-    ...seededShuffle(starredCards).slice(0, starredTarget),
-    ...seededShuffle(regularCards).slice(0, regularTarget),
-  ]);
-
-  // Only cache non-empty pools (don't persist API failures)
   if (pool.length > 0) {
     cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
     await savePoolToSupabase(poolKey, pool);
   }
 
   return pool;
+}
+
+/** Background rebuild for discover pool (called from after()) */
+export async function rebuildDiscoverPool(genre?: string): Promise<void> {
+  const lockKey = genre ? `discover-${genre.toLowerCase()}` : "discover";
+  if (rebuildingPools.has(lockKey)) return;
+  rebuildingPools.add(lockKey);
+  try {
+    await buildDiscoverPool(genre);
+  } finally {
+    rebuildingPools.delete(lockKey);
+  }
 }
 
 export async function discoverFromYouTube(
@@ -539,8 +673,8 @@ export async function discoverFromYouTube(
   genre?: string,
   rotate?: number
 ): Promise<PoolResult> {
-  const pool = await getDiscoverPool(genre);
-  if (pool.length === 0) return { cards: [], totalFiltered: 0 };
+  const { pool, needsRebuild } = await getDiscoverPool(genre);
+  if (pool.length === 0) return { cards: [], totalFiltered: 0, needsRebuild };
 
   const filtered = applyTagFilter(pool, tag);
   let feed = filtered;
@@ -551,10 +685,50 @@ export async function discoverFromYouTube(
   return {
     cards: feed.slice(offset, offset + limit),
     totalFiltered: feed.length,
+    needsRebuild,
   };
 }
 
 /* ── Mixes ───────────────────────────────────────────────────────────── */
+
+/** Full YouTube rebuild for mixes pool */
+function isValidMixVideo(v: YouTubeVideo): boolean {
+  if (v.title === "Private video" || v.title === "Deleted video") return false;
+  if (!v.duration || v.duration < 2400) return false;
+  const lower = v.title.toLowerCase();
+  if (lower.includes("#shorts") || lower.includes("#short")) return false;
+  if (!titleContainsAny(v.title, MIX_TITLE_KEYWORDS)) {
+    if (isNonMusic(v.title)) return false;
+  }
+  return true;
+}
+
+async function buildMixesPool(genre?: string): Promise<CardData[]> {
+  const poolKey = genre ? `mixes-${genre.toLowerCase()}` : "mixes";
+  const memoryCacheKey = `pool-${poolKey}`;
+
+  const { raw } = await getRawVideos("mixes", genre);
+  const pool = smartSample(raw, isValidMixVideo);
+
+  if (pool.length > 0) {
+    cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
+    await savePoolToSupabase(poolKey, pool);
+  }
+
+  return pool;
+}
+
+/** Background rebuild for mixes pool (called from after()) */
+export async function rebuildMixesPool(genre?: string): Promise<void> {
+  const lockKey = genre ? `mixes-${genre.toLowerCase()}` : "mixes";
+  if (rebuildingPools.has(lockKey)) return;
+  rebuildingPools.add(lockKey);
+  try {
+    await buildMixesPool(genre);
+  } finally {
+    rebuildingPools.delete(lockKey);
+  }
+}
 
 export async function discoverMixes(
   limit = 20,
@@ -565,62 +739,21 @@ export async function discoverMixes(
 ): Promise<PoolResult> {
   const poolKey = genre ? `mixes-${genre.toLowerCase()}` : "mixes";
   const memoryCacheKey = `pool-${poolKey}`;
+  let needsRebuild = false;
 
   let pool = cacheGet<CardData[]>(memoryCacheKey);
 
   if (!pool || pool.length === 0) {
-    // Check Supabase persistent cache
     const sbCached = await getPoolFromSupabase(poolKey);
-    if (sbCached && sbCached.length > 0) {
-      pool = sbCached;
+    if (sbCached && sbCached.data.length > 0) {
+      pool = sbCached.data;
       cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
+      needsRebuild = sbCached.isStale;
     }
   }
 
   if (!pool || pool.length === 0) {
-    const allApproved = await getApprovedChannels();
-    if (allApproved.length === 0) return { cards: [], totalFiltered: 0 };
-
-    let mixChannels = allApproved.filter(
-      (c) => c.labels?.some((l) =>
-        MIX_CHANNEL_LABELS.some((ml) => ml.toLowerCase() === l.toLowerCase())
-      )
-    );
-
-    mixChannels = filterChannelsByGenre(mixChannels, genre);
-
-    if (mixChannels.length === 0) return { cards: [], totalFiltered: 0 };
-
-    const allVideos: YouTubeVideo[] = [];
-    const results = await Promise.allSettled(
-      mixChannels.map((ch) => getChannelUploads(ch.id, 50, true, false, 2))
-    );
-
-    for (const result of results) {
-      if (result.status === "fulfilled") {
-        allVideos.push(...result.value);
-      }
-    }
-
-    pool = seededShuffle(
-      allVideos
-        .filter((v) => {
-          if (v.title === "Private video" || v.title === "Deleted video") return false;
-          if (!v.duration || v.duration < 2400) return false;
-          const lower = v.title.toLowerCase();
-          if (lower.includes("#shorts") || lower.includes("#short")) return false;
-          if (!titleContainsAny(v.title, MIX_TITLE_KEYWORDS)) {
-            if (isNonMusic(v.title)) return false;
-          }
-          return true;
-        })
-        .map(videoToCard)
-    );
-
-    if (pool.length > 0) {
-      cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
-      await savePoolToSupabase(poolKey, pool);
-    }
+    pool = await buildMixesPool(genre);
   }
 
   const filtered = applyTagFilter(pool, tag);
@@ -632,6 +765,7 @@ export async function discoverMixes(
   return {
     cards: feed.slice(offset, offset + limit),
     totalFiltered: feed.length,
+    needsRebuild,
   };
 }
 
@@ -642,6 +776,45 @@ const STRICT_SAMPLE_LABELS = [
   "Hip Hop", "Dub", "World", "Pop", "Downtempo", "Industrial", "Reggae",
 ];
 
+/** Full YouTube rebuild for samples pool */
+function isValidSampleVideo(v: YouTubeVideo): boolean {
+  if (v.title === "Private video" || v.title === "Deleted video") return false;
+  if (!v.duration || v.duration > 2700 || v.duration < 30) return false;
+  const lower = v.title.toLowerCase();
+  if (lower.includes("#shorts") || lower.includes("#short")) return false;
+  if (lower.includes("shorts") && lower.length < 80) return false;
+  if (v.height > v.width) return false;
+  if (isNonMusic(v.title)) return false;
+  return true;
+}
+
+async function buildSamplesPool(genre?: string): Promise<CardData[]> {
+  const poolKey = genre ? `samples-${genre.toLowerCase()}` : "samples";
+  const memoryCacheKey = `pool-${poolKey}`;
+
+  const { raw } = await getRawVideos("samples", genre);
+  const pool = smartSample(raw, isValidSampleVideo);
+
+  if (pool.length > 0) {
+    cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
+    await savePoolToSupabase(poolKey, pool);
+  }
+
+  return pool;
+}
+
+/** Background rebuild for samples pool (called from after()) */
+export async function rebuildSamplesPool(genre?: string): Promise<void> {
+  const lockKey = genre ? `samples-${genre.toLowerCase()}` : "samples";
+  if (rebuildingPools.has(lockKey)) return;
+  rebuildingPools.add(lockKey);
+  try {
+    await buildSamplesPool(genre);
+  } finally {
+    rebuildingPools.delete(lockKey);
+  }
+}
+
 export async function discoverSamples(
   limit = 30,
   offset = 0,
@@ -651,63 +824,21 @@ export async function discoverSamples(
 ): Promise<PoolResult> {
   const poolKey = genre ? `samples-${genre.toLowerCase()}` : "samples";
   const memoryCacheKey = `pool-${poolKey}`;
+  let needsRebuild = false;
 
   let pool = cacheGet<CardData[]>(memoryCacheKey);
 
   if (!pool || pool.length === 0) {
     const sbCached = await getPoolFromSupabase(poolKey);
-    if (sbCached && sbCached.length > 0) {
-      pool = sbCached;
+    if (sbCached && sbCached.data.length > 0) {
+      pool = sbCached.data;
       cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
+      needsRebuild = sbCached.isStale;
     }
   }
 
   if (!pool || pool.length === 0) {
-    const allApproved = await getApprovedChannels();
-    if (allApproved.length === 0) return { cards: [], totalFiltered: 0 };
-
-    let sampleChannels = allApproved.filter(
-      (c) => c.labels?.some((l) =>
-        STRICT_SAMPLE_LABELS.some((sl) => l.toLowerCase() === sl.toLowerCase())
-      )
-    );
-
-    sampleChannels = filterChannelsByGenre(sampleChannels, genre);
-
-    const shuffled = seededShuffle(sampleChannels);
-
-    const allVideos: YouTubeVideo[] = [];
-
-    const results = await Promise.allSettled(
-      shuffled.map((ch) => getChannelUploads(ch.id, 30, true))
-    );
-    for (const result of results) {
-      if (result.status === "fulfilled") {
-        for (const v of result.value) {
-          allVideos.push(v);
-        }
-      }
-    }
-
-    pool = seededShuffle(
-      allVideos
-        .filter((v) => {
-          if (v.title === "Private video" || v.title === "Deleted video") return false;
-          if (!v.duration || v.duration > 2700 || v.duration < 30) return false;
-          const lower = v.title.toLowerCase();
-          if (lower.includes("#shorts") || lower.includes("#short")) return false;
-          if (lower.includes("shorts") && lower.length < 80) return false;
-          if (v.height > v.width) return false;
-          if (isNonMusic(v.title)) return false;
-          return true;
-        })
-        .map((video) => videoToCard(video))
-    );
-
-    if (pool.length > 0) {
-      cacheSet(memoryCacheKey, pool, POOL_MAX_AGE);
-      await savePoolToSupabase(poolKey, pool);
-    }
+    pool = await buildSamplesPool(genre);
   }
 
   const filtered = applyTagFilter(pool, tag);
@@ -719,5 +850,6 @@ export async function discoverSamples(
   return {
     cards: feed.slice(offset, offset + limit),
     totalFiltered: feed.length,
+    needsRebuild,
   };
 }

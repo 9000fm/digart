@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { discoverMixes, isValidTag } from "@/lib/youtube";
+import { after } from "next/server";
+import { discoverMixes, rebuildMixesPool, isValidTag } from "@/lib/youtube";
 import type { Tag } from "@/lib/youtube";
 
 export async function GET(request: NextRequest) {
@@ -13,7 +14,12 @@ export async function GET(request: NextRequest) {
     const genre = searchParams.get("genre") || undefined;
     const rotate = parseInt(searchParams.get("rotate") || "0", 10) || undefined;
 
-    const { cards, totalFiltered } = await discoverMixes(limit, offset, tag, genre, rotate);
+    const { cards, totalFiltered, needsRebuild } = await discoverMixes(limit, offset, tag, genre, rotate);
+
+    if (needsRebuild) {
+      after(() => rebuildMixesPool(genre));
+    }
+
     return NextResponse.json({
       cards,
       hasMore: offset + cards.length < totalFiltered,

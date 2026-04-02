@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { discoverFromYouTube, isValidTag } from "@/lib/youtube";
+import { after } from "next/server";
+import { discoverFromYouTube, rebuildDiscoverPool, isValidTag } from "@/lib/youtube";
 import type { Tag } from "@/lib/youtube";
 
 export async function GET(req: NextRequest) {
@@ -15,7 +16,12 @@ export async function GET(req: NextRequest) {
   const rotate = parseInt(req.nextUrl.searchParams.get("rotate") || "0", 10) || undefined;
 
   try {
-    const { cards, totalFiltered } = await discoverFromYouTube(limit, offset, tag, genre, rotate);
+    const { cards, totalFiltered, needsRebuild } = await discoverFromYouTube(limit, offset, tag, genre, rotate);
+
+    if (needsRebuild) {
+      after(() => rebuildDiscoverPool(genre));
+    }
+
     return NextResponse.json({
       cards,
       hasMore: offset + cards.length < totalFiltered,

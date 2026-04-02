@@ -85,6 +85,8 @@ export default function Home() {
   const [showAbout, setShowAbout] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [mountedTabs, setMountedTabs] = useState<Set<ViewType>>(new Set(["home"]));
+  const scrollPositions = useRef<Record<string, number>>({});
 
   // Undo unlike state
   const [undoToastVisible, setUndoToastVisible] = useState(false);
@@ -646,8 +648,18 @@ export default function Home() {
   handleClosePlayerRef.current = handleClosePlayer;
 
   const handleViewChange = useCallback((view: ViewType) => {
+    scrollPositions.current[activeView] = window.scrollY;
     setActiveView(view);
-  }, []);
+    setMountedTabs((prev) => {
+      if (prev.has(view)) return prev;
+      const next = new Set(prev);
+      next.add(view);
+      return next;
+    });
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollPositions.current[view] || 0);
+    });
+  }, [activeView]);
 
   // Locate card — with 3s poll (30 × 100ms) + failure feedback
   const handleLocateCard = useCallback(() => {
@@ -905,35 +917,39 @@ export default function Home() {
       </div>
 
       <div style={{ display: activeView === "samples" ? undefined : "none" }}>
-        <SamplesGrid
-          savedIds={likedIds}
-          likedIds={likedIds}
-          playingId={playingId}
-          isPlaying={isPlaying}
-          onPlay={handlePlay}
-          onToggleSave={toggleLike}
-          onToggleLike={toggleLike}
-          activeTagFilters={activeTagFilters}
-          activeGenreLabels={activeGenreLabels}
-          onCardsLoaded={registerSamplesCards}
-          isAuthenticated={isAuthenticated}
-        />
+        {mountedTabs.has("samples") && (
+          <SamplesGrid
+            savedIds={likedIds}
+            likedIds={likedIds}
+            playingId={playingId}
+            isPlaying={isPlaying}
+            onPlay={handlePlay}
+            onToggleSave={toggleLike}
+            onToggleLike={toggleLike}
+            activeTagFilters={activeTagFilters}
+            activeGenreLabels={activeGenreLabels}
+            onCardsLoaded={registerSamplesCards}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
       </div>
 
       <div style={{ display: activeView === "mixes" ? undefined : "none" }}>
-        <MixesGrid
-          savedIds={likedIds}
-          likedIds={likedIds}
-          playingId={playingId}
-          isPlaying={isPlaying}
-          onPlay={handlePlay}
-          onToggleSave={toggleLike}
-          onToggleLike={toggleLike}
-          activeTagFilters={activeTagFilters}
-          activeGenreLabels={activeGenreLabels}
-          onCardsLoaded={registerMixesCards}
-          isAuthenticated={isAuthenticated}
-        />
+        {mountedTabs.has("mixes") && (
+          <MixesGrid
+            savedIds={likedIds}
+            likedIds={likedIds}
+            playingId={playingId}
+            isPlaying={isPlaying}
+            onPlay={handlePlay}
+            onToggleSave={toggleLike}
+            onToggleLike={toggleLike}
+            activeTagFilters={activeTagFilters}
+            activeGenreLabels={activeGenreLabels}
+            onCardsLoaded={registerMixesCards}
+            isAuthenticated={isAuthenticated}
+          />
+        )}
       </div>
 
       <div style={{ display: activeView === "saved" ? undefined : "none" }}>
