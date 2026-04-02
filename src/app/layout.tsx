@@ -20,7 +20,7 @@ const displayFont = localFont({
 
 export const metadata: Metadata = {
   title: "digeart — music discovery for diggers",
-  description: "Music discovery for diggers. All underground. All human-selected.",
+  description: "Music discovery for diggers. All human-selected.",
 };
 
 export const viewport: Viewport = {

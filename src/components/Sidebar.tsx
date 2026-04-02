@@ -568,7 +568,7 @@ export default function Sidebar({
                 } : undefined}
               >
                 <p className="font-mono text-base text-[var(--text)] font-bold">digeart</p>
-                <p className="font-mono text-xs text-[var(--text-muted)] mt-0.5">Music discovery for diggers. All underground. All human-selected.</p>
+                <p className="font-mono text-xs text-[var(--text-muted)] mt-0.5">Music discovery for diggers. All human-selected.</p>
 
                 {/* Tag legend */}
                 <div className="mt-2.5 pt-2 border-t border-[var(--border)]/50">
@@ -861,7 +861,7 @@ export default function Sidebar({
               <div className="w-10 h-1 rounded-full bg-[var(--border)] mx-auto mb-3" />
 
               <p className="font-mono text-base text-[var(--text)] font-bold">digeart</p>
-              <p className="font-mono text-xs text-[var(--text-muted)] mt-0.5">Music discovery for diggers. All underground. All human-selected.</p>
+              <p className="font-mono text-xs text-[var(--text-muted)] mt-0.5">Music discovery for diggers. All human-selected.</p>
 
               {/* Tag legend */}
               <div className="mt-2.5 pt-2 border-t border-[var(--border)]/50">
