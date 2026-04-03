@@ -241,7 +241,7 @@ export default function QueuePanel({
           <div className="px-1 py-2">
             <div className="flex items-center justify-between px-4 py-1.5">
               <p className="font-mono text-xs uppercase tracking-wider text-[var(--text)] font-bold">Queue</p>
-              <button onClick={onClose} className="w-7 h-7 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--text)]/10 active:scale-95 transition-all duration-150 cursor-pointer" aria-label="Close queue">
+              <button onClick={onClose} className="w-6 h-6 flex items-center justify-center rounded-full text-[var(--text)]/50 hover:bg-[var(--text)]/10 hover:text-[var(--text)] active:scale-90 transition-all duration-75 cursor-pointer" aria-label="Close queue">
                 <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
               </button>
             </div>
