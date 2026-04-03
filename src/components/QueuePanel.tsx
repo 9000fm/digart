@@ -214,7 +214,7 @@ export default function QueuePanel({
                 <div className="w-8 h-1 rounded-full bg-[var(--text-muted)]/30" />
               </div>
               <div className="px-1 pb-2">
-                <p className="font-mono text-sm uppercase tracking-wider text-[var(--text)] font-bold px-4 py-2">Queue</p>
+                <p className="font-mono text-xs uppercase tracking-wider text-[var(--text)] font-bold px-4 py-2">Queue</p>
                 {content}
               </div>
             </motion.div>
@@ -240,7 +240,7 @@ export default function QueuePanel({
         >
           <div className="px-1 py-2">
             <div className="flex items-center justify-between px-4 py-1.5">
-              <p className="font-mono text-sm uppercase tracking-wider text-[var(--text)] font-bold">Queue</p>
+              <p className="font-mono text-xs uppercase tracking-wider text-[var(--text)] font-bold">Queue</p>
               <button onClick={onClose} className="text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer text-xl leading-none" aria-label="Close queue">&times;</button>
             </div>
             {content}
