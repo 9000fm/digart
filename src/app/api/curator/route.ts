@@ -218,11 +218,10 @@ export async function GET(req: NextRequest) {
     .single();
 
   if (!nextChannel) {
-    const [{ count: total }, { count: approved }] = await Promise.all([
-      supabase.from("curator_channels").select("*", { count: "exact", head: true }),
-      supabase.from("curator_channels").select("*", { count: "exact", head: true }).eq("status", "approved"),
-    ]);
-    return NextResponse.json({ done: true, reviewed: total || 0, total: total || 0, approvedCount: approved || 0 });
+    const { data: doneRows } = await supabase.from("curator_channels").select("status");
+    let total = 0, approvedCount = 0;
+    for (const row of doneRows || []) { total++; if (row.status === "approved") approvedCount++; }
+    return NextResponse.json({ done: true, reviewed: total, total, approvedCount });
   }
 
   let allUploads: Awaited<ReturnType<typeof getChannelUploads>> = [];
@@ -236,19 +235,23 @@ export async function GET(req: NextRequest) {
     .eq("channel_id", nextChannel.channel_id);
   if (scanErr2) console.error("Failed to update scan info:", scanErr2);
 
-  const [{ count: total }, { count: approved }, { count: pending }] = await Promise.all([
-    supabase.from("curator_channels").select("*", { count: "exact", head: true }),
-    supabase.from("curator_channels").select("*", { count: "exact", head: true }).eq("status", "approved"),
-    supabase.from("curator_channels").select("*", { count: "exact", head: true }).eq("status", "pending"),
-  ]);
+  const { data: statusRows } = await supabase
+    .from("curator_channels")
+    .select("status");
+  const counts = { total: 0, approved: 0, pending: 0 };
+  for (const row of statusRows || []) {
+    counts.total++;
+    if (row.status === "approved") counts.approved++;
+    else if (row.status === "pending" || row.status === "filtered") counts.pending++;
+  }
 
   return NextResponse.json({
     channel: { name: nextChannel.name, id: nextChannel.channel_id },
     uploads: pickUploads(allUploads),
-    reviewed: (total || 0) - (pending || 0),
-    total: total || 0,
-    remaining: pending || 0,
-    approvedCount: approved || 0,
+    reviewed: counts.total - counts.pending,
+    total: counts.total,
+    remaining: counts.pending,
+    approvedCount: counts.approved,
     isStarred: nextChannel.starred,
   });
 }

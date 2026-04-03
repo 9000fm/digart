@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { supabase } from "@/lib/supabase";
 import { cacheDeleteByPrefix } from "@/lib/cache";
 
 export async function POST() {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   // Delete all pool_cache entries — next request triggers rebuild
   const { error } = await supabase.from("pool_cache").delete().neq("key", "");
 

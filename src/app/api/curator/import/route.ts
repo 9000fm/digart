@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { supabase } from "@/lib/supabase";
 
 const API_KEY = process.env.YOUTUBE_API_KEY!;
@@ -6,16 +7,10 @@ const API_KEY = process.env.YOUTUBE_API_KEY!;
 async function resolveHandle(handle: string): Promise<{ id: string; name: string } | null> {
   const cleanHandle = handle.startsWith("@") ? handle : `@${handle}`;
   const params = new URLSearchParams({ part: "snippet", forHandle: cleanHandle.slice(1), key: API_KEY });
-  let res = await fetch(`https://www.googleapis.com/youtube/v3/channels?${params}`);
+  const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?${params}`);
   if (res.ok) {
     const data = await res.json();
     if (data.items?.length > 0) return { id: data.items[0].id, name: data.items[0].snippet.title };
-  }
-  const searchParams = new URLSearchParams({ part: "snippet", q: handle.replace("@", ""), type: "channel", maxResults: "1", key: API_KEY });
-  res = await fetch(`https://www.googleapis.com/youtube/v3/search?${searchParams}`);
-  if (res.ok) {
-    const data = await res.json();
-    if (data.items?.length > 0) return { id: data.items[0].snippet.channelId, name: data.items[0].snippet.title };
   }
   return null;
 }
@@ -48,6 +43,11 @@ function parseUrl(input: string): { type: "id"; value: string } | { type: "handl
 }
 
 export async function POST(req: NextRequest) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { urls } = await req.json();
   if (!urls || typeof urls !== "string") {
     return NextResponse.json({ error: "Provide urls as a string" }, { status: 400 });
