@@ -40,8 +40,8 @@ export default function MaintenanceScreen() {
       <div className="w-8 h-px bg-[var(--text-muted)]/20 mb-4" />
 
       {/* Message with cycling dots */}
-      <p className="font-mono text-sm text-[var(--text)] uppercase font-bold tracking-wider">
-        We'll be right back{".".repeat(dotCount)}
+      <p className="font-mono text-sm text-[var(--text)] font-bold tracking-wider">
+        We&apos;ll be right back<span className="inline-block w-[1.5em] text-left">{".".repeat(dotCount)}</span>
       </p>
     </div>
   );
