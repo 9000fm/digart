@@ -843,6 +843,8 @@ export default function Sidebar({
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
             className="min-[1152px]:hidden fixed bottom-0 left-0 right-0 max-h-[80vh] overflow-y-auto bg-[var(--bg)] border-t border-[var(--border)] rounded-t-2xl shadow-2xl px-5 py-4 z-[71]"
+            style={{ touchAction: "pan-y" }}
+            onTouchMove={(e) => e.stopPropagation()}
             >
               {/* Drag handle */}
               <div className="w-10 h-1 rounded-full bg-[var(--border)] mx-auto mb-3" />
